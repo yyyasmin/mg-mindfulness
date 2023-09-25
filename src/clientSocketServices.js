@@ -1,9 +1,11 @@
 import io from "socket.io-client";
 
-// const PROXY_URL = 'http://localhost:5000'; // server port
-const RENDER_PROXY_URL = 'https://react-multi-match-game-production.up.railway.app/'; // server port
+// const PROXY_URL = 'http://localhost:5000'; // local server port
+const RENDER_PROXY_URL = 'https://react-multi-match-game-production.up.railway.app/'; // RENDER server port
 
 export const socket = io(RENDER_PROXY_URL);
+
+console.log("IN clientSocketServices -- socket: ", socket)
 
 // Broadcast player actions to all playerS in the room
 
