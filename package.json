@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.2.1",
     "concurrently": "^8.2.1",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "framer-motion": "^10.16.4",
     "react": "^18.2.0",
@@ -26,9 +27,11 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "yarn:start": "CI=false react-scripts start",
     "yarn:client": "react-scripts start",
     "yarn:server": "node index.js",
-    "yarn:all": "concurrently \"yarn yarn:client\" \"yarn yarn:server\""  },
+    "yarn:all": "concurrently \"yarn yarn:client\" \"yarn yarn:server\""
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
