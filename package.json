@@ -30,7 +30,7 @@
     "yarn:start": "CI=false react-scripts start",
     "yarn:client": "react-scripts start",
     "yarn:server": "node index.js",
-    "yarn:all": "concurrently \"yarn yarn:client\" \"yarn yarn:server\""
+    "yarn:all": "concurrently \"yarn yarn:server\" \"yarn yarn:client\""
   },
   "eslintConfig": {
     "extends": [
