@@ -5,7 +5,8 @@ import Players from "./Players";
 import MatchedCards from "./MatchedCards";
 import TougleMatchedCardButton from "./TougleMatchedCardButton";
 
-import { useParams, useLocation } from "react-router-dom";
+// import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import {
   updateCurentRoomAndActiveRooms,
@@ -44,7 +45,7 @@ const CardGallery = styled.div`
 
 
 function Game() {
-  const { roomId } = useParams();
+  // const { roomId } = useParams();
   const location = useLocation();
   const { userName, currentRoom } = location.state;
 
@@ -52,8 +53,9 @@ function Game() {
   const [updatedActiveRooms, setUpdatedActiveRooms] = useState([]);
   const [matchedCards, setMatchedCards] = useState(true);
 
-  useEffect(() => {
+  useEffect( () => {
     setCurrentRoom(currentRoom);
+    setUpdatedActiveRooms(updatedActiveRooms);
   }, []);
 
   useEffect(() => {
@@ -86,7 +88,7 @@ function Game() {
 
   
   useEffect(() => {
-    if ( cr != undefined && cr.id >= 0 )  {
+    if ( cr !== undefined && cr.id >= 0 )  {
       console.log("in Game useEffect[cr] -- cr: ", cr)
       cr.cardsData.map( (card, index) => (
         console.log("in Game useEffect[cr] -- ", "cr.cardsMap-", {index}, "- isFliped: ", card.isFlipped)
@@ -95,9 +97,8 @@ function Game() {
   }, [cr]);
   
   useEffect(() => {
-    if ( matchedCards != undefined )  {
+    if ( matchedCards !== undefined )  {
       console.log("in Game useEffect[matchedCards] -- matchedCards: ", matchedCards)
-      console.log("in Game useEffect[matchedCards] -- userName: ", userName)
       emitCurentMatchedCards(matchedCards);
     }
   }, [matchedCards]);
@@ -126,7 +127,7 @@ function Game() {
         />
       )}
         
-      { (cr.cardsData != undefined &&  cr.cardsData.length > 0 && matchedCards != undefined )? (
+      { (cr.cardsData !== undefined &&  cr.cardsData.length > 0 && matchedCards !== undefined )? (
         matchedCards ? (
 
           <CardGallery>

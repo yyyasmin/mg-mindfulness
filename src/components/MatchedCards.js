@@ -56,16 +56,6 @@ const CardText = styled.div`
   font-size: 1em;
 `;
 
-const ReturnButton = styled.button`
-  margin-top: 10px;
-  padding: 5px 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
 const MatchedCards = (props) => {
   let { playerName, players, card, matchedCards } = props;
 
@@ -77,12 +67,13 @@ const MatchedCards = (props) => {
       <ContentWrapper>
 
         <ImageWrapper>
-          {/* <img src={card.imageImportName} alt={card.name} /> */}
           <Image src={card.imageImportName} alt={card.name} />
         </ImageWrapper>
 
         <TextContainer>
           <PlayerName>{playerName}</PlayerName>
+          <PlayerName>{players[0].name}</PlayerName>   // players wil be used
+
           <CardText>MatchedCards: {matchedCards}</CardText>
           <CardText>TEXT-1: {card.text1}</CardText>
           <CardText>TEXT-2: {card.text2}</CardText>

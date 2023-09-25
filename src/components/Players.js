@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
-import ReactCardFlip from "react-card-flip";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const Wellcome = styled.h1`
-  font-size: 2.5rem;
-  margin: 10px 0 5px 0; /* Adjust top and bottom margin */
 `;
 
 const PlayersContainer = styled.div`

@@ -18,10 +18,10 @@ const AppContainer = styled.div`
   background-color: snow;
 `;
 
-const Title = styled.h1`
-  margin-top: 15px;
-  font-size: 4rem;
-`;
+// const Title = styled.h1`
+//   margin-top: 15px;
+//   font-size: 4rem;
+// `;
 
 function App() {
   const [userName, setUserName] = useState("");

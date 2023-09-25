@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import ReactCardFlip from "react-card-flip";
 
-const catImage = require("../assets/textures/catImage.png");
+// const catImage = require("../assets/textures/catImage.png");
 const yasminLogo = require("../assets/textures/yasminLogo.PNG");
 
 const CardContainer = styled.div`
@@ -42,7 +42,7 @@ const CardImage = styled.img`
 
 const NikeCard =  ( props ) =>  {
   
-  let { playerName, card, isFlipped, toggleCardFlip } = props
+  let { card, isFlipped, toggleCardFlip } = props
 
   const handleCardClick = () => {
     // console.log("IN NUKECARD -- toggleCardFlip: ", toggleCardFlip)
