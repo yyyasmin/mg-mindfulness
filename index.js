@@ -28,7 +28,9 @@ const io = socket(server, {
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
 
+
 app.get("/database/Cards.json", (req, res) => {
+  app.get("/database/Cards.json", (req, res) => {
   const filePath = path.join(__dirname, "database", "Cards.json");
   res.sendFile(filePath);
 });
