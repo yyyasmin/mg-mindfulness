@@ -2,10 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import NameForm from "./components/NameForm";
 import RoomsList from "./components/RoomsList";
-import Game from "./components/Game";
 import { initRoomsFunc } from "./helpers/init"; // Import the initialization function
 
 const AppContainer = styled.div`
@@ -26,7 +23,6 @@ const AppContainer = styled.div`
 function App() {
   const [userName, setUserName] = useState("");
   const [roomsInitialData, setRoomsInitialData] = useState(null); // State to hold initialization data
-  const [dataIsSet, setDataIsSet] = useState(false); // State to hold initialization data
 
   useEffect(() => {
     // Initialize the app when it mounts
@@ -45,23 +41,15 @@ function App() {
   
   useEffect(() => {
     if  ( roomsInitialData )  {
-      setDataIsSet(true)
+      setUserName('yyy')
     }
   }, [roomsInitialData]);
 
   return (
-    <Router>
       <AppContainer>
-        <Routes>
-{ dataIsSet? <Route path="/rooms" element={<RoomsList userName={userName} roomsInitialData={roomsInitialData} />} /> : null}
-          <Route path="/name" element={<NameForm setUserName={setUserName} />} />
-          {/* Add the route for the game page with :roomId parameter */}
-          <Route path="/game/:roomId" element={<Game />} />
-
-          <Route path="" element={<NameForm setUserName={setUserName} />} />
-        </Routes>
+ <RoomsList userName={userName} roomsInitialData={roomsInitialData} />
       </AppContainer>
-    </Router>
+
   );
 }
 
