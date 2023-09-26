@@ -15,7 +15,7 @@ const fetchDataFromJSON = async (filePath) => {
 
 // Initialize rooms with data from rooms.json
 const initRoomsFromJson = async () => {
-  const roomsData = await fetchDataFromJSON("/database/rooms.json");
+  const roomsData = await fetchDataFromJSON("https://spotty-join-production.up.railway.app/database/rooms.json");
   if (roomsData) {
     return roomsData.map((room) => ({
       ...room,
@@ -27,7 +27,7 @@ const initRoomsFromJson = async () => {
 
 // Initialize cardsData for each room based on data from cards.json
 const initCardsInRoomsFromJson = async (rooms) => {
-  const cardsData = await fetchDataFromJSON("/database/Cards.json");
+  const cardsData = await fetchDataFromJSON("https://spotty-join-production.up.railway.app/database/Cards.json");
   if (cardsData) {
     rooms.forEach((room) => {
       if (cardsData[room.id]) {
