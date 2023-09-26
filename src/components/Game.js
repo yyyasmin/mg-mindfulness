@@ -1,0 +1,118 @@
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
+
+// import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
+import {
+  updateCurentRoomAndActiveRooms,
+  removeUpdatedRoomDataListener,
+  emitCurentRoomChanged,
+  updateMatchedCards,
+  removeUpdatedMatchedCards,
+  emitCurentMatchedCards
+} from "../clientSocketServices";
+
+const GameContainer = styled.div`
+  background-color: #FDF2E9;
+  color: brown;
+  border-radius: 25px;
+`;
+
+const Wellcome = styled.h1`
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 5px;
+  border-radius: 25px;
+
+`;
+
+
+const CardGallery = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 35px;
+  background-color: #FAD5A5;
+  border-radius: 25px;
+
+`;
+
+
+function Game() {
+  // const { roomId } = useParams();
+  const location = useLocation();
+  const { userName, currentRoom } = location.state;
+
+  const [cr, setCurrentRoom] = useState({});
+  const [updatedActiveRooms, setUpdatedActiveRooms] = useState([]);
+  const [matchedCards, setMatchedCards] = useState(true);
+
+  useEffect( () => {
+    setCurrentRoom(currentRoom);
+    setUpdatedActiveRooms(updatedActiveRooms);
+  }, []);
+
+  useEffect(() => {
+    updateCurentRoomAndActiveRooms(setUpdatedActiveRooms, setCurrentRoom);
+    return () => {
+      removeUpdatedRoomDataListener();
+    };
+  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+  
+  useEffect(() => {
+    updateMatchedCards(setMatchedCards);
+    return () => {
+      removeUpdatedMatchedCards();
+    };
+  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+
+  const toggleCardFlip = (cardId) => {
+    const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
+
+    if (cardIndex !== -1) {
+      const updatedCard = { ...cr.cardsData[cardIndex] };
+      updatedCard.isFlipped = !updatedCard.isFlipped;
+      const updatedRoom = { ...cr };
+      updatedRoom.cardsData[cardIndex] = updatedCard;
+      console.log("IN GAME -- toggleCardFlip -- cardId: ", cardId)
+      console.log("IN GAME -- toggleCardFlip -- updatedRoom: ", updatedRoom)
+      emitCurentRoomChanged(updatedRoom); // The setting happens after the value received from the server
+    }
+  };
+
+  
+  useEffect(() => {
+    if ( cr !== undefined && cr.id >= 0 )  {
+      console.log("in Game useEffect[cr] -- cr: ", cr)
+      cr.cardsData.map( (card, index) => (
+        console.log("in Game useEffect[cr] -- ", "cr.cardsMap-", {index}, "- isFliped: ", card.isFlipped)
+      ) )
+    }
+  }, [cr]);
+  
+  useEffect(() => {
+    if ( matchedCards !== undefined )  {
+      console.log("in Game useEffect[matchedCards] -- matchedCards: ", matchedCards)
+      emitCurentMatchedCards(matchedCards);
+    }
+  }, [matchedCards]);
+
+
+  console.log("in Game BEFORE RENDER -- matchedCards: ", matchedCards)
+  console.log("in Game BEFORE RENDER -- userName: ", userName)
+
+  return (
+    <GameContainer>
+
+      <Wellcome>
+        <div>Wellcome to room: {cr.name}</div>
+      </Wellcome>
+
+ 
+    </GameContainer>
+  );
+}
+
+export default Game;

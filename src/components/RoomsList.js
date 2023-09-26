@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-//import { useNavigate  } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 
 import {  updateCurentRoomAndActiveRooms,
   removeUpdatedRoomDataListener,
@@ -23,6 +23,8 @@ const RoomsList = ({ userName, roomsInitialData }) => {
   
   const [currentRoom, setCurrentRoom] = useState({});
   const [updatedActiveRooms, setUpdatedActiveRooms] = useState([]);
+  const navigate = useNavigate(); // Get the navigate function from React Router
+
 
   const handleJoinRoom = async (chosenRoom) => {
     
@@ -48,11 +50,10 @@ const RoomsList = ({ userName, roomsInitialData }) => {
     // Check if updatedActiveRooms has a length greater than 0
     if (currentRoom != undefined && currentRoom.id >= 0) {
       console.log("IN RoomsList 2222 -- useEffect[updatedActiveRooms, currentRoom] -- passing to GAME -- currentRoom: ", currentRoom);
-      
-	  // Navigate to the game page
-      //navigate(`/game/${currentRoom.id}`, {
-      //  state: { userName, currentRoom },
-      //  });
+      // Navigate to the game page
+      navigate(`/game/${currentRoom.id}`, {
+        state: { userName, currentRoom },
+      });
     }
   }, [currentRoom]);
   
