@@ -21,7 +21,7 @@
     "styled-components": "^6.0.8",
     "web-vitals": "^2.1.0"
   },
-  "proxy": "https://your-railway-app.up.railway.app",
+  "proxy": "spotty-join-production.up.railway.app",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
