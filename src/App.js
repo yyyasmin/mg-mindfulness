@@ -31,6 +31,8 @@ function App() {
   useEffect(() => {
     // Initialize the app when it mounts
     const init = async () => {
+      console.log("6666")
+
       try {
         const initRoomsObj = await initRoomsFunc();
         setRoomsInitialData(initRoomsObj);
@@ -38,12 +40,13 @@ function App() {
         console.error("Error initializing the app:", error);
       }
     };
-
     init();
   }, []);
 
   
   useEffect(() => {
+    console.log("5555")
+
     if  ( roomsInitialData )  {
       setDataIsSet(true)
     }

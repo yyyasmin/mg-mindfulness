@@ -27,7 +27,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
 
 
   const handleJoinRoom = async (chosenRoom) => {
-    
+      console.log("1111")
       emitAddMemberToRoom({
         playerName: userName,
         chosenRoom: chosenRoom,
@@ -35,6 +35,8 @@ const RoomsList = ({ userName, roomsInitialData }) => {
   }
 
   useEffect(() => {
+    console.log("2222")
+
     // Listen for updated room data from the server - 
 	// when arive - set updated curentRoom and activeRooms values sent by server
     updateCurentRoomAndActiveRooms(setUpdatedActiveRooms, setCurrentRoom);
@@ -47,6 +49,8 @@ const RoomsList = ({ userName, roomsInitialData }) => {
 
   // Use useEffect to listen for changes in updatedActiveRooms and currentRoom
   useEffect(() => {
+    console.log("3333")
+
     // Check if updatedActiveRooms has a length greater than 0
     if (currentRoom != undefined && currentRoom.id >= 0) {
       console.log("IN RoomsList 2222 -- useEffect[updatedActiveRooms, currentRoom] -- passing to GAME -- currentRoom: ", currentRoom);
@@ -57,6 +61,8 @@ const RoomsList = ({ userName, roomsInitialData }) => {
     }
   }, [currentRoom]);
   
+  console.log("4444")
+
 
   return (
     <GameContainer>
