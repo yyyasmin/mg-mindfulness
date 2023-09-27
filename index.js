@@ -23,7 +23,7 @@ const io = socket(server, {
   //   allowedHeaders: ["secretHeader"],  // IN RENDER var disableHostCheck: true
   //   credentials: true,
   // },
-});
+} });
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
