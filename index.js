@@ -8,9 +8,12 @@ const path = require("path");
 const app = express();
 const server = http.Server(app);
 
-// Add the 'cors' middleware with options to allow requests from 'http://localhost:8080'
+// Replace "*" with the actual URL of your production CLIENT
+const allowedOrigin = "https://react-multi-match-game-production.up.railway.app/";
+
+// Update corsOptions with allowedOrigin
 const corsOptions = {
-  origin: "*",
+  origin: allowedOrigin,
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
@@ -18,18 +21,16 @@ app.use(cors(corsOptions));
 // Add the following lines to handle Socket.IO connections
 const io = socket(server, {
   cors: {
-    origin: "*",
+    origin: allowedOrigin,
     methods: ["GET", "POST"],
-  //   allowedHeaders: ["secretHeader"],  // IN RENDER var disableHostCheck: true
-  //   credentials: true,
-  // },
-} });
+    // You can configure other CORS options as needed
+  },
+});
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
 
-
-  app.get("/database/Cards.json", (req, res) => {
+app.get("/database/Cards.json", (req, res) => {
   const filePath = path.join(__dirname, "database", "Cards.json");
   res.sendFile(filePath);
 });
@@ -39,9 +40,9 @@ app.get("/database/rooms.json", (req, res) => {
   res.sendFile(filePath);
 });
 
-const serverSocketServices = require("./serverSocketServices");// Use the io instance to invoke serverSocketServices
+const serverSocketServices = require("./serverSocketServices");
 serverSocketServices(io);
 
-// Start the server
+// Use process.env.PORT for flexibility in choosing the port
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, console.log(`Listening to ${PORT}!`));
