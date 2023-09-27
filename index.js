@@ -19,8 +19,10 @@ app.use(cors(corsOptions));
 const io = socket(server, {
   cors: {
     origin: "*",
-    methods: ["GET", "POST"]
-  },
+    methods: ["GET", "POST"],
+  //   allowedHeaders: ["secretHeader"],  // IN RENDER var disableHostCheck: true
+  //   credentials: true,
+  // },
 });
 
 // Serve static files from the "public" directory

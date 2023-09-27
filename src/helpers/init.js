@@ -15,7 +15,7 @@ const fetchDataFromJSON = async (filePath) => {
 
 // Initialize rooms with data from rooms.json
 const initRoomsFromJson = async () => {
-  const roomsData = await fetchDataFromJSON("/database/rooms.json");
+  const roomsData = await fetchDataFromJSON("https://spotty-join-production.up.railway.app//database/rooms.json");
   if (roomsData) {
     return roomsData.map((room) => ({
       ...room,
