@@ -9,7 +9,7 @@ const app = express();
 const server = http.Server(app);
 
 // Replace "*" with the actual URL of your production CLIENT
-const allowedOrigin = "https://mg-client-production.up.railway.app/";
+const allowedOrigin = "https://6515a011d7e9ca1d9a23b191--mg-client.netlify.app/";
 
 // Update corsOptions with allowedOrigin
 const corsOptions = {
