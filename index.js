@@ -9,7 +9,7 @@ const app = express();
 const server = http.Server(app);
 
 // Replace "*" with the actual URL of your production CLIENT
-const allowedOrigin = "https://react-multi-match-game-production.up.railway.app/";
+const allowedOrigin = "https://mg-client-production.up.railway.app/";
 
 // Update corsOptions with allowedOrigin
 const corsOptions = {
