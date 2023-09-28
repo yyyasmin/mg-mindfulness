@@ -17,7 +17,7 @@ const fetchDataFromJSON = async (filePath) => {
 const initRoomsFromJson = async () => {
   console.log("7777")
 
-  const roomsData = await fetchDataFromJSON("https://spotty-join-production.up.railway.app/database/rooms.json");
+  const roomsData = await fetchDataFromJSON("https://react-multi-match-game-production.up.railway.app/database/rooms.json");
   console.log("8888")
 
   if (roomsData) {
@@ -35,7 +35,7 @@ const initRoomsFromJson = async () => {
 const initCardsInRoomsFromJson = async (rooms) => {
   console.log("10-10-10-10")
 
-  const cardsData = await fetchDataFromJSON("https://spotty-join-production.up.railway.app/database/Cards.json");
+  const cardsData = await fetchDataFromJSON("https://react-multi-match-game-production.up.railway.app/database/Cards.json");
   if (cardsData) {
     rooms.forEach((room) => {
       if (cardsData[room.id]) {
