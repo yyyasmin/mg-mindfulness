@@ -7,7 +7,7 @@ import NameForm from "./components/NameForm";
 import RoomsList from "./components/RoomsList";
 import Game from "./components/Game";
 import { initRoomsFunc } from "./helpers/init"; // Import the initialization function
-
+// FOR RUNNINIG RENDER
 const AppContainer = styled.div`
   width: 100%;
   display: flex;
