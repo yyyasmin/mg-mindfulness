@@ -54,10 +54,10 @@ const RoomsList = ({ userName, roomsInitialData }) => {
     // Check if updatedActiveRooms has a length greater than 0
     if (currentRoom != undefined && currentRoom.id >= 0) {
       console.log("IN RoomsList 2222 -- useEffect[updatedActiveRooms, currentRoom] -- passing to GAME -- currentRoom: ", currentRoom);
-      // // Navigate to the game page
-      // navigate(`/game/${currentRoom.id}`, {
-      //   state: { userName, currentRoom },
-      // });
+      // Navigate to the game page
+      navigate(`/game/${currentRoom.id}`, {
+        state: { userName, currentRoom },
+      });
     }
   }, [currentRoom]);
   
