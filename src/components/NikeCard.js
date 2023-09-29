@@ -6,29 +6,24 @@ import ReactCardFlip from "react-card-flip";
 const yasminLogo = require("../assets/textures/yasminLogo.PNG");
 
 const CardContainer = styled.div`
-  width: 200px;
-  height: 250px;
+  width: 250px;
+  height: 350px;
   display: flex;
-  justify-content: center;
-  background-color: brown;
-  border-radius: 25px;
+  flex-direction: column;
   cursor: grab;
   overflow: hidden;
   position: relative;
+  margin: 10px;
 
-  transition: transform 0.2s ease; /* Add a smooth transition for the 3D effect */
-  transform-style: preserve-3d; /* Enable 3D transforms */
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* Add a box shadow for the 3D effect */
-`;
-
-const ImageWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border: 10px solid brown;
   border-radius: 25px;
-  transform: translateZ(10px); /* Add a z-translation for the 3D effect */
+  border: 10px solid brown; /* Border around the entire card */
+  /*
+  transition: transform 0.2s ease;
+  transform-style: preserve-3d;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+  */
 `;
+
 
 const CardImage = styled.img`
   position: absolute;
@@ -45,11 +40,6 @@ const NikeCard =  ( props ) =>  {
   let { card, isFlipped, toggleCardFlip } = props
 
   const handleCardClick = () => {
-    // console.log("IN NUKECARD -- toggleCardFlip: ", toggleCardFlip)
-    // console.log("IN NUKECARD -- card: ", card)
-    // console.log("IN NUKECARD -- playerName: ", playerName)
-    // console.log("IN NUKECARD -- isFlipped: ", isFlipped)
-
     toggleCardFlip(card.id);
   };
 
@@ -57,15 +47,11 @@ const NikeCard =  ( props ) =>  {
     <ReactCardFlip isFlipped={isFlipped}>
 
       <CardContainer onClick={handleCardClick}>
-        <ImageWrapper>
           <CardImage src={card.imageImportName} alt={card.name} />
-        </ImageWrapper>
       </CardContainer>
 
       <CardContainer onClick={handleCardClick}>
-        <ImageWrapper>
           <CardImage src={yasminLogo} alt={card.name} />
-        </ImageWrapper>
       </CardContainer>
 
     </ReactCardFlip>
