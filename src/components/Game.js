@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import NikeCard from "./NikeCard";
+import Players from "./Players";
+import MatchedCards from "./MatchedCards";
+import TougleMatchedCardButton from "./TougleMatchedCardButton";
 
 // import { useParams, useLocation } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -110,7 +114,51 @@ function Game() {
         <div>Wellcome to room: {cr.name}</div>
       </Wellcome>
 
- 
+  
+      {cr !== undefined && cr.id >= 0 && (
+        <Players players={cr.currentPlayers} />
+      )}
+
+      
+      {cr !== undefined && cr.id >= 0 && (
+        <TougleMatchedCardButton
+          matchedCards = {matchedCards}
+          setMatchedCards={(matchedCards) => setMatchedCards(matchedCards)}
+        />
+      )}
+        
+      { (cr.cardsData !== undefined &&  cr.cardsData.length > 0 && matchedCards !== undefined )? (
+        matchedCards ? (
+
+          <CardGallery>
+            {cr.cardsData.map((card, index) => (
+              <MatchedCards
+                key={index}
+                playerName={userName}
+                players={currentRoom.currentPlayers}
+                card={card}
+                // toggleMatchedCards={() => toggleMatchedCards()}
+                matchedCards = {matchedCards}
+              />
+            ))}
+            </CardGallery>
+        ) : (	  
+          <CardGallery>
+            {cr.cardsData.map((card, index) => (
+              <NikeCard
+                key={index}
+                playerName={userName}
+                card={card}
+                isFlipped={card.isFlipped}
+                toggleCardFlip={(cardId) => toggleCardFlip(cardId)}
+              />
+            ))}
+          </CardGallery>
+        )
+      ) : (
+        // Handle the case when cr.cardsData is undefined or null
+        <div>Loading...</div>
+      )}
     </GameContainer>
   );
 }
