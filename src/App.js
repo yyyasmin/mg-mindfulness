@@ -50,6 +50,7 @@ function App() {
 
     if  ( roomsInitialData )  {
       setDataIsSet(true)
+      console.log("IN App roomsInitialData -- ", roomsInitialData)
     }
   }, [roomsInitialData]);
 

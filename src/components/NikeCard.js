@@ -43,6 +43,9 @@ const NikeCard =  ( props ) =>  {
     toggleCardFlip(card.id);
   };
 
+  console.log("NikeCard -- yasminLogo: ", yasminLogo)
+  console.log("NikeCard -- card.imageImportName: ", card.imageImportName)
+
   return (
     <ReactCardFlip isFlipped={isFlipped}>
 

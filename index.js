@@ -33,11 +33,14 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/database/Cards.json", (req, res) => {
   const filePath = path.join(__dirname, "database", "Cards.json");
+  console.log("IN INDEX -- Cards -- filePath: ", filePath)
   res.sendFile(filePath);
 });
 
 app.get("/database/rooms.json", (req, res) => {
   const filePath = path.join(__dirname, "database", "rooms.json");
+  console.log("IN INDEX -- Rooms -- filePath: ", filePath)
+
   res.sendFile(filePath);
 });
 

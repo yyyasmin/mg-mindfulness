@@ -1,5 +1,25 @@
 // init.js
-import importArr from "./importCardFullPath"; // Import all exports for images loading 
+// import importArr from "./importCardFullPath.js"; // Import all exports for images loading 
+import { shuffle } from "./shuffle"; // Import all exports for images loading 
+import { CHOSEN_PROXY_URL } from "./ServerRoutes.js"
+
+
+const em1 =  require("../assets/textures/emotions_1/png/em1.png");
+const em2 =  require("../assets/textures/emotions_1/png/em2.png");
+const em3 =  require("../assets/textures/emotions_1/png/em3.png");
+const em4 =  require("../assets/textures/emotions_1/png/em4.png");
+const em5 =  require("../assets/textures/emotions_2/png/em5.png");
+const em6 =  require("../assets/textures/emotions_2/png/em6.png");
+const em7 =  require("../assets/textures/emotions_2/png/em7.png");
+const em8 =  require("../assets/textures/emotions_2/png/em8.png");
+const em9 =  require("../assets/textures/emotions_2/png/em9.png");
+const em10 =  require("../assets/textures/emotions_2/png/em10.png");
+
+const importArr =  [em1, em2, em3, em4, em5, em6, em7, em8, em9, em10];
+
+console.log("init - server - CHOSEN_PROXY_URL: ", CHOSEN_PROXY_URL)
+console.log("init - server - importArr: ", importArr)
+
 
 // This function fetches data from a JSON file
 const fetchDataFromJSON = async (filePath) => {
@@ -16,8 +36,11 @@ const fetchDataFromJSON = async (filePath) => {
 // Initialize rooms with data from rooms.json
 const initRoomsFromJson = async () => {
   console.log("7777")
+  const jsonURL = `${CHOSEN_PROXY_URL}/database/rooms.json`;
+  console.log("7777 - initRoomsFromJson -- jsonURL: ", jsonURL)
 
-  const roomsData = await fetchDataFromJSON("https://react-multi-match-game-production.up.railway.app/database/rooms.json");
+
+  const roomsData = await fetchDataFromJSON(jsonURL);
   console.log("8888")
 
   if (roomsData) {
@@ -31,23 +54,41 @@ const initRoomsFromJson = async () => {
   return [];
 };
 
-// Initialize cardsData for each room based on data from cards.json
-const initCardsInRoomsFromJson = async (rooms) => {
-  console.log("10-10-10-10")
 
-  const cardsData = await fetchDataFromJSON("https://react-multi-match-game-production.up.railway.app/database/Cards.json");
+// Initialize cards in rooms from Cards.json
+const initCardsInRoomsFromJson = async (rooms) => {
+  const jsonURL = `${CHOSEN_PROXY_URL}/database/Cards.json`;
+  const cardsData = await fetchDataFromJSON(jsonURL);
+
   if (cardsData) {
     rooms.forEach((room) => {
       if (cardsData[room.id]) {
-        room.cardsData = cardsData[room.id].gameCards.map((card, index) => ({
-          ...card,
-          imageImportName: importArr[index], // Use the generated import names
-        })) || [];
+        let gameCards = cardsData[room.id].gameCards || [];
+
+        // Shuffle gameCards
+        gameCards = shuffle(gameCards);
+
+        // Map each card to include the imported image directly
+        gameCards = gameCards.map((card, index) => ({
+          ...card, // Use spread operator to copy the card
+          imageImportName: importArr[index]
+        }));
+
+        // Duplicate each card and use spread operator
+        gameCards = gameCards.flatMap((card) => [{ ...card }, { ...card }]);
+
+        // Assign the card index to each card ID using spread operator
+        room.cardsData = gameCards.map((card, index) => ({
+          ...card, // Use spread operator to copy the card
+          id: index, // Assign the index as the ID
+        }));
       }
     });
   }
+
   return rooms;
 };
+
 
 // Export a function that initializes rooms with cardsData
 export const initRoomsFunc = async () => {

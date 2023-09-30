@@ -4,17 +4,14 @@ import NikeCard from "./NikeCard";
 import Players from "./Players";
 import MatchedCards from "./MatchedCards";
 import TougleMatchedCardButton from "./TougleMatchedCardButton";
-
-// import { useParams, useLocation } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-
 import {
   updateCurentRoomAndActiveRooms,
   removeUpdatedRoomDataListener,
   emitCurentRoomChanged,
   updateMatchedCards,
   removeUpdatedMatchedCards,
-  emitCurentMatchedCards
+  emitCurentMatchedCards,
 } from "../clientSocketServices";
 
 const GameContainer = styled.div`
@@ -28,9 +25,7 @@ const Wellcome = styled.h1`
   text-align: center;
   margin-bottom: 5px;
   border-radius: 25px;
-
 `;
-
 
 const CardGallery = styled.div`
   display: flex;
@@ -40,37 +35,39 @@ const CardGallery = styled.div`
   gap: 35px;
   background-color: #FAD5A5;
   border-radius: 25px;
-
 `;
 
-
 function Game() {
-  // const { roomId } = useParams();
   const location = useLocation();
   const { userName, currentRoom } = location.state;
 
   const [cr, setCurrentRoom] = useState({});
   const [updatedActiveRooms, setUpdatedActiveRooms] = useState([]);
-  const [matchedCards, setMatchedCards] = useState(true);
+  const [matchedCards, setMatchedCards] = useState(false);
 
-  useEffect( () => {
+  useEffect(() => {
     setCurrentRoom(currentRoom);
     setUpdatedActiveRooms(updatedActiveRooms);
   }, []);
+
+  
+  useEffect(() => {
+    console.log("DEBUG -- useEffect[currentRoom] -- currentRoom: ", currentRoom)
+  }, [currentRoom]);
 
   useEffect(() => {
     updateCurentRoomAndActiveRooms(setUpdatedActiveRooms, setCurrentRoom);
     return () => {
       removeUpdatedRoomDataListener();
     };
-  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
-  
+  }, []);
+
   useEffect(() => {
     updateMatchedCards(setMatchedCards);
     return () => {
       removeUpdatedMatchedCards();
     };
-  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
+  }, []);
 
   const toggleCardFlip = (cardId) => {
     const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
@@ -80,56 +77,43 @@ function Game() {
       updatedCard.isFlipped = !updatedCard.isFlipped;
       const updatedRoom = { ...cr };
       updatedRoom.cardsData[cardIndex] = updatedCard;
-      console.log("IN GAME -- toggleCardFlip -- cardId: ", cardId)
-      console.log("IN GAME -- toggleCardFlip -- updatedRoom: ", updatedRoom)
-      emitCurentRoomChanged(updatedRoom); // The setting happens after the value received from the server
+      emitCurentRoomChanged(updatedRoom);
     }
   };
 
-  
   useEffect(() => {
-    if ( cr !== undefined && cr.id >= 0 )  {
-      console.log("in Game useEffect[cr] -- cr: ", cr)
-      cr.cardsData.map( (card, index) => (
-        console.log("in Game useEffect[cr] -- ", "cr.cardsMap-", {index}, "- isFliped: ", card.isFlipped)
-      ) )
+    if (cr !== undefined && cr.id >= 0) {
+      console.log(" IN useEffect[cr] -- cr: ", cr)
+      cr.cardsData.map((card, index) => (
+        console.log("in Game useEffect[cr] -- ", "cr.cardsMap-", { index }, "- isFlipped: ", card.isFlipped)
+      ));
     }
   }, [cr]);
-  
+
   useEffect(() => {
-    if ( matchedCards !== undefined )  {
-      console.log("in Game useEffect[matchedCards] -- matchedCards: ", matchedCards)
+    if ( matchedCards == true ) {
+      console.log("in USEeFFECT[matchedCards] -- matchedCards: ", matchedCards)
       emitCurentMatchedCards(matchedCards);
     }
   }, [matchedCards]);
 
-
-  console.log("in Game BEFORE RENDER -- matchedCards: ", matchedCards)
-  console.log("in Game BEFORE RENDER -- userName: ", userName)
-
   return (
     <GameContainer>
-
       <Wellcome>
         <div>Wellcome to room: {cr.name}</div>
       </Wellcome>
 
-  
-      {cr !== undefined && cr.id >= 0 && (
-        <Players players={cr.currentPlayers} />
-      )}
+      {cr !== undefined && cr.id >= 0 && <Players players={cr.currentPlayers} />}
 
-      
       {cr !== undefined && cr.id >= 0 && (
         <TougleMatchedCardButton
-          matchedCards = {matchedCards}
+          matchedCards={matchedCards}
           setMatchedCards={(matchedCards) => setMatchedCards(matchedCards)}
         />
       )}
-        
-      { (cr.cardsData !== undefined &&  cr.cardsData.length > 0 && matchedCards !== undefined )? (
-        matchedCards ? (
 
+      {cr?.cardsData?.length > 0 && matchedCards !== undefined ? (
+        matchedCards ? (
           <CardGallery>
             {cr.cardsData.map((card, index) => (
               <MatchedCards
@@ -137,12 +121,11 @@ function Game() {
                 playerName={userName}
                 players={currentRoom.currentPlayers}
                 card={card}
-                // toggleMatchedCards={() => toggleMatchedCards()}
-                matchedCards = {matchedCards}
+                matchedCards={matchedCards}
               />
             ))}
-            </CardGallery>
-        ) : (	  
+          </CardGallery>
+        ) : (
           <CardGallery>
             {cr.cardsData.map((card, index) => (
               <NikeCard
@@ -156,7 +139,6 @@ function Game() {
           </CardGallery>
         )
       ) : (
-        // Handle the case when cr.cardsData is undefined or null
         <div>Loading...</div>
       )}
     </GameContainer>

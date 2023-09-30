@@ -67,7 +67,7 @@ const MatchedCards = (props) => {
       <ContentWrapper>
 
         <ImageWrapper>
-          <Image src={card.imageImportName} alt={card.name} />
+          <Image src={card.imageImportName} alt={card.imageImportName} />
         </ImageWrapper>
 
         <TextContainer>
