@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import NikeCard from "./NikeCard";
 import Players from "./Players";
+import WaitingMsg from "./WaitingMsg";
+
 import MatchedCards from "./MatchedCards";
 import TougleMatchedCardButton from "./TougleMatchedCardButton";
 import { useLocation } from "react-router-dom";
 import {
   updateCurentRoomAndActiveRooms,
   removeUpdatedRoomDataListener,
+  emitAddMemberToRoom,  // IN RoomsList
+  emitRemoveMemberFromRoom,
   emitCurentRoomChanged,
   updateMatchedCards,
   removeUpdatedMatchedCards,
@@ -52,23 +56,45 @@ function Game() {
   }, [currentRoom]);
 
   useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ""; // Required for Chrome
+      // Notify the server that the player is leaving
+      console.log("PLAYER IS LEAVING ROOM ")
+      handlePlayerLeaveRoom(cr);
+    };
+  
+    window.addEventListener("beforeunload", handleBeforeUnload);
+  
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+  
+
+  useEffect(() => {
     if (clearFlippedCards) {
       setLastFlippedCards([]);
       emitCurentRoomChanged(cr);
       setClearFlippedCards(false);
     }
   }, [clearFlippedCards, cr]);
+  
+  const handlePlayerLeaveRoom = async (chosenRoom) => {
+    console.log("GAME -- handlePlayerLeaveRoom -- chosenRoom", chosenRoom)
+    console.log("GAME -- handlePlayerLeaveRoom -- userName", userName)
+    emitRemoveMemberFromRoom({
+      playerName: userName,
+      chosenRoom: chosenRoom,
+    });  
+  }
 
   useEffect(() => {
     updateCurentRoomAndActiveRooms(setUpdatedActiveRooms, setCurrentRoom);
+    updateMatchedCards(setIsMatched);
+
     return () => {
       removeUpdatedRoomDataListener();
-    };
-  }, []);
-
-  useEffect(() => {
-    updateMatchedCards(setIsMatched);
-    return () => {
       removeUpdatedMatchedCards();
     };
   }, []);
@@ -110,8 +136,7 @@ function Game() {
       }
     }
   };
-  
-         
+          
   const toggleCardFlip = async (cardId) => {
     const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
     if (cardIndex !== -1) {
@@ -120,21 +145,22 @@ function Game() {
     }
   };
 
-return (
-  <GameContainer>
-    <Wellcome>
-      <div>Wellcome to room: {cr.name}</div>
-    </Wellcome>
+	return (
+	  <GameContainer>
+	  
+		<Wellcome>
+		  <div>Wellcome to room: {cr.name}</div>
+		</Wellcome>
 
-    {cr !== undefined && cr.id >= 0 && <Players players={cr.currentPlayers} />}
+		{cr !== undefined && cr.id >= 0 && <Players players={cr.currentPlayers} />}
 
-    {cr !== undefined && cr.id >= 0 && (
-      <TougleMatchedCardButton
-        isMatched={isMatched}
-        setIsMatched={(isMatched) => setIsMatched(isMatched)}
-        setClearFlippedCards={setClearFlippedCards}
-      />
-    )}
+		{cr !== undefined && cr.id >= 0 && (
+		  <TougleMatchedCardButton
+			isMatched={isMatched}
+			setIsMatched={(isMatched) => setIsMatched(isMatched)}
+			setClearFlippedCards={setClearFlippedCards}
+		  />
+		)}
 
     <CardGallery>
       {isMatched && allFlippedCards.length > 0 ? (
@@ -147,21 +173,35 @@ return (
           />
         ))
       ) : (
-        cr.cardsData?.map((card, index) => (
-          <NikeCard
-            key={index}
-            playerName={userName}
-            card={card}
-            isFlipped={card.isFlipped}
-            toggleCardFlip={(cardId) => toggleCardFlip(cardId)}
-          />
-        ))
+        <>
+          { !cr.startGame ? (
+            <WaitingMsg />
+          ) : (
+            cr.cardsData?.map((card, index) => (
+              <NikeCard
+                key={index}
+                playerName={userName}
+                card={card}
+                isFlipped={card.isFlipped}
+                toggleCardFlip={
+                  cr.startGame
+                    ? (cardId) => toggleCardFlip(cardId)
+                    : null // Disable flipping when not enough players
+                }
+              />
+            ))
+          )}
+        </>
       )}
     </CardGallery>
 
+		
+		{cr !== undefined && cr.id >= 0 && (
+			<button onClick={() => handlePlayerLeaveRoom(cr)}>Leave Room</button>
+		)}
 
-  </GameContainer>
-);
+	  </GameContainer>
+	);
 
 }
 

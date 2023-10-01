@@ -38,8 +38,12 @@ const NikeCard =  ( props ) =>  {
   
   let { card, isFlipped, toggleCardFlip } = props
 
+  console.log("NikeCard -- props: ", props)
+
   const handleCardClick = () => {
-    toggleCardFlip(card.id);
+    if ( toggleCardFlip != null )  {
+      toggleCardFlip(card.id);
+    }
   };
 
   return (
