@@ -9,23 +9,20 @@ const CardContainer = styled.div`
   overflow: hidden;
   position: relative;
   margin: 10px;
-
   border-radius: 25px;
   border: 10px solid brown; /* Border around the entire card */
 `;
 
 const ContentWrapper = styled.div`
   display: flex;
-  flex-direction: column;  // Disaply section one UNDER another
+  flex-direction: column;
   justify-content: center;
-  
   border-radius: 25px;
   background-color: brown;
-
 `;
 
 const ImageWrapper = styled.div`
-  object-fit: cover; /* Ensure the image covers the entire container */
+  object-fit: cover;
   justify-content: center;
   border-radius: 25px;
 `;
@@ -34,18 +31,16 @@ const Image = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 25px; /* Add this line */
+  border-radius: 25px;
 `;
 
-
 const TextContainer = styled.div`
-  background-color: white; /* Adjust the background color for the text section */
+  background-color: white;
   padding: 10px;
   border-radius: 25px;
   dir: rtl;
-  text-align:right;
+  text-align: right;
   border-radius: 25px;
-
 `;
 
 const PlayerName = styled.div`
@@ -57,30 +52,22 @@ const CardText = styled.div`
 `;
 
 const MatchedCards = (props) => {
-  let { playerName, players, card, matchedCards } = props;
-
-  console.log("IN MatchedCards: -- props: ", props);
+  const { playerName, players, card } = props;
 
   return (
     <CardContainer>
-
       <ContentWrapper>
-
         <ImageWrapper>
           <Image src={card.imageImportName} alt={card.imageImportName} />
         </ImageWrapper>
-
         <TextContainer>
           <PlayerName>{playerName}</PlayerName>
-          <PlayerName>{players[0].name}</PlayerName>   // players wil be used
-
-          <CardText>MatchedCards: {matchedCards}</CardText>
+          <PlayerName>{players[0].name}</PlayerName>
+          <CardText>MatchedCards: {card.matchedCards}</CardText>
           <CardText>TEXT-1: {card.text1}</CardText>
           <CardText>TEXT-2: {card.text2}</CardText>
         </TextContainer>
-
       </ContentWrapper>
-
     </CardContainer>
   );
 };

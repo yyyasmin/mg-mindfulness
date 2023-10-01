@@ -13,6 +13,9 @@ const serverSocketServices = (io) => {
 
       existingRoom = activeRooms.find((oneOfTheRooms) => oneOfTheRooms.id === chosenRoom.id);
 
+      console.log("0000 -- on-CREATE_ROOM_AND_ADD_PLAYER -- chosenRoom: ", chosenRoom)
+      console.log("0000 -- on-CREATE_ROOM_AND_ADD_PLAYER -- existingRoom: ", existingRoom)
+
       if (!existingRoom) {
         newRoom = {
           ...chosenRoom,
@@ -51,7 +54,7 @@ const serverSocketServices = (io) => {
 
       socket.join(updatedRoom.id);
 
-      console.log("on-CREATE_ROOM_AND_ADD_PLAYER -- updatedRoom.cardsData[0]: ", updatedRoom.cardsData[0])
+      console.log("1111 -- on-CREATE_ROOM_AND_ADD_PLAYER -- updatedRoom: ", updatedRoom)
 
       io.emit("UPDATED_ROOMS_AND_ROOM_DATA", activeRooms, updatedRoom);
     });
@@ -63,6 +66,8 @@ const serverSocketServices = (io) => {
       if (existingRoomIndex !== -1) {
         activeRooms[existingRoomIndex] = updatedRoom;
       }
+
+      console.log("2222 -- on-CREATE_ROOM_AND_ADD_PLAYER -- updatedRoom.cardsData[0]: ", updatedRoom.cardsData)
 
       io.emit("UPDATED_ROOMS_AND_ROOM_DATA", activeRooms, updatedRoom);
     });

@@ -25,6 +25,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
   const [updatedActiveRooms, setUpdatedActiveRooms] = useState([]);
   const navigate = useNavigate(); // Get the navigate function from React Router
 
+  console.log("Rooms -- roomsInitialData: ", roomsInitialData)
 
   const handleJoinRoom = async (chosenRoom) => {
       console.log("1111")

@@ -1,18 +1,16 @@
 export const shuffle = (array) => {
-    let currentIndex = array.length, temporaryValue, randomIndex;
+    const shuffledArray = [...array]; // Create a copy of the original array to avoid modifying it directly
 
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        // Generate a random index between 0 and i (inclusive)
+        const randomIndex = Math.floor(Math.random() * (i + 1));
+        // Swap elements at i and randomIndex
+        [shuffledArray[i], shuffledArray[randomIndex]] = [shuffledArray[randomIndex], shuffledArray[i]];
     }
 
-    return array;
+    for (let i=0; i < shuffledArray.length;  i++) {
+        shuffledArray[i].id = i
+    }
+
+    return shuffledArray;
 };

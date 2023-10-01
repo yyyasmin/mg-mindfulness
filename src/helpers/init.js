@@ -64,30 +64,25 @@ const initCardsInRoomsFromJson = async (rooms) => {
     rooms.forEach((room) => {
       if (cardsData[room.id]) {
         let gameCards = cardsData[room.id].gameCards || [];
-
-        // Shuffle gameCards
-        gameCards = shuffle(gameCards);
-
         // Map each card to include the imported image directly
         gameCards = gameCards.map((card, index) => ({
           ...card, // Use spread operator to copy the card
           imageImportName: importArr[index]
         }));
-
         // Duplicate each card and use spread operator
         gameCards = gameCards.flatMap((card) => [{ ...card }, { ...card }]);
+        gameCards = shuffle(gameCards);
+        // Assign the shuffled gameCards array back to the room's cardsData property
+        room.cardsData = gameCards;
 
-        // Assign the card index to each card ID using spread operator
-        room.cardsData = gameCards.map((card, index) => ({
-          ...card, // Use spread operator to copy the card
-          id: index, // Assign the index as the ID
-        }));
+        console.log("INIT -- AFTER SHUFFLE -- room.cardsData: ", room.cardsData);
       }
     });
   }
 
   return rooms;
 };
+
 
 
 // Export a function that initializes rooms with cardsData

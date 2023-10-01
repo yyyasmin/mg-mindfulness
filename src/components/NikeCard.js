@@ -24,7 +24,6 @@ const CardContainer = styled.div`
   */
 `;
 
-
 const CardImage = styled.img`
   position: absolute;
   top: 0;
@@ -42,9 +41,6 @@ const NikeCard =  ( props ) =>  {
   const handleCardClick = () => {
     toggleCardFlip(card.id);
   };
-
-  console.log("NikeCard -- yasminLogo: ", yasminLogo)
-  console.log("NikeCard -- card.imageImportName: ", card.imageImportName)
 
   return (
     <ReactCardFlip isFlipped={isFlipped}>
