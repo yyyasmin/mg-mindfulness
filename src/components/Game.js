@@ -92,6 +92,7 @@ function Game() {
       setLastFlippedCards([]);
       emitCurentRoomChanged(cr);
       setClearFlippedCards(false);
+      setIsMatched(false)
     }
   }, [clearFlippedCards, cr]);
     
@@ -134,6 +135,8 @@ function Game() {
   const checkForMatch = async (updatedCard) => {
     // Update allFlippedCards by appending the updated card
     const newAllFlippedCards = [...allFlippedCards, updatedCard];
+    let localIsMatched = false
+
     setAllFlippedCards(newAllFlippedCards);
   
     console.log("Game -- checkForMatch -- allFlippedCards: ", allFlippedCards);
@@ -149,7 +152,7 @@ function Game() {
       if (lastTwoFlippedCards[0].imageImportName === lastTwoFlippedCards[1].imageImportName) {
         // Found a match
         setIsMatched(true);
-        setFlippedCardCount(0);
+        localIsMatched = true
       } else {
         console.log("HERE SHOULD COME AOUTO FLIP CARDS BACK")
         // No match, initiate delayed flip-back
@@ -158,27 +161,51 @@ function Game() {
         // }, 1000); // Delayed flip-back after 1 second
       }
     }  // END 2 CARDS FLIPPED
+    console.log("Game -- checkForMatch -- returning localIsMatched: ", localIsMatched )
+    return localIsMatched
   };
 
             
   const toggleCardFlip = async (cardId) => {
+    let localIsMatched = false
     console.log("Game -- toggleCardFlip -- cardId: ", cardId)
     const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
     if (cardIndex !== -1) {
       let updatedCard = await handleFlippedCard(cardId, cardIndex);
-      checkForMatch(updatedCard);
+      console.log("00000000000")
 
-      // HANFLE PLAYER TURN
-      setFlippedCardCount(flippedCardCount + 1);
-      if (flippedCardCount === 3) {
-        // Toggle the turn after flipping two pairs of cards
-        togglePlayerTurn();
-        // Reset the flipped card count
+      localIsMatched = await checkForMatch(updatedCard)
+      console.log("Game -- 6666666666666666 -- toggleCardFlip -- localIsMatched: ", localIsMatched)
+      console.log("Game -- 7777777777777777 -- toggleCardFlip -- flippedCardCount: ", flippedCardCount)
+
+      if ( localIsMatched )  {  // IF THERE IS A MATCH
+        console.log("11111111111111111")
+
         setFlippedCardCount(0);
       }
-    }
-  };
+      else  {
+        // HANFLE PLAYER TURN
+        console.log("22222222222222222222")
 
+        if (flippedCardCount === 3) {  // 3 is the prevous => next is 4
+          // Toggle the turn after flipping two pairs of cards
+          console.log("33333333333333333333")
+
+          await togglePlayerTurn();
+          console.log("44444444444444444")
+
+          // Reset the flipped card count
+          setFlippedCardCount(0);  // it will be 4 so turned should be switched
+        }     
+        else {
+          console.log("55555555555555555555")
+
+          setFlippedCardCount(flippedCardCount+1)
+        }
+      }
+    }
+  }
+ 
 
   console.log("GAME -- BEFORE RENDER return -- cr:", cr)
 
