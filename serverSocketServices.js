@@ -49,16 +49,39 @@ setRoomToAddPlayer = (chosenRoom) => {
   if (updatedRoom.currentPlayers.length > updatedRoom.maxMembers)  {  // ROOM FULL - OPEN NEW ONE WITH NEW ID
     updatedRoom = createNewRoom(updatedRoom, updatedRoom.id+updatedRoom.id)
   }
+  
+  updatedRoom.cardsData.map( (card, index) =>  {
+    // Reset all game cards to be on thier back side - when a new players joins - to start the game from start
+    card.isFlipped = true
+  } )
   return updatedRoom
 }
+
+function movePlayerToEnd(currentPlayers, playerName) {
+  // Find the index of the player to move
+  const playerIndex = currentPlayers.findIndex((player) => player.name === playerName);
+
+  // If the player is found in the array
+  if (playerIndex !== -1) {
+    // Remove the player from the array
+    const playerToMove = currentPlayers.splice(playerIndex, 1)[0];
+
+    // Push the player back to the end of the array
+    currentPlayers.push(playerToMove);
+  }
+  return currentPlayers;
+}
+
 
 addPlayerToRoom = (room, playerName, socketId) => {
   // PREPARE THE ROOM TO ADD PLAYER TOO
   let updatedRoom
   let startGame = room.startGame
        
-  existingPlayer = room.currentPlayers && room.currentPlayers.find((player) => player.name === playerName);
+  const existingPlayer = room.currentPlayers && room.currentPlayers.find((player) => player.name === playerName);
   if (existingPlayer) {
+    console.log("Player ", playerName , " already present in room ", room,  "- MOVING HIM TO BE LAST IN PLAYERS ARRAY ")
+    room.currentPlayers = movePlayerToEnd(room.currentPlayers, playerName)  // MOVE EXISTING PLAYER TO END OF currentPlayers ARR
     updatedRoom = { ...room }
     return updatedRoom
 
@@ -70,16 +93,23 @@ addPlayerToRoom = (room, playerName, socketId) => {
       isWinner: false,
       isActive: false,
     };
-    if (room.currentPlayers.length === 1)  { newPlayer.isActive = true }  // FIRST PLAYER IN THE ROOM IS ACTIVE ONE
+   
     room.currentPlayers.push(newPlayer);
 
     if ( room.currentPlayers.length === room.maxMembers )  {  // ALL PLAYERS HERE - START GAME
       startGame = true
     }
+
+    room.currentPlayers.map( (player, index) =>  {
+      // FIRST PLAYER TO JOIN iS ACTIVE => GOES FIRST IN THE GAME
+      index === 0 ? player.isActive = true : player.isActive = false 
+    } )
+
     updatedRoom = {
       ...room,
       startGame: startGame,
     }
+    console.log("addPlayer " , playerName, "ToRoom -- returning -- updatedRoom: ", updatedRoom)
     return updatedRoom
   }
 }
@@ -99,6 +129,8 @@ const serverSocketServices = (io) => {
       updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
 
       updateActiveRoomsWithUpdatedRoom(updatedRoom)
+
+      console.log("AFTER ADDING PLAYER ", playerName , "to room ", chosenRoom, "updatedRoom:", updatedRoom, "activeRooms:", activeRooms )
 
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
@@ -134,15 +166,17 @@ const serverSocketServices = (io) => {
         }
       }
     }
+    console.log("SERVER -- SFTER REMOVING ", playerName, "FROM ROOM ", chosenRoom)
+    console.log("SERVER -- SFTER REMOVING ", updatedRoom, updatedRoom)
+    console.log("SERVER -- SFTER REMOVING ", activeRooms, activeRooms)
+
     updateActiveRoomsWithUpdatedRoom(updatedRoom)  
     io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
     
 
     socket.on("CURENT_ROOM_CHANGED", (updatedRoom) => {
-      updateActiveRoomsWithUpdatedRoom(updatedRoom)
-      console.log("SERVER -- on-CURENT_ROOM_CHANGED -- 6666-on-UPDATED_CURRENT_ROOM -- updatedRoom: ", updatedRoom)
- 
+      updateActiveRoomsWithUpdatedRoom(updatedRoom) 
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
 

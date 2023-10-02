@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const CardContainer = styled.div`
-  width: 300px; /* Increase the width as needed */
+  width: 300px;
   display: flex;
   flex-direction: column;
   cursor: grab;
@@ -10,7 +10,8 @@ const CardContainer = styled.div`
   position: relative;
   margin: 10px;
   border-radius: 25px;
-  border: 10px solid brown; /* Border around the entire card */
+  border: 10px solid brown;
+  display: flex;
 `;
 
 const ContentWrapper = styled.div`
@@ -19,12 +20,14 @@ const ContentWrapper = styled.div`
   justify-content: center;
   border-radius: 25px;
   background-color: brown;
+  flex: 1;
 `;
 
 const ImageWrapper = styled.div`
   object-fit: cover;
   justify-content: center;
   border-radius: 25px;
+  flex: 1;
 `;
 
 const Image = styled.img`
@@ -41,6 +44,7 @@ const TextContainer = styled.div`
   dir: rtl;
   text-align: right;
   border-radius: 25px;
+  flex: 1;
 `;
 
 const PlayerName = styled.div`
@@ -52,7 +56,21 @@ const CardText = styled.div`
 `;
 
 const MatchedCards = (props) => {
-  const { playerName, players, card } = props;
+  const { index, playerName, players, card } = props;
+
+  console.log("MatchedCards -- props: ", props)
+
+  const activePlayerIndex = players.findIndex((player) => player.isActive);
+  console.log("MatchedCards -- activePlayerIndex", activePlayerIndex)
+
+  const secondPlayerIndex = players.findIndex((player) => !player.isActive);
+  console.log("MatchedCards -- secondPlayerIndex", secondPlayerIndex)
+
+  const currentPlayer = activePlayerIndex === index ? players[activePlayerIndex] : players[secondPlayerIndex]
+  console.log("MatchedCards -- currentPlayer", currentPlayer)
+
+  const currentText = activePlayerIndex === index ? card.text1 : card.text2
+  console.log("MatchedCards -- currentText", currentText)
 
   return (
     <CardContainer>
@@ -61,11 +79,10 @@ const MatchedCards = (props) => {
           <Image src={card.imageImportName} alt={card.imageImportName} />
         </ImageWrapper>
         <TextContainer>
-          <PlayerName>{playerName}</PlayerName>
-          <PlayerName>{players[0].name}</PlayerName>
-          <CardText>MatchedCards: {card.matchedCards}</CardText>
-          <CardText>TEXT-1: {card.text1}</CardText>
-          <CardText>TEXT-2: {card.text2}</CardText>
+          <>
+            <PlayerName>{currentPlayer.name}</PlayerName>
+            <CardText>TEXT-{index + 1}: {currentText}</CardText>
+          </>
         </TextContainer>
       </ContentWrapper>
     </CardContainer>

@@ -4,13 +4,10 @@ import { CHOSEN_PROXY_URL } from "./helpers/ServerRoutes.js";
 export const socket = io(CHOSEN_PROXY_URL);
 
 export const emitAddMemberToRoom = ({ playerName, chosenRoom }) => {
-  console.log("clientSocketServices.js -- emitAddMemberToRoom -- emit-CREATE_ROOM_AND_ADD_PLAYER -- chosenRoom ", chosenRoom);
   socket.emit('CREATE_ROOM_AND_ADD_PLAYER', { playerName, chosenRoom });
 };
 
 export const emitRemoveMemberFromRoom = ({ playerName, chosenRoom }) => {
-  console.log("clientSocketServices.js -- emitRemoveMemberFromRoom -- emit-REMOVE_PLAYER_FROM_ROOM -- chosenRoom ", chosenRoom);
-  console.log("clientSocketServices.js -- emitRemoveMemberFromRoom -- emit-REMOVE_PLAYER_FROM_ROOM -- playerName ", playerName);
   socket.emit('REMOVE_PLAYER_FROM_ROOM', { playerName, chosenRoom });
 };
 
@@ -24,7 +21,7 @@ export const emitCurentMatchedCards = (matchedCards) => {
 
 export const updateCurentRoom = (setCurentRoom) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
-    console.log("CLIENT -- on-UPDATED_CURRENT_ROOM -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom);
+    console.log("clientSocketServices -- on-UPDATED_CURRENT_ROOM -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom)
     setCurentRoom(serverUpdatedCurentRoom);
   });
 };
