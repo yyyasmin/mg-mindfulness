@@ -8,7 +8,7 @@ import MatchedCards from "./MatchedCards";
 import TougleMatchedCardButton from "./TougleMatchedCardButton";
 import { useLocation } from "react-router-dom";
 import {
-  updateCurentRoomAndActiveRooms,
+  updateCurentRoom,
   removeUpdatedRoomDataListener,
   emitAddMemberToRoom,  // IN RoomsList
   emitRemoveMemberFromRoom,
@@ -51,7 +51,10 @@ function Game() {
   const [lastFlippedCards, setLastFlippedCards] = useState([]);
   const [clearFlippedCards, setClearFlippedCards] = useState(false);
 
+  console.log("Game -- 6666-useEffect[currentRoom] -- currentRoom: ", currentRoom)
+
   useEffect(() => {
+    console.log("Game -- 7777-useEffect[currentRoom] -- currentRoom: ", currentRoom)
     setCurrentRoom(currentRoom);
   }, [currentRoom]);
 
@@ -90,7 +93,7 @@ function Game() {
   }
 
   useEffect(() => {
-    updateCurentRoomAndActiveRooms(setUpdatedActiveRooms, setCurrentRoom);
+    updateCurentRoom(setCurrentRoom);
     updateMatchedCards(setIsMatched);
 
     return () => {
@@ -105,6 +108,7 @@ function Game() {
     updatedCard.isFlipped = !updatedCard.isFlipped;
     const updatedRoom = { ...cr };
     updatedRoom.cardsData[cardIndex] = updatedCard;
+    console.log("Game -- handleFlippedCard -- emit - updatedRoom: ", updatedRoom)
     await emitCurentRoomChanged(updatedRoom);
     return updatedCard;
   };
@@ -138,12 +142,19 @@ function Game() {
   };
           
   const toggleCardFlip = async (cardId) => {
+    console.log("Game -- toggleCardFlip -- cardId: ", cardId)
     const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
     if (cardIndex !== -1) {
       let updatedCard = await handleFlippedCard(cardId, cardIndex);
       checkForMatch(updatedCard);
     }
   };
+
+  console.log("GAME -- BEFORE RENDER return -- cr !== undefined : ", cr !== undefined )
+  console.log("GAME -- BEFORE RENDER return -- parseInt(cr.id) >= 0: ", "CR:", cr, "CR.ID:", cr.id,  "PARESE-CR-ID:", parseInt(cr.id) >= 0)
+
+  console.log("GAME -- BEFORE RENDER return -- !cr.startGame: ", !cr.startGame)
+  console.log("GAME -- BEFORE RENDER return -- cr[0]: ", cr[0])
 
 	return (
 	  <GameContainer>
@@ -152,9 +163,9 @@ function Game() {
 		  <div>Wellcome to room: {cr.name}</div>
 		</Wellcome>
 
-		{cr !== undefined && cr.id >= 0 && <Players players={cr.currentPlayers} />}
+		{cr !== undefined && parseInt(cr.id) >= 0 && <Players players={cr.currentPlayers} />}
 
-		{cr !== undefined && cr.id >= 0 && (
+		{cr !== undefined && parseInt(cr.id) >= 0 && (
 		  <TougleMatchedCardButton
 			isMatched={isMatched}
 			setIsMatched={(isMatched) => setIsMatched(isMatched)}
@@ -174,7 +185,7 @@ function Game() {
         ))
       ) : (
         <>
-          { !cr.startGame ? (
+          { cr !== undefined && parseInt(cr.id) >= 0 && !cr.startGame ? (
             <WaitingMsg />
           ) : (
             cr.cardsData?.map((card, index) => (
@@ -196,7 +207,7 @@ function Game() {
     </CardGallery>
 
 		
-		{cr !== undefined && cr.id >= 0 && (
+		{cr !== undefined && parseInt(cr.id) >= 0 && (
 			<button onClick={() => handlePlayerLeaveRoom(cr)}>Leave Room</button>
 		)}
 

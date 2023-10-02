@@ -22,33 +22,10 @@ export const emitCurentMatchedCards = (matchedCards) => {
   socket.emit("MATCHED_CARDS_CHANGED", matchedCards);
 };
 
-
-// export const emitStartGame = () => {
-//   socket.emit("START_GAME");
-// };
-
-// export const emitEndGame = () => {
-//   socket.emit("END_GAME");
-// };
-
-// export const updateStartGame = (setStartGame) => {
-//   socket.on("UPDATED_START_GAME", () => {
-//     setStartGame(true);
-//   });
-// };
-
-// export const updateEndGame = (setEndGame, setStartGame) => {
-//   socket.on("UPDATED_END_GAME", () => {
-//     setEndGame(true);
-//     setStartGame(false);
-//   });
-// };
-
-export const updateCurentRoomAndActiveRooms = (setUpdatedActiveRooms, setCurentRoom) => {
-  socket.on("UPDATED_ROOMS_AND_ROOM_DATA", (serverUpdatedActiveRooms, serverUpdatedCurentRoom) => {
-    console.log("CLIENT -- on-UPDATED_ROOMS_AND_ROOM_DATA -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom);
+export const updateCurentRoom = (setCurentRoom) => {
+  socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
+    console.log("CLIENT -- on-UPDATED_CURRENT_ROOM -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom);
     setCurentRoom(serverUpdatedCurentRoom);
-    setUpdatedActiveRooms(serverUpdatedActiveRooms);
   });
 };
 
@@ -59,7 +36,7 @@ export const updateMatchedCards = (setMatchedCards) => {
 };
 
 export const removeUpdatedRoomDataListener = () => {
-  socket.off("UPDATED_ROOMS_AND_ROOM_DATA");
+  socket.off("UPDATED_CURRENT_ROOM");
 };
 
 export const removeUpdatedMatchedCards = () => {

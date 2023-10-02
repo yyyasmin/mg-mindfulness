@@ -39,7 +39,6 @@ const initRoomsFromJson = async () => {
   const jsonURL = `${CHOSEN_PROXY_URL}/database/rooms.json`;
   console.log("7777 - initRoomsFromJson -- jsonURL: ", jsonURL)
 
-
   const roomsData = await fetchDataFromJSON(jsonURL);
   console.log("8888")
 

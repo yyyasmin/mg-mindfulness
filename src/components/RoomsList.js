@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate  } from "react-router-dom";
+import isEmpty from "../helpers/isEmpty";
 
-import {  updateCurentRoomAndActiveRooms,
+import {  
+  updateCurentRoom,
   removeUpdatedRoomDataListener,
   emitAddMemberToRoom
 } from "../clientSocketServices";
@@ -22,14 +24,16 @@ const GameContainer = styled.div`
 const RoomsList = ({ userName, roomsInitialData }) => {
   
   const [currentRoom, setCurrentRoom] = useState({});
-  const [updatedActiveRooms, setUpdatedActiveRooms] = useState([]);
   const navigate = useNavigate(); // Get the navigate function from React Router
+  
 
   console.log("Rooms -- roomsInitialData: ", roomsInitialData)
 
   const handleJoinRoom = async (chosenRoom) => {
       console.log("1111")
       console.log("ROOMS -- handleJoinRoom -- chosenRoom", chosenRoom)
+      console.log("RoomsList -- playerName: ", userName)
+
       emitAddMemberToRoom({
         playerName: userName,
         chosenRoom: chosenRoom,
@@ -38,7 +42,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
 
   useEffect(() => {
     console.log("2222")
-    updateCurentRoomAndActiveRooms(setUpdatedActiveRooms, setCurrentRoom);
+    updateCurentRoom(setCurrentRoom);
     return () => {
       removeUpdatedRoomDataListener();
     };
@@ -46,11 +50,10 @@ const RoomsList = ({ userName, roomsInitialData }) => {
 
 
   useEffect(() => {
-    console.log("3333")
+    console.log("RoomList -- useEffect[currentRoom] -- currentRoom: ", currentRoom)
 
-    // Check if updatedActiveRooms has a length greater than 0
-    if (currentRoom !== undefined && currentRoom.id >= 0) {
-      console.log("IN RoomsList 2222 -- useEffect[updatedActiveRooms, currentRoom] -- passing to GAME -- currentRoom: ", currentRoom);
+    if (currentRoom !== null && currentRoom !== undefined && currentRoom.id >= 0) {
+      console.log("IN RoomsList 2222 -- useEffect[currentRoom] -- passing to GAME -- currentRoom: ", currentRoom);
       // Navigate to the game page
       navigate(`/game/${currentRoom.id}`, {
         state: { userName, currentRoom },
