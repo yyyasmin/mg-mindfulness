@@ -164,6 +164,7 @@ const serverSocketServices = (io) => {
       if ( updatedPlayers.length == 0 )  {  // NO PLAYERS IN THE ROOM
         updatedRoom = {
           ... updatedRoom,
+          currentPlayers: updatedPlayers,
           startGame: false,
           endGame: false,
         }

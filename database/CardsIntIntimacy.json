@@ -1,0 +1,151 @@
+   {
+      "gameName":"Intimacy-1",
+      "gameIndex":2,
+      "gameCards":[
+         {
+            "id":"1",
+            "name":"int1",
+
+            "fileFolder":"../assets/textures/intimacy_1/png/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int1.png",
+            "fileNameWithSufix":"int1.png",
+            "background":"red",
+            "text1":"בחר נושא שמעניין אותך ודבר עליו במשך דקה",
+            "text2":"סכם בשלושה משפטים את מה שחברך למשחק אמר",
+            "isFlipped": true
+
+         },
+         {
+            "id":"2",
+            "name":"int2",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int2.png",
+            "fileNameWithSufix":"int2.png",
+            "background":"red",
+            "text1":"אמור חמישה דברים שאתה אוהב בחברך למשחק",
+            "text2":"תן 3 דוגמאות ל-איך הדברים שאמר  חברך למשחק מתבטאים",
+            "isFlipped": true
+         },
+         {
+            "id":"3",
+            "name":"int3",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int3.png",
+            "fileNameWithSufix":"int3.png",
+            "background":"red",
+            "text1":"ספר על חוויה מעצבנת שקרתה לך",
+            "text2":"חזור על מה שסיפר חברך למשחק אבל הפוך",
+            "isFlipped": true
+         },
+         {
+            "id":"4",
+            "name":"int4",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int4.png",
+            "fileNameWithSufix":"int4.png",
+            "background":"red",
+            "text1":"אמור 4 דברים שהיית רוצה לעשות עם חברך למשחק השבוע",
+            "text2":"בחר 2 דברים מתוך מה שאמר חברך למשחק וקבע זמן לעשות אותם בתוך השבוע הקרוב",
+            "isFlipped": true
+         },   
+         {
+            "id": "5",
+            "name":"int5",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int5.png",
+            "fileNameWithSufix":"int5.png",
+            "background":"red",
+            "text1":"אמור 4 דברים שיהיו ביום המושלם שלך",
+            "text2":"בחר 2 דברים מתוך מה שאמר חברך למשחק ותאר איך תשתתף בהם",
+            "isFlipped": true
+         },
+         {
+            "id": "6",
+            "name":"int6",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int6.png",
+            "fileNameWithSufix":"int6.png",
+            "background":"red",
+            "text1":"אמור 4 דברים שמעוררים בך השראה בחברך למשחק",
+            "text2":"תן 2 דוגמאות לאיך מה שאמר חברך למשחק מתבטאים",
+            "isFlipped": true
+         },
+         {
+            "id": "7",
+            "name":"int7",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int7.png",
+            "fileNameWithSufix":"int7.png",
+            "background":"red",
+            "text1":"אמור 4 דברים שמצא חן בעיניכם שחברכם למשחק עשה",
+            "text2":"תאר את הרגש שמה שאמר חברך למשחק מעורר בך",
+            "isFlipped": true
+         }, 
+         {
+            "id": "8",
+            "name":"int8",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int8.png",
+            "fileNameWithSufix":"int8.png",
+            "background":"red",
+            "text1":"אמור 4 משפטים שחברך למשחק אמר שהכי השפיעו עליך.",
+            "text2":"אמור מה הכי הפתיע אותך מתוך 4 הדברים שחברך למשחק ציין.",
+            "isFlipped": true
+         },	 
+         {
+            "id": "9",
+            "name":"int9",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int9.png",
+            "fileNameWithSufix":"int9.png",
+            "background":"red",
+            "text1":"תאר משהו שחברך למשחק היציע , ואתה התנגדת ובסוף זה הסתבר כמשהו טוב בשבילך",
+            "text2":"תאר משהו שחברך למשחק היציע , ואתה התנגדת ובסוף זה הסתבר כמשהו טוב בשבילך",
+            "isFlipped": true
+         },		 
+         {
+            "id":"10",
+            "name":"int1",
+
+            "fileFolder":"../assets/textures/intimacy_1/png",
+            "fileFullPath":"../assets/textures/intimacy_1/png/int10.png",
+            "fileNameWithSufix":"int10.png",
+            "background":"red",
+            "text1":"אם היית חיה , איזה חיה היית? ",
+            "text2":"תן 3 דוגמאות שמתארות איך החיה שבחר חברך למשחק מתאימה לו",
+            "isFlipped": true
+         },
+         {
+         "id":"11",
+         "name":"int1",
+
+         "fileFolder":"../assets/textures/intimacy_1/png",
+         "fileFullPath":"../assets/textures/intimacy_1/png/int11.png",
+         "fileNameWithSufix":"int11.png",
+         "background":"red",
+         "text1":"בחר חפץ שלדעתך יכול לייצג את האישיות שלך",
+         "text2":"תן 3 דוגמאות לאיך שהחפץ שחברך למשחק בחר מתאר אותו.",
+         "isFlipped": true
+         },
+         {
+         "id":"12",
+         "name":"int1",
+
+         "fileFolder":"../assets/textures/intimacy_1/png",
+         "fileFullPath":"../assets/textures/intimacy_1/png/int12.png",
+         "fileNameWithSufix":"int12.png",
+         "background":"red",
+         "text1":"בחר תכונה שמתאימה לך מבין: מצחיק, מפרגן, מקשיב, דעתן",
+         "text2":"תן דוגמא ל - איך התכונה שבחר חברך למשחק מאפיינת אותו",
+         "isFlipped": true
+         }
+      ]
+   }
