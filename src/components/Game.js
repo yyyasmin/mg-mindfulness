@@ -54,12 +54,6 @@ function Game() {
 
   
   useEffect(() => {
-    console.log("Game -- CCCCCCCCCCCCCCCCCCCCCCCCCC-useEffect[currentPlayers.length] -- cr: ", cr)
-    setCurrentRoom(currentRoom);
-  }, [cr.currentPlayers]);
-
-  
-  useEffect(() => {
     console.log("Game -- 7777-useEffect[currentRoom] -- changing cr to currentRoom: ", currentRoom)
     setCurrentRoom(currentRoom);
   }, [currentRoom]);
@@ -200,6 +194,13 @@ function Game() {
   // console.log("GAME -- BEFORE RENDER return -- MATCHED CONDITION -- : cr", cr)
   // console.log("GAME -- BEFORE RENDER return -- MATCHED CONDITION -- : cr!==undefined", cr!==undefined)
   // console.log("GAME -- BEFORE RENDER return -- MATCHED CONDITION -- : cr.currentPlayers!=undefined", cr.currentPlayers!=undefined)
+  if (cr && cr.currentPlayers &&  cr.currentPlayers.length === 2)  {
+    const debugActivePlayerIndex = cr.currentPlayers.findIndex(player => player.name === userName);
+    console.log("GAME -- BEFORE RENDER return -- debugActivePlayerIndex", cr, debugActivePlayerIndex)
+    console.log("GAME -- BEFORE RENDER return -- userName", cr, userName)
+    console.log("GAME -- BEFORE RENDER return -- cr.currentPlayers[0].name", cr.currentPlayers[0].name, cr.currentPlayers[1].name==userName)
+    console.log("GAME -- BEFORE RENDER return -- cr.currentPlayers[1].name", cr.currentPlayers[1].name, cr.currentPlayers[1].name==userName)
+  } 
 
 	return (
 	  <GameContainer>
@@ -251,9 +252,15 @@ function Game() {
                 playerName={userName}
                 card={card}
                 isFlipped={card.isFlipped}
-                toggleCardFlip={
-                  (cardId) => toggleCardFlip(cardId)
-                }
+                
+                toggleCardFlip={(cardId) => {
+                  const activePlayerIndex = cr.currentPlayers.findIndex(player => player.name === userName);
+                  if (activePlayerIndex !== -1 && cr.currentPlayers[activePlayerIndex].isActive) {
+                    toggleCardFlip(cardId);
+                  }
+                }}
+
+
               />
             ))
           )}
