@@ -56,7 +56,7 @@ function Game() {
   useEffect(() => {
     console.log("Game -- CCCCCCCCCCCCCCCCCCCCCCCCCC-useEffect[currentPlayers.length] -- cr: ", cr)
     setCurrentRoom(currentRoom);
-  }, [cr.currentPlayers.length]);
+  }, [cr.currentPlayers]);
 
   
   useEffect(() => {
