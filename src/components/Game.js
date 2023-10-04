@@ -52,6 +52,13 @@ function Game() {
   const [clearFlippedCards, setClearFlippedCards] = useState(false);
   const [flippedCardCount, setFlippedCardCount] = useState(0);
 
+  
+  useEffect(() => {
+    console.log("Game -- CCCCCCCCCCCCCCCCCCCCCCCCCC-useEffect[currentPlayers.length] -- cr: ", cr)
+    setCurrentRoom(currentRoom);
+  }, [cr.currentPlayers.length]);
+
+  
   useEffect(() => {
     console.log("Game -- 7777-useEffect[currentRoom] -- changing cr to currentRoom: ", currentRoom)
     setCurrentRoom(currentRoom);
