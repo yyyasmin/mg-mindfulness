@@ -52,17 +52,14 @@ function Game() {
   const [clearFlippedCards, setClearFlippedCards] = useState(false);
   const [flippedCardCount, setFlippedCardCount] = useState(0);
 
-  console.log("Game -- 6666-useEffect[currentRoom] -- currentRoom: ", currentRoom)
-
   useEffect(() => {
-    console.log("Game -- 7777-useEffect[currentRoom] -- currentRoom: ", currentRoom)
+    console.log("Game -- 7777-useEffect[currentRoom] -- changing cr to currentRoom: ", currentRoom)
     setCurrentRoom(currentRoom);
   }, [currentRoom]);
 
-  const handlePlayerLeaveRoom = async (chosenRoom) => {
+  const handlePlayerLeaveRoom = async () => {
     
-    if ( !isEmpty(chosenRoom) ) {
-      console.log("GAME -- 2222-handlePlayerLeaveRoom -- isEmpty(chosenRoom)", isEmpty(chosenRoom))
+    if ( !isEmpty(cr) ) {
       console.log("GAME -- 2222-handlePlayerLeaveRoom -- cr", cr)
       console.log("GAME -- handlePlayerLeaveRoom -- userName", userName)
       emitRemoveMemberFromRoom({
@@ -75,7 +72,6 @@ function Game() {
 
   useEffect( () => {
     console.log("Game -- 0000 - useEffect[cr] -- cr: ", cr)
-
     const handleBeforeUnload = (event) => {
       console.log("Game -- useEffect[] -- handleBeforeUnload -- event: ", event)
       console.log("Game -- 1111 - useEffect[] -- handleBeforeUnload -- cr: ", cr)
@@ -84,12 +80,10 @@ function Game() {
         event.returnValue = ""; // Required for Chrome
         // Notify the server that the player is leaving
         console.log("PLAYER ", userName, " IS LEAVING ROOM ", cr)
-        handlePlayerLeaveRoom(cr);
+        handlePlayerLeaveRoom();
       }
     };
-    
     window.addEventListener("beforeunload", handleBeforeUnload);
-  
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
@@ -141,22 +135,19 @@ function Game() {
   const checkForMatch = async (updatedCard) => {
     // Update allFlippedCards by appending the updated card
     const newAllFlippedCards = [...allFlippedCards, updatedCard];
-    let localIsMatched = false
 
     setAllFlippedCards(newAllFlippedCards);
     
     // If 2 cards have been flipped, check for a match directly from newAllFlippedCards
     if (newAllFlippedCards.length % 2 === 0) {
       const lastTwoFlippedCards = newAllFlippedCards.slice(-2);
-
       console.log("Game -- checkForMatch -- lastTwoFlippedCards: ", lastTwoFlippedCards);
-
       // Check for a match here...
       if (lastTwoFlippedCards[0].imageImportName === lastTwoFlippedCards[1].imageImportName) {
         // Found a match
-        setIsMatched(true);
-        localIsMatched = true
+        await setIsMatched(true);
       } else {
+        await setIsMatched(false);
         console.log("HERE SHOULD COME AOUTO FLIP CARDS BACK")
         // No match, initiate delayed flip-back
         // setTimeout(() => {
@@ -164,7 +155,7 @@ function Game() {
         // }, 1000); // Delayed flip-back after 1 second
       }
     }  // END 2 CARDS FLIPPED
-    return localIsMatched
+    return isMatched
   };
 
             
@@ -173,22 +164,23 @@ function Game() {
     const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
     if (cardIndex !== -1) {
       let updatedCard = await handleFlippedCard(cardId, cardIndex);
-      localIsMatched = await checkForMatch(updatedCard)
+      // localIsMatched = await checkForMatch(updatedCard)
       // if ( localIsMatched )  {  // IF THERE IS A MATCH
+      await checkForMatch(updatedCard)
       if ( isMatched )  {
-        setFlippedCardCount(0);
+        await setFlippedCardCount(0);
       }
       else  {
-        // HANFLE PLAYER TURN
+        // HANDLE PLAYER TURN
         if (flippedCardCount === 3) {  // 3 is the prevous => next is 4
-          // Toggle the turn after flipping two pairs of cards
+          // Toggle the turn after flipping and flipping back 2 cards ( toal of 4 flipps) with no match
           await togglePlayerTurn();
-          // Reset the flipped card count
-          setFlippedCardCount(0);  // it will be 4 so turned should be switched
+          await setFlippedCardCount(0);  // it will be 4 so turned should be switched
+
         }     
-        // else {
-        //   setFlippedCardCount(flippedCardCount+1)
-        // }
+        else {
+          await setFlippedCardCount(flippedCardCount+1)
+        }
       }
     }
   }
@@ -237,7 +229,7 @@ function Game() {
             key={index}
             index={index}
             playerName={userName}
-            players={currentRoom.currentPlayers}
+            players={cr.currentPlayers}
             card={card}
           />
         ))
