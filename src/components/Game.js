@@ -3,6 +3,7 @@ import styled from "styled-components";
 import NikeCard from "./NikeCard";
 import Players from "./Players";
 import WaitingMsg from "./WaitingMsg";
+import isEmpty from "../helpers/isEmpty";
 
 import MatchedCards from "./MatchedCards";
 import TougleMatchedCardButton from "./TougleMatchedCardButton";
@@ -59,24 +60,32 @@ function Game() {
   }, [currentRoom]);
 
   const handlePlayerLeaveRoom = async (chosenRoom) => {
-    console.log("GAME -- handlePlayerLeaveRoom -- chosenRoom", chosenRoom)
-    console.log("GAME -- handlePlayerLeaveRoom -- userName", userName)
-    emitRemoveMemberFromRoom({
-      playerName: userName,
-      chosenRoom: chosenRoom,
-    });  
+    
+    if ( !isEmpty(chosenRoom) ) {
+      console.log("GAME -- 2222-handlePlayerLeaveRoom -- isEmpty(chosenRoom)", isEmpty(chosenRoom))
+      console.log("GAME -- 2222-handlePlayerLeaveRoom -- cr", cr)
+      console.log("GAME -- handlePlayerLeaveRoom -- userName", userName)
+      emitRemoveMemberFromRoom({
+        playerName: userName,
+        chosenRoom: cr,
+      });
+      await updateCurentRoom(setCurrentRoom);
+    }  
   }
 
   useEffect( () => {
+    console.log("Game -- 0000 - useEffect[cr] -- cr: ", cr)
+
     const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = ""; // Required for Chrome
-      // Notify the server that the player is leaving
-      console.log("PLAYER IS LEAVING ROOM ")
-      handlePlayerLeaveRoom(cr);
-      setTimeout(() => {
-        console.log("Game -- useEffect[]  -- handleBeforeUnload -- TRYING TO SLOW DOWN - REMOVING PLAYER ", userName, "FROM ROOM ", cr)
-      }, 5000);
+      console.log("Game -- useEffect[] -- handleBeforeUnload -- event: ", event)
+      console.log("Game -- 1111 - useEffect[] -- handleBeforeUnload -- cr: ", cr)
+      if ( !isEmpty(cr) )  {
+        event.preventDefault();
+        event.returnValue = ""; // Required for Chrome
+        // Notify the server that the player is leaving
+        console.log("PLAYER ", userName, " IS LEAVING ROOM ", cr)
+        handlePlayerLeaveRoom(cr);
+      }
     };
     
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -84,7 +93,7 @@ function Game() {
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [cr]);
   
 
   useEffect(() => {
@@ -94,8 +103,8 @@ function Game() {
       setClearFlippedCards(false);
       setIsMatched(false)
     }
-  }, [clearFlippedCards, cr]);
-    
+  // }, [clearFlippedCards, cr]);
+  }, [clearFlippedCards]);
 
   useEffect(() => {
     updateCurentRoom(setCurrentRoom);
@@ -113,7 +122,6 @@ function Game() {
     updatedCard.isFlipped = !updatedCard.isFlipped;
     const updatedRoom = { ...cr };
     updatedRoom.cardsData[cardIndex] = updatedCard;
-    console.log("Game -- handleFlippedCard -- emit - updatedRoom: ", updatedRoom)
     await emitCurentRoomChanged(updatedRoom);
     return updatedCard;
   };
@@ -121,12 +129,10 @@ function Game() {
               
   const togglePlayerTurn = async () => {
     const updatedCurrentPlayers = [...cr.currentPlayers];
-    console.log("Game -- togglePlayerTurn -- updatedCurrentPlayers: ", updatedCurrentPlayers);
     updatedCurrentPlayers.forEach((player) => {
       player.isActive = !player.isActive;
     });
     const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
-    console.log("Game -- togglePlayerTurn -- emit - updatedRoom: ", updatedRoom); 
     await emitCurentRoomChanged(updatedRoom);
     return updatedRoom;
   };
@@ -138,10 +144,7 @@ function Game() {
     let localIsMatched = false
 
     setAllFlippedCards(newAllFlippedCards);
-  
-    console.log("Game -- checkForMatch -- allFlippedCards: ", allFlippedCards);
-    console.log("Game -- checkForMatch -- newAllFlippedCards: ", newAllFlippedCards);
-  
+    
     // If 2 cards have been flipped, check for a match directly from newAllFlippedCards
     if (newAllFlippedCards.length % 2 === 0) {
       const lastTwoFlippedCards = newAllFlippedCards.slice(-2);
@@ -161,53 +164,35 @@ function Game() {
         // }, 1000); // Delayed flip-back after 1 second
       }
     }  // END 2 CARDS FLIPPED
-    console.log("Game -- checkForMatch -- returning localIsMatched: ", localIsMatched )
     return localIsMatched
   };
 
             
   const toggleCardFlip = async (cardId) => {
     let localIsMatched = false
-    console.log("Game -- toggleCardFlip -- cardId: ", cardId)
     const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
     if (cardIndex !== -1) {
       let updatedCard = await handleFlippedCard(cardId, cardIndex);
-      console.log("00000000000")
-
       localIsMatched = await checkForMatch(updatedCard)
-      console.log("Game -- 6666666666666666 -- toggleCardFlip -- localIsMatched: ", localIsMatched)
-      console.log("Game -- 7777777777777777 -- toggleCardFlip -- flippedCardCount: ", flippedCardCount)
-
-      if ( localIsMatched )  {  // IF THERE IS A MATCH
-        console.log("11111111111111111")
-
+      // if ( localIsMatched )  {  // IF THERE IS A MATCH
+      if ( isMatched )  {
         setFlippedCardCount(0);
       }
       else  {
         // HANFLE PLAYER TURN
-        console.log("22222222222222222222")
-
         if (flippedCardCount === 3) {  // 3 is the prevous => next is 4
           // Toggle the turn after flipping two pairs of cards
-          console.log("33333333333333333333")
-
           await togglePlayerTurn();
-          console.log("44444444444444444")
-
           // Reset the flipped card count
           setFlippedCardCount(0);  // it will be 4 so turned should be switched
         }     
-        else {
-          console.log("55555555555555555555")
-
-          setFlippedCardCount(flippedCardCount+1)
-        }
+        // else {
+        //   setFlippedCardCount(flippedCardCount+1)
+        // }
       }
     }
   }
  
-
-  console.log("GAME -- BEFORE RENDER return -- cr:", cr)
 
   // console.log("GAME -- BEFORE RENDER return -- !cr.startGame: ", !cr.startGame)
   // console.log("GAME -- BEFORE RENDER return -- cr[0]: ", cr[0])
@@ -244,7 +229,7 @@ function Game() {
         allFlippedCards !== undefined &&
         allFlippedCards.length > 0 &&
         cr !== undefined && 
-        cr.currentPlayers != undefined &&
+        cr.currentPlayers !== undefined &&
         cr.currentPlayers.length === 2 ? (
 
         allFlippedCards.slice(-2).map((card, index) => (

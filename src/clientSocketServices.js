@@ -8,6 +8,7 @@ export const emitAddMemberToRoom = ({ playerName, chosenRoom }) => {
 };
 
 export const emitRemoveMemberFromRoom = ({ playerName, chosenRoom }) => {
+  console.log("clientSocket -- emitRemoveMemberFromRoom -- chosenRoom: ", chosenRoom)
   socket.emit('REMOVE_PLAYER_FROM_ROOM', { playerName, chosenRoom });
 };
 

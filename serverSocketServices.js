@@ -13,23 +13,25 @@ const updateActiveRoomsWithUpdatedRoom = (updatedRoom) =>  {
   }
 }
 
-
 const getRoomFromActiveRooms = (room) =>  {
   const existingRoomIndex = activeRooms.findIndex((r) => r.id === room.id);
   if (existingRoomIndex !== -1) {
     return activeRooms[existingRoomIndex]
   }
   else  {
+    console.log("PUSHING room ", room, " to activeRooms")
     activeRooms.push(room)
     return room
   }
 }
 
 createNewRoom = (chosenRoom, roomId) => {
+  
   let newRoom = {
     ...chosenRoom,
     id: roomId,
   }
+  console.log("Created new Room: ", newRoom)
   return newRoom
 }
 
@@ -153,10 +155,9 @@ const serverSocketServices = (io) => {
 
     existingPlayer = updatedRoom.currentPlayers && updatedRoom.currentPlayers.find((player) => player.name === playerName);  
     if (existingPlayer) {
-      const updatedPlayers = [...updatedRoom.currentPlayers];
-      const playerIndex = updatedRoom.currentPlayers.findIndex((player) => player.name === playerName);
+      // let updatedPlayers = [...updatedRoom.currentPlayers];
+      let updatedPlayers = [...updatedRoom.currentPlayers.filter((player) => player.name !== playerName)]
 
-      updatedPlayers.splice(playerIndex, 1);  // REMOVE playerName cell
       updatedRoom = {
         ... updatedRoom,
         currentPlayers: updatedPlayers,
