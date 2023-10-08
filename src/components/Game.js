@@ -16,6 +16,9 @@ import {
   emitCurentRoomChanged,
   updateMatchedCards,
   removeUpdatedMatchedCards,
+  updateFlippCount,
+  removeUpdatedFlippCount,
+  emitCurentFlippCount
 } from "../clientSocketServices";
 
 const GameContainer = styled.div`
@@ -50,19 +53,16 @@ function Game() {
   const [allFlippedCards, setAllFlippedCards] = useState([]);
   const [lastFlippedCards, setLastFlippedCards] = useState([]);
   const [clearFlippedCards, setClearFlippedCards] = useState(false);
-  const [flippedCardCount, setFlippedCardCount] = useState(0);
+  const [flippCount, setFlippCount] = useState(0);
 
   
   useEffect(() => {
-    console.log("Game -- 7777-useEffect[currentRoom] -- changing cr to currentRoom: ", currentRoom)
     setCurrentRoom(currentRoom);
   }, [currentRoom]);
 
   const handlePlayerLeaveRoom = async () => {
     
     if ( !isEmpty(cr) ) {
-      console.log("GAME -- 2222-handlePlayerLeaveRoom -- cr", cr)
-      console.log("GAME -- handlePlayerLeaveRoom -- userName", userName)
       emitRemoveMemberFromRoom({
         playerName: userName,
         chosenRoom: cr,
@@ -72,15 +72,11 @@ function Game() {
   }
 
   useEffect( () => {
-    console.log("Game -- 0000 - useEffect[cr] -- cr: ", cr)
     const handleBeforeUnload = (event) => {
-      console.log("Game -- useEffect[] -- handleBeforeUnload -- event: ", event)
-      console.log("Game -- 1111 - useEffect[] -- handleBeforeUnload -- cr: ", cr)
       if ( !isEmpty(cr) )  {
         event.preventDefault();
         event.returnValue = ""; // Required for Chrome
         // Notify the server that the player is leaving
-        console.log("PLAYER ", userName, " IS LEAVING ROOM ", cr)
         handlePlayerLeaveRoom();
       }
     };
@@ -104,14 +100,38 @@ function Game() {
   useEffect(() => {
     updateCurentRoom(setCurrentRoom);
     updateMatchedCards(setIsMatched);
+    updateFlippCount(setFlippCount);
 
     return () => {
       removeUpdatedRoomDataListener();
       removeUpdatedMatchedCards();
+      removeUpdatedFlippCount();
     };
   }, []);
 
+  useEffect(() => {
+    console.log("Game -- useEffect[flippCount] -- flippCount: ", flippCount)
+    emitCurentFlippCount(flippCount);   
+  }, [flippCount]);
 
+
+  const handleFlippCount = async () => {
+    let localFlippCount = flippCount
+    console.log("Game -- 1111 - handleFlippCount -- localFlippCount: ", localFlippCount)
+    localFlippCount++
+
+    if ( isMatched ) {
+      localFlippCount = 0
+    } else if ( localFlippCount === 4)  {  // cycle of 4 flipps => 2 cards to front and back each
+        await togglePlayerTurn()
+        localFlippCount = 0
+    } 
+    console.log("Game -- 2222 - handleFlippCount -- localFlippCount: ", localFlippCount)
+    await setFlippCount(localFlippCount)
+    return localFlippCount;
+  };
+
+  
   const handleFlippedCard = async (cardIndex) => {
     const updatedCard = { ...cr.cardsData[cardIndex] };
     updatedCard.isFlipped = !updatedCard.isFlipped;
@@ -123,11 +143,13 @@ function Game() {
 
               
   const togglePlayerTurn = async () => {
+    console.log("Game -- togglePlayerTurn")
     const updatedCurrentPlayers = [...cr.currentPlayers];
     updatedCurrentPlayers.forEach((player) => {
       player.isActive = !player.isActive;
     });
-    const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
+    const updatedRoom = { ...cr }
+    updatedRoom.currentPlayers = updatedCurrentPlayers
     await emitCurentRoomChanged(updatedRoom);
     return updatedRoom;
   };
@@ -142,7 +164,6 @@ function Game() {
     // If 2 cards have been flipped, check for a match directly from newAllFlippedCards
     if (newAllFlippedCards.length % 2 === 0) {
       const lastTwoFlippedCards = newAllFlippedCards.slice(-2);
-      console.log("Game -- checkForMatch -- lastTwoFlippedCards: ", lastTwoFlippedCards);
       // Check for a match here...
       if (lastTwoFlippedCards[0].imageImportName === lastTwoFlippedCards[1].imageImportName) {
         // Found a match
@@ -158,49 +179,16 @@ function Game() {
     }  // END 2 CARDS FLIPPED
     return isMatched
   };
-
-            
+  
   const toggleCardFlip = async (cardId) => {
-    let localIsMatched = false
+    await setFlippCount(flippCount+1)
     const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
     if (cardIndex !== -1) {
-      let updatedCard = await handleFlippedCard(cardId, cardIndex);
-      // localIsMatched = await checkForMatch(updatedCard)
-      // if ( localIsMatched )  {  // IF THERE IS A MATCH
+      let updatedCard = await handleFlippedCard(cardId, cardIndex);     
       await checkForMatch(updatedCard)
-      if ( isMatched )  {
-        await setFlippedCardCount(0);
+      await handleFlippCount()
       }
-      else  {
-        // HANDLE PLAYER TURN
-        if (flippedCardCount === 3) {  // 3 is the prevous => next is 4
-          // Toggle the turn after flipping and flipping back 2 cards ( toal of 4 flipps) with no match
-          await togglePlayerTurn();
-          await setFlippedCardCount(0);  // it will be 4 so turned should be switched
-
-        }     
-        else {
-          await setFlippedCardCount(flippedCardCount+1)
-        }
-      }
-    }
   }
- 
-
-  // console.log("GAME -- BEFORE RENDER return -- !cr.startGame: ", !cr.startGame)
-  // console.log("GAME -- BEFORE RENDER return -- cr[0]: ", cr[0])
-  // console.log("GAME -- BEFORE RENDER return -- MATCHED CONDITION -- : isMatched", isMatched)
-  // console.log("GAME -- BEFORE RENDER return -- MATCHED CONDITION -- : allFlippedCards.length>0", allFlippedCards, allFlippedCards.length>0) 
-  // console.log("GAME -- BEFORE RENDER return -- MATCHED CONDITION -- : cr", cr)
-  // console.log("GAME -- BEFORE RENDER return -- MATCHED CONDITION -- : cr!==undefined", cr!==undefined)
-  // console.log("GAME -- BEFORE RENDER return -- MATCHED CONDITION -- : cr.currentPlayers!=undefined", cr.currentPlayers!=undefined)
-  if (cr && cr.currentPlayers &&  cr.currentPlayers.length === 2)  {
-    const debugActivePlayerIndex = cr.currentPlayers.findIndex(player => player.name === userName);
-    console.log("GAME -- BEFORE RENDER return -- debugActivePlayerIndex", cr, debugActivePlayerIndex)
-    console.log("GAME -- BEFORE RENDER return -- userName", cr, userName)
-    console.log("GAME -- BEFORE RENDER return -- cr.currentPlayers[0].name", cr.currentPlayers[0].name, cr.currentPlayers[1].name==userName)
-    console.log("GAME -- BEFORE RENDER return -- cr.currentPlayers[1].name", cr.currentPlayers[1].name, cr.currentPlayers[1].name==userName)
-  } 
 
 	return (
 	  <GameContainer>

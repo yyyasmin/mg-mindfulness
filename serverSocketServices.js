@@ -114,7 +114,6 @@ addPlayerToRoom = (room, playerName, socketId) => {
       ...room,
       startGame: startGame,
     }
-    console.log("Add player " , playerName, "ToRoom -- returning -- updatedRoom: ", updatedRoom)
     return updatedRoom
   }
 }
@@ -134,8 +133,6 @@ const serverSocketServices = (io) => {
       updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
 
       updateActiveRoomsWithUpdatedRoom(updatedRoom)
-
-      console.log("AFTER ADDING PLAYER ", playerName , "to room ", chosenRoom, "updatedRoom:", updatedRoom, "activeRooms:", activeRooms )
 
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
@@ -171,12 +168,8 @@ const serverSocketServices = (io) => {
         }
       }
     }
-    console.log("SERVER -- SFTER REMOVING ", playerName, "FROM ROOM ", chosenRoom)
-    console.log("SERVER -- SFTER REMOVING ", updatedRoom, updatedRoom)
 
     updateActiveRoomsWithUpdatedRoom(updatedRoom)
-
-    console.log("SERVER -- SFTER REMOVING ", activeRooms, activeRooms)
   
     io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
@@ -187,11 +180,13 @@ const serverSocketServices = (io) => {
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
 
-
     socket.on("MATCHED_CARDS_CHANGED", (matchedCards) => {
       io.emit("UPDATED_MATCHED_CARDS", matchedCards);
     });
 
+    socket.on("FLIPP_COUNT_CHANGED", (flippCount) => {
+      io.emit("UPDATED_FLIPP_COUNT", flippCount);
+    });
     
     socket.on("START_GAME", () => {
       io.emit("UPDATED_START_GAME");

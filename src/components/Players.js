@@ -37,12 +37,8 @@ const Turn = styled.div`
 const Players = (props) => {
   const { players, playerName } = props
 
-  console.log("Player -- props: ", props)
-
   const activePlayerIndex = players.findIndex((player) => player.isActive);
   const activePlayer = players[activePlayerIndex] 
-  console.log("Players -- activePlayerIndex", activePlayerIndex)
-  console.log("Players -- activePlayer", activePlayer)
 
   return (
     <Container>

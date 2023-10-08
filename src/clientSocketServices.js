@@ -8,7 +8,6 @@ export const emitAddMemberToRoom = ({ playerName, chosenRoom }) => {
 };
 
 export const emitRemoveMemberFromRoom = ({ playerName, chosenRoom }) => {
-  console.log("clientSocket -- emitRemoveMemberFromRoom -- chosenRoom: ", chosenRoom)
   socket.emit('REMOVE_PLAYER_FROM_ROOM', { playerName, chosenRoom });
 };
 
@@ -20,9 +19,12 @@ export const emitCurentMatchedCards = (matchedCards) => {
   socket.emit("MATCHED_CARDS_CHANGED", matchedCards);
 };
 
+export const emitCurentFlippCount = (matchedCards) => {
+  socket.emit("FLIPP_COUNT_CHANGED", matchedCards);
+};
+
 export const updateCurentRoom = (setCurentRoom) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
-    console.log("clientSocketServices -- on-UPDATED_CURRENT_ROOM -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom)
     setCurentRoom(serverUpdatedCurentRoom);
   });
 };
@@ -33,10 +35,21 @@ export const updateMatchedCards = (setMatchedCards) => {
   });
 };
 
+export const updateFlippCount = (setFlippCount) => {
+  socket.on("UPDATED_FLIPP_COUNT", (flippCount) => {
+    setFlippCount(flippCount);
+  });
+};
+
 export const removeUpdatedRoomDataListener = () => {
   socket.off("UPDATED_CURRENT_ROOM");
 };
 
 export const removeUpdatedMatchedCards = () => {
   socket.off("UPDATED_MATCHED_CARDS");
+};
+
+
+export const removeUpdatedFlippCount = () => {
+  socket.off("UPDATED_FLIPP_COUNT");
 };
