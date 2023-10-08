@@ -60,6 +60,14 @@ function Game() {
     setCurrentRoom(currentRoom);
   }, [currentRoom]);
 
+  useEffect(() => {
+    console.log("Game -- useEffect[] -- flippCount: ", flippCount);
+    if ( flippCount === 0)  {
+      emitCurentFlippCount(flippCount); // Emit the initial flippCount value when the component mounts
+    }
+  }, []);
+  
+
   const handlePlayerLeaveRoom = async () => {
     
     if ( !isEmpty(cr) ) {
@@ -109,11 +117,6 @@ function Game() {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("Game -- useEffect[flippCount] -- flippCount: ", flippCount)
-    emitCurentFlippCount(flippCount);   
-  }, [flippCount]);
-
 
   const handleFlippCount = async () => {
     let localFlippCount = flippCount
@@ -128,6 +131,7 @@ function Game() {
     } 
     console.log("Game -- 2222 - handleFlippCount -- localFlippCount: ", localFlippCount)
     await setFlippCount(localFlippCount)
+    await emitCurentFlippCount(flippCount);   
     return localFlippCount;
   };
 
