@@ -156,8 +156,17 @@ function Game() {
   const togglePlayerTurn = async () => {
     console.log("Game -- togglePlayerTurn")
     const updatedCurrentPlayers = [...cr.currentPlayers];
-    updatedCurrentPlayers.forEach((player) => {
-      player.isActive = !player.isActive;
+    let tougledPlayerName
+    updatedCurrentPlayers.forEach((player) => {  // SET ACTIVE to IN-ACTIVE FIRST TO AVOID MORE THAN 1 ACTIVE
+      if (player.isActive)  {
+        player.isActive = false;
+        tougledPlayerName = player.name
+      }
+    });
+    updatedCurrentPlayers.forEach((player) => {  // SET ACTIVE to IN-ACTIVE FIRST TO AVOID MORE THAN 1 ACTIVE
+      if (player.name !== tougledPlayerName && !player.isActive)  {
+        player.isActive = true
+      }
     });
     const updatedRoom = { ...cr }
     updatedRoom.currentPlayers = updatedCurrentPlayers
