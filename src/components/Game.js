@@ -125,7 +125,8 @@ function Game() {
 
     if ( isMatched ) {
       localFlippCount = 0
-    } else if ( localFlippCount === 4)  {  // cycle of 4 flipps => 2 cards to front and back each
+    }  
+    if ( localFlippCount === 4)  {  // cycle of 4 flipps => 2 cards to front and back each
         await togglePlayerTurn()
         localFlippCount = 0
     } 
