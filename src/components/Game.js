@@ -101,8 +101,8 @@ function Game() {
       emitCurentRoomChanged(cr);
       setClearFlippedCards(false);
       setIsMatched(false)
+	    setFlippCount(0)
     }
-  // }, [clearFlippedCards, cr]);
   }, [clearFlippedCards]);
 
   useEffect(() => {
@@ -118,22 +118,28 @@ function Game() {
   }, []);
 
 
+  useEffect(() => {
+	if ( !isEmpty(cr) )  {
+		console.log("Game -- useEffect[flippCount, isMatched] -- flippCount: ", flippCount);
+		console.log("Game -- useEffect[flippCount, isMatched] -- isMatched: ", isMatched);
+		console.log("Game -- useEffect[flippCount, isMatched] -- cr.currentPlayers: ", cr.currentPlayers);
+		handleFlippCount()
+	}
+  }, [flippCount, isMatched]);
+  
   const handleFlippCount = async () => {
-    let localFlippCount = flippCount
-    console.log("Game -- 1111 - handleFlippCount -- localFlippCount: ", localFlippCount)
-    localFlippCount++
+    console.log("Game -- 1111 - handleFlippCount -- flippCount: ", flippCount)
+    console.log("Game -- 1111 - handleFlippCount -- isMatched: ", isMatched)
+    console.log("Game -- 1111 - handleFlippCount -- cr: ", cr);
 
-    if ( isMatched ) {
-      localFlippCount = 0
-    }  
-    if ( localFlippCount === 4)  {  // cycle of 4 flipps => 2 cards to front and back each
-        await togglePlayerTurn()
-        localFlippCount = 0
+    if (flippCount === 4)  {  // ITS IN HERE TO PREVENT INFINITE USEEFFECT LOOP
+        await setFlippCount(0)
+		await togglePlayerTurn()
     } 
-    console.log("Game -- 2222 - handleFlippCount -- localFlippCount: ", localFlippCount)
-    await setFlippCount(localFlippCount)
-    await emitCurentFlippCount(flippCount);   
-    return localFlippCount;
+    console.log("Game -- 2222 - handleFlippCount -- flippCount: ", flippCount)
+    console.log("Game -- 2222 - handleFlippCount -- isMatched: ", isMatched)
+    console.log("Game -- 2222 - handleFlippCount -- cr: ", cr);
+
   };
 
   
