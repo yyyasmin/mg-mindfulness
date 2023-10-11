@@ -49,4 +49,5 @@ serverSocketServices(io);
 
 // Use process.env.PORT for flexibility in choosing the port
 const PORT = process.env.PORT || 5000;
+console.log("INDEX -- PORT: ", PORT)
 server.listen(PORT, console.log(`Listening to ${PORT}!`));
