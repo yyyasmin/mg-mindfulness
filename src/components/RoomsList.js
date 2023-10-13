@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useNavigate  } from "react-router-dom";
-import isEmpty from "../helpers/isEmpty";
-
-import {  
-  updateCurentRoom,
+import { useNavigate } from "react-router-dom";
+import {
+  updateCr,
   removeUpdatedRoomDataListener,
-  emitAddMemberToRoom
+  emitAddMemberToRoom,
 } from "../clientSocketServices";
 
 const GameContainer = styled.div`
@@ -18,87 +16,128 @@ const GameContainer = styled.div`
   justify-content: flex-start;
   margin-top: 20px;
   background-color: snow;
+`;
 
+const RoomTable = styled.table`
+  width: 80%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 2px solid black; /* Added a 2px solid black border to the table */
+  margin: 0 auto;
+
+  th {
+    background: #9b9b9b;
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    border: 1px solid #9b9b9b;
+    border-radius: 5px;
+    padding: 10px;
+
+  }
+
+  th,
+  td {
+    padding: 10px;
+    text-align: center;
+    border: 5px solid brown; /* Added a 1px solid black border to table cells */
+
+  }
+
+  th:first-child,
+  td:first-child {
+    text-align: left;
+  }
+
+  
+  button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+`;
+
+const GameHeading = styled.h1`
+  margin: 3rem;
 `;
 
 const RoomsList = ({ userName, roomsInitialData }) => {
-  
   const [currentRoom, setCurrentRoom] = useState({});
-  const navigate = useNavigate(); // Get the navigate function from React Router
-  
-
-  console.log("Rooms -- roomsInitialData: ", roomsInitialData)
+  const navigate = useNavigate();
 
   const handleJoinRoom = async (chosenRoom) => {
-      console.log("1111")
-      console.log("ROOMS -- handleJoinRoom -- chosenRoom", chosenRoom)
-      console.log("RoomsList -- playerName: ", userName)
-
-      emitAddMemberToRoom({
-        playerName: userName,
-        chosenRoom: chosenRoom,
-      });  
-  }
+    emitAddMemberToRoom({
+      playerName: userName,
+      chosenRoom: chosenRoom,
+    });
+  };
 
   useEffect(() => {
-    console.log("2222")
-    updateCurentRoom(setCurrentRoom);
+    updateCr(setCurrentRoom);
     return () => {
       removeUpdatedRoomDataListener();
     };
-  }, []); // Empty dependency array ensures the effect runs only once when the component mounts
-
+  }, []);
 
   useEffect(() => {
-    console.log("RoomList -- useEffect[currentRoom] -- currentRoom: ", currentRoom)
-
     if (currentRoom !== null && currentRoom !== undefined && currentRoom.id >= 0) {
-      console.log("IN RoomsList 2222 -- useEffect[currentRoom] -- passing to GAME -- currentRoom: ", currentRoom);
-      // Navigate to the game page
       navigate(`/game/${currentRoom.id}`, {
         state: { userName, currentRoom },
       });
     }
   }, [currentRoom]);
-  
-  console.log("4444")
 
+  const rowColors = [
+    "#E3F9A6",
+    "#8DB600",
+    "#C7A317",
+    "#E6BF83",
+    "lightseagreen",
+  ];
+
+  const textColors = [
+    "black",
+    "white",
+    "white",
+    "black",
+    "white",
+  ];
 
   return (
     <GameContainer>
-      <h3>Available Rooms:</h3>
-      <table>
+      <GameHeading>Available Rooms:</GameHeading>
+      <RoomTable>
         <thead>
           <tr>
             <th>Room Name</th>
-            <th>Difficulty</th>
             <th>Max Members</th>
             <th>Info</th>
             <th>Join</th>
           </tr>
         </thead>
         <tbody>
-          {roomsInitialData.map((room) => (
-            <tr key={room.id}>
-              <td>{room.name}</td>
-              <td>{room.difficulty}</td>
-              <td>{room.maxMembers}</td>
+          {roomsInitialData.map((room, index) => (
+            <tr
+              key={room.id}
+              style={{
+                backgroundColor: rowColors[index % rowColors.length],
+                color: textColors[index % textColors.length],
+              }}
+            >
               <td>
-                <a
-                  href={room.info}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={room.info} target="_blank" rel="noopener noreferrer">
                   {room.name}
                 </a>
               </td>
+              <td>{room.maxMembers}</td>
+              <td>{room.name}</td>
               <td>
                 <button onClick={() => handleJoinRoom(room)}>Join</button>
               </td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </RoomTable>
     </GameContainer>
   );
 };

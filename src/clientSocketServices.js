@@ -23,7 +23,7 @@ export const emitCurentFlippCount = (matchedCards) => {
   socket.emit("FLIPP_COUNT_CHANGED", matchedCards);
 };
 
-export const updateCurentRoom = (setCurentRoom) => {
+export const updateCr = (setCurentRoom) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
     setCurentRoom(serverUpdatedCurentRoom);
   });

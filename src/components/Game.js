@@ -9,7 +9,7 @@ import MatchedCards from "./MatchedCards";
 import TougleMatchedCardButton from "./TougleMatchedCardButton";
 import { useLocation } from "react-router-dom";
 import {
-  updateCurentRoom,
+  updateCr,
   removeUpdatedRoomDataListener,
   emitAddMemberToRoom,  // IN RoomsList
   emitRemoveMemberFromRoom,
@@ -75,7 +75,7 @@ function Game() {
         playerName: userName,
         chosenRoom: cr,
       });
-      await updateCurentRoom(setCurrentRoom);
+      await updateCr(setCurrentRoom);
     }  
   }
 
@@ -106,7 +106,7 @@ function Game() {
   }, [clearFlippedCards]);
 
   useEffect(() => {
-    updateCurentRoom(setCurrentRoom);
+    updateCr(setCurrentRoom);
     updateMatchedCards(setIsMatched);
     updateFlippCount(setFlippCount);
 
