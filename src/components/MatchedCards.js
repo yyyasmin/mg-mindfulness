@@ -75,7 +75,7 @@ const MatchedCards = (props) => {
         <TextContainer>
           <>
             <PlayerName>{currentPlayer.name}</PlayerName>
-            <CardText>TEXT-{index + 1}: {currentText}</CardText>
+            <CardText>{currentText}</CardText>
           </>
         </TextContainer>
       </ContentWrapper>

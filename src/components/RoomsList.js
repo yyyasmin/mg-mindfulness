@@ -62,7 +62,7 @@ const GameHeading = styled.h1`
 `;
 
 const RoomsList = ({ userName, roomsInitialData }) => {
-  const [currentRoom, setCurrentRoom] = useState({});
+  const [currentRoom, setCr] = useState({});
   const navigate = useNavigate();
 
   const handleJoinRoom = async (chosenRoom) => {
@@ -73,7 +73,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
   };
 
   useEffect(() => {
-    updateCr(setCurrentRoom);
+    updateCr(setCr);
     return () => {
       removeUpdatedRoomDataListener();
     };

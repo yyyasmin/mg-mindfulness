@@ -19,7 +19,6 @@ const getRoomFromActiveRooms = (room) =>  {
     return activeRooms[existingRoomIndex]
   }
   else  {
-    console.log("PUSHING room ", room, " to activeRooms")
     activeRooms.push(room)
     return room
   }
@@ -31,7 +30,6 @@ createNewRoom = (chosenRoom, roomId) => {
     ...chosenRoom,
     id: roomId,
   }
-  console.log("Created new Room: ", newRoom)
   return newRoom
 }
 
@@ -121,19 +119,13 @@ addPlayerToRoom = (room, playerName, socketId) => {
 // SOCKET SERVICES
 
 console.log("IN serverSocketServices.js");
-
 const serverSocketServices = (io) => {
-
   io.on("connection", (socket) => {
-
     socket.on("CREATE_ROOM_AND_ADD_PLAYER", ({ playerName, chosenRoom }) => {
       let updatedRoom;
       updatedRoom = setRoomToAddPlayer(chosenRoom, playerName)
-
       updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
-
       updateActiveRoomsWithUpdatedRoom(updatedRoom)
-
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
 
@@ -141,25 +133,29 @@ const serverSocketServices = (io) => {
 	socket.on("REMOVE_PLAYER_FROM_ROOM", ({ playerName, chosenRoom }) => {
     let existingRoom, updatedRoom;
     let existingPlayer = {}
-     
     existingRoom = getRoomFromActiveRooms(chosenRoom) 
-
     if (!existingRoom) {
       return { playerName, chosenRoom }
     }  else {
       updatedRoom = existingRoom;
     }
-
     existingPlayer = updatedRoom.currentPlayers && updatedRoom.currentPlayers.find((player) => player.name === playerName);  
     if (existingPlayer) {
       // let updatedPlayers = [...updatedRoom.currentPlayers];
       let updatedPlayers = [...updatedRoom.currentPlayers.filter((player) => player.name !== playerName)]
+      
+      if ( updatedPlayers.length === 1 )  {
+        updatedPlayers[0].isActive = true
+      } 
 
       updatedRoom = {
         ... updatedRoom,
         currentPlayers: updatedPlayers,
       }
+
       if ( updatedPlayers.length == 0 )  {  // NO PLAYERS IN THE ROOM
+        console.log("ALL PLAYERS LEFT THE ROOM")
+
         updatedRoom = {
           ... updatedRoom,
           currentPlayers: updatedPlayers,
@@ -168,11 +164,17 @@ const serverSocketServices = (io) => {
         }
       }
     }
-
+    
     updateActiveRoomsWithUpdatedRoom(updatedRoom)
-  
-    io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
-    });
+    // Notify other players about the departure
+    socket.broadcast.emit("PLAYER_LEFT_ROOM", playerName);
+
+
+    console.log("IINDEX 0000 -- EMITTING AFTER PLAYER ", playerName, " LEFT: updatedRoom.currentPlayers: ", updatedRoom.currentPlayers)
+    // io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
+    socket.broadcast.emit("UPDATED_CURRENT_ROOM", updatedRoom);
+
+  });
     
 
     socket.on("CURENT_ROOM_CHANGED", (updatedRoom) => {
@@ -191,12 +193,10 @@ const serverSocketServices = (io) => {
     socket.on("START_GAME", () => {
       io.emit("UPDATED_START_GAME");
     });
-
     
     socket.on("END_GAME", () => {
       io.emit("UPDATED_END_GAME");
     });
-
 
   });
 

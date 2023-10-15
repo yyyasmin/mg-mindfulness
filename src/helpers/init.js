@@ -40,11 +40,22 @@ const calm5 = require("../assets/textures/calm_1/png/calm5.PNG");
 const calm6 = require("../assets/textures/calm_1/png/calm6.PNG");
 const calm7 = require("../assets/textures/calm_1/png/calm7.PNG");
 
+
+// Import all the required images for first_letter_1
+const fl1 = require("../assets/textures/first_letter_1/png/fl1.PNG");
+const fl2 = require("../assets/textures/first_letter_1/png/fl2.PNG");
+const fl3 = require("../assets/textures/first_letter_1/png/fl3.PNG");
+const fl4 = require("../assets/textures/first_letter_1/png/fl4.PNG");
+const fl5 = require("../assets/textures/first_letter_1/png/fl5.PNG");
+const fl6 = require("../assets/textures/first_letter_1/png/fl6.PNG");
+
+
 // Create separate arrays for each room's card set
 const emotions1Cards = [em1, em2, em3, em4];
 const emotions2Cards = [em5, em6, em7, em8, em9, em10];
 const intimacy1Cards = [inti1, inti2, inti3, inti4, inti5, inti6, inti7, inti8, inti9, inti10, inti11, inti12];
 const calm1Cards = [calm1, calm2, calm3, calm4, calm5, calm6, calm7];
+const firstLetter1Cards = [fl1, fl2, fl3, fl4, fl5, fl6];
 
 console.log("init - server - CHOSEN_PROXY_URL: ", CHOSEN_PROXY_URL)
 
@@ -111,6 +122,10 @@ const initCardsInRoomsFromJson = async (rooms) => {
           case "3":
               importArr[room.id] = calm1Cards;
               break;
+
+          case "4":
+            importArr[room.id] = firstLetter1Cards;
+            break;
 
           default:
             console.log("NO ROOM WITH ID ", room.id, "in database-Cards.json file")

@@ -14,6 +14,7 @@ import {
   emitAddMemberToRoom,  // IN RoomsList
   emitRemoveMemberFromRoom,
   emitCurentRoomChanged,
+  updatePlayerLeft,
   updateMatchedCards,
   removeUpdatedMatchedCards,
   updateFlippCount,
@@ -48,16 +49,18 @@ function Game() {
   const location = useLocation();
   const { userName, currentRoom } = location.state;
 
-  const [cr, setCurrentRoom] = useState({});
+  const [cr, setCr] = useState({});
   const [isMatched, setIsMatched] = useState(false);
   const [allFlippedCards, setAllFlippedCards] = useState([]);
   const [lastFlippedCards, setLastFlippedCards] = useState([]);
   const [clearFlippedCards, setClearFlippedCards] = useState(false);
   const [flippCount, setFlippCount] = useState(0);
+  const [playerLeft, setPlayerLeft] = useState(null);
+
 
   
   useEffect(() => {
-    setCurrentRoom(currentRoom);
+    setCr(currentRoom);
   }, [currentRoom]);
 
   useEffect(() => {
@@ -66,35 +69,8 @@ function Game() {
       emitCurentFlippCount(flippCount); // Emit the initial flippCount value when the component mounts
     }
   }, []);
+
   
-
-  const handlePlayerLeaveRoom = async () => {
-    
-    if ( !isEmpty(cr) ) {
-      emitRemoveMemberFromRoom({
-        playerName: userName,
-        chosenRoom: cr,
-      });
-      await updateCr(setCurrentRoom);
-    }  
-  }
-
-  useEffect( () => {
-    const handleBeforeUnload = (event) => {
-      if ( !isEmpty(cr) )  {
-        event.preventDefault();
-        event.returnValue = ""; // Required for Chrome
-        // Notify the server that the player is leaving
-        handlePlayerLeaveRoom();
-      }
-    };
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
-  }, [cr]);
-  
-
   useEffect(() => {
     if (clearFlippedCards) {
       setLastFlippedCards([]);
@@ -105,41 +81,51 @@ function Game() {
     }
   }, [clearFlippedCards]);
 
+
+
+  window.onbeforeunload = async function (e) {
+
+    await console.log("onbeforeunload is firing");
+  
+    await updatePlayerLeft(setPlayerLeft);
+    await updateCr(setCr);
+    await emitRemoveMemberFromRoom({
+      playerName: userName,
+      chosenRoom: cr,
+    });
+    var dialogText = 'Are you really sure you want to leave?';
+    console.log("Game -- handleBeforeUnload -- dialogText: ", dialogText);
+    e.returnValue = dialogText;
+    return dialogText;
+  };
+  
+
+
   useEffect(() => {
-    updateCr(setCurrentRoom);
+    updateCr(setCr);
     updateMatchedCards(setIsMatched);
     updateFlippCount(setFlippCount);
-
+    
     return () => {
-      removeUpdatedRoomDataListener();
+      // removeUpdatedRoomDataListener();
       removeUpdatedMatchedCards();
       removeUpdatedFlippCount();
     };
   }, []);
 
 
+
   useEffect(() => {
 	if ( !isEmpty(cr) )  {
-		console.log("Game -- useEffect[flippCount, isMatched] -- flippCount: ", flippCount);
-		console.log("Game -- useEffect[flippCount, isMatched] -- isMatched: ", isMatched);
-		console.log("Game -- useEffect[flippCount, isMatched] -- cr.currentPlayers: ", cr.currentPlayers);
 		handleFlippCount()
 	}
   }, [flippCount, isMatched]);
-  
-  const handleFlippCount = async () => {
-    console.log("Game -- 1111 - handleFlippCount -- flippCount: ", flippCount)
-    console.log("Game -- 1111 - handleFlippCount -- isMatched: ", isMatched)
-    console.log("Game -- 1111 - handleFlippCount -- cr: ", cr);
 
+  const handleFlippCount = async () => {
     if (flippCount === 4)  {  // ITS IN HERE TO PREVENT INFINITE USEEFFECT LOOP
         await setFlippCount(0)
 		await togglePlayerTurn()
     } 
-    console.log("Game -- 2222 - handleFlippCount -- flippCount: ", flippCount)
-    console.log("Game -- 2222 - handleFlippCount -- isMatched: ", isMatched)
-    console.log("Game -- 2222 - handleFlippCount -- cr: ", cr);
-
   };
 
   
@@ -153,25 +139,21 @@ function Game() {
   };
 
   const togglePlayerTurn = async () => {
-    console.log("GGGGGGGGGGGGG Game -- togglePlayerTurn -- cr: ", cr);
     const updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
       ...player,
-      isActive: !player.isActive,
+      isActive: cr.currentPlayers.length > 1 ? !player.isActive : true,
     }));
   
     const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
     await emitCurentRoomChanged(updatedRoom);
     return updatedRoom;
   };
-  
-  
+    
 
   const checkForMatch = async (updatedCard) => {
     // Update allFlippedCards by appending the updated card
     const newAllFlippedCards = [...allFlippedCards, updatedCard];
-
     setAllFlippedCards(newAllFlippedCards);
-    
     // If 2 cards have been flipped, check for a match directly from newAllFlippedCards
     if (newAllFlippedCards.length % 2 === 0) {
       const lastTwoFlippedCards = newAllFlippedCards.slice(-2);
@@ -201,8 +183,13 @@ function Game() {
       }
   }
 
+  console.log("GAME - before render -- playerLeft: ", playerLeft, playerLeft===true)
+
 	return (
 	  <GameContainer>
+
+    {playerLeft && <div>{playerLeft} has left the room.</div>}
+
 	  
 		<Wellcome>
 		  <div>Wellcome to room: {cr.name}</div>
@@ -267,10 +254,10 @@ function Game() {
       )}
     </CardGallery>
 
-		
+{/* 		
 		{cr !== undefined && parseInt(cr.id) >= 0 && (
 			<button onClick={() => handlePlayerLeaveRoom(cr)}>Leave Room</button>
-		)}
+		)} */}
 
 	  </GameContainer>
 	);

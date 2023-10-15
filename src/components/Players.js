@@ -38,7 +38,10 @@ const Players = (props) => {
   const { players, playerName } = props
 
   const activePlayerIndex = players.findIndex((player) => player.isActive);
-  const activePlayer = players[activePlayerIndex] 
+  const activePlayer = players[activePlayerIndex]
+
+  console.log("Players -- players: ",players) 
+  console.log("Players -- activePlayer: ",activePlayer) 
 
   return (
     <Container>

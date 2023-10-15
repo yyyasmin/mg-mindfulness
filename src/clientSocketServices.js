@@ -23,9 +23,16 @@ export const emitCurentFlippCount = (matchedCards) => {
   socket.emit("FLIPP_COUNT_CHANGED", matchedCards);
 };
 
-export const updateCr = (setCurentRoom) => {
+export const updateCr = (setCr) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
-    setCurentRoom(serverUpdatedCurentRoom);
+    setCr(serverUpdatedCurentRoom);
+  });
+};
+
+export const updatePlayerLeft = (setPlayerLeft) => {
+  socket.on("PLAYER_LEFT_ROOM", (playerName) => {
+    console.log("clientSocketServices -- updatePlayerLeft -- ON-PLAYER_LEFT_ROOM -- playerName: ", playerName)
+    setPlayerLeft(playerName);
   });
 };
 
@@ -42,6 +49,7 @@ export const updateFlippCount = (setFlippCount) => {
 };
 
 export const removeUpdatedRoomDataListener = () => {
+  console.log("removeUpdatedRoomDataListener -- REMOVING SOCKER from UPDATED_CURRENT_ROOM")
   socket.off("UPDATED_CURRENT_ROOM");
 };
 
