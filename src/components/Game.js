@@ -158,7 +158,9 @@ function Game() {
     if (newAllFlippedCards.length % 2 === 0) {
       const lastTwoFlippedCards = newAllFlippedCards.slice(-2);
       // Check for a match here...
-      if (lastTwoFlippedCards[0].imageImportName === lastTwoFlippedCards[1].imageImportName) {
+      // if (lastTwoFlippedCards[0].imageImportName === lastTwoFlippedCards[1].imageImportName) {
+      if (lastTwoFlippedCards[0].name === lastTwoFlippedCards[1].name) {
+
         // Found a match
         await setIsMatched(true);
       } else {

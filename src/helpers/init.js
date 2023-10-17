@@ -4,58 +4,105 @@ import { shuffle } from "./shuffle"; // Import all exports for images loading
 import { CHOSEN_PROXY_URL } from "./ServerRoutes.js"
 
 // Import all the required images for Emotions-1
-const em1 = require("../assets/textures/emotions_1/png/em1.png");
-const em2 = require("../assets/textures/emotions_1/png/em2.png");
-const em3 = require("../assets/textures/emotions_1/png/em3.png");
-const em4 = require("../assets/textures/emotions_1/png/em4.png");
+const em1_1 = require("../assets/textures/emotions_1/png1/em1.png");
+const em2_1 = require("../assets/textures/emotions_1/png1/em2.png");
+const em3_1 = require("../assets/textures/emotions_1/png1/em3.png");
+const em4_1 = require("../assets/textures/emotions_1/png1/em4.png");
+
+const em1_2 = require("../assets/textures/emotions_1/png2/em1.png");
+const em2_2 = require("../assets/textures/emotions_1/png2/em2.png");
+const em3_2 = require("../assets/textures/emotions_1/png2/em3.png");
+const em4_2 = require("../assets/textures/emotions_1/png2/em4.png");
+const emotions1Cards = [em1_1, em2_1, em3_1, em4_1, 
+                        em1_2, em2_2, em3_2, em4_2];
+
 
 // Import all the required images for Emotions-2
-const em5 = require("../assets/textures/emotions_2/png/em5.png");
-const em6 = require("../assets/textures/emotions_2/png/em6.png");
-const em7 = require("../assets/textures/emotions_2/png/em7.png");
-const em8 = require("../assets/textures/emotions_2/png/em8.png");
-const em9 = require("../assets/textures/emotions_2/png/em9.png");
-const em10 = require("../assets/textures/emotions_2/png/em10.png");
+const em5_1 = require("../assets/textures/emotions_2/png1/em5.png");
+const em6_1 = require("../assets/textures/emotions_2/png1/em6.png");
+const em7_1 = require("../assets/textures/emotions_2/png1/em7.png");
+const em8_1 = require("../assets/textures/emotions_2/png1/em8.png");
+const em9_1 = require("../assets/textures/emotions_2/png1/em9.png");
+const em10_1 = require("../assets/textures/emotions_2/png1/em10.png");
+
+const em5_2 = require("../assets/textures/emotions_2/png2/em5.png");
+const em6_2 = require("../assets/textures/emotions_2/png2/em6.png");
+const em7_2 = require("../assets/textures/emotions_2/png2/em7.png");
+const em8_2 = require("../assets/textures/emotions_2/png2/em8.png");
+const em9_2 = require("../assets/textures/emotions_2/png2/em9.png");
+const em10_2 = require("../assets/textures/emotions_2/png2/em10.png");
+const emotions2Cards = [em5_1, em6_1, em7_1, em8_1, em9_1, em10_1,
+                        em5_2, em6_2, em7_2, em8_2, em9_2, em10_2];
+
 
 // Import all the required images for Intimacy-1
-const inti1 = require("../assets/textures/intimacy_1/png/inti1.png");
-const inti2 = require("../assets/textures/intimacy_1/png/inti2.png");
-const inti3 = require("../assets/textures/intimacy_1/png/inti3.png");
-const inti4 = require("../assets/textures/intimacy_1/png/inti4.png");
-const inti5 = require("../assets/textures/intimacy_1/png/inti5.png");
-const inti6 = require("../assets/textures/intimacy_1/png/inti6.png");
-const inti7 = require("../assets/textures/intimacy_1/png/inti7.png");
-const inti8 = require("../assets/textures/intimacy_1/png/inti8.png");
-const inti9 = require("../assets/textures/intimacy_1/png/inti9.png");
-const inti10 = require("../assets/textures/intimacy_1/png/inti10.png");
-const inti11 = require("../assets/textures/intimacy_1/png/inti11.png");
-const inti12 = require("../assets/textures/intimacy_1/png/inti12.png");
+const inti1_1 = require("../assets/textures/intimacy_1/png1/inti1.png");
+const inti2_1 = require("../assets/textures/intimacy_1/png1/inti2.png");
+const inti3_1 = require("../assets/textures/intimacy_1/png1/inti3.png");
+const inti4_1 = require("../assets/textures/intimacy_1/png1/inti4.png");
+const inti5_1 = require("../assets/textures/intimacy_1/png1/inti5.png");
+const inti6_1 = require("../assets/textures/intimacy_1/png1/inti6.png");
+const inti7_1= require("../assets/textures/intimacy_1/png1/inti7.png");
+const inti8_1 = require("../assets/textures/intimacy_1/png1/inti8.png");
+const inti9_1 = require("../assets/textures/intimacy_1/png1/inti9.png");
+const inti10_1 = require("../assets/textures/intimacy_1/png1/inti10.png");
+const inti11_1 = require("../assets/textures/intimacy_1/png1/inti11.png");
+const inti12_1 = require("../assets/textures/intimacy_1/png1/inti12.png");
+
+const inti1_2 = require("../assets/textures/intimacy_1/png2/inti1.png");
+const inti2_2 = require("../assets/textures/intimacy_1/png2/inti2.png");
+const inti3_2 = require("../assets/textures/intimacy_1/png2/inti3.png");
+const inti4_2 = require("../assets/textures/intimacy_1/png2/inti4.png");
+const inti5_2 = require("../assets/textures/intimacy_1/png2/inti5.png");
+const inti6_2 = require("../assets/textures/intimacy_1/png2/inti6.png");
+const inti7_2 = require("../assets/textures/intimacy_1/png2/inti7.png");
+const inti8_2 = require("../assets/textures/intimacy_1/png2/inti8.png");
+const inti9_2 = require("../assets/textures/intimacy_1/png2/inti9.png");
+const inti10_2 = require("../assets/textures/intimacy_1/png2/inti10.png");
+const inti11_2 = require("../assets/textures/intimacy_1/png2/inti11.png");
+const inti12_2 = require("../assets/textures/intimacy_1/png2/inti12.png");
+const intimacy1Cards = [inti1_1, inti2_1, inti3_1, inti4_1, inti5_1, inti6_1, inti7_1, inti8_1, inti9_1, inti10_1, inti11_1, inti12_1, 
+								        inti1_2, inti2_2, inti3_2, inti4_2, inti5_2, inti6_2, inti7_2, inti8_2, inti9_2, inti10_2, inti11_2, inti12_2];
+
+
 
 // Import all the required images for Calm-1
-const calm1 = require("../assets/textures/calm_1/png/calm1.PNG");
-const calm2 = require("../assets/textures/calm_1/png/calm2.PNG");
-const calm3 = require("../assets/textures/calm_1/png/calm3.PNG");
-const calm4 = require("../assets/textures/calm_1/png/calm4.PNG");
-const calm5 = require("../assets/textures/calm_1/png/calm5.PNG");
-const calm6 = require("../assets/textures/calm_1/png/calm6.PNG");
-const calm7 = require("../assets/textures/calm_1/png/calm7.PNG");
+const calm1_1 = require("../assets/textures/calm_1/png1/calm1.PNG");
+const calm2_1 = require("../assets/textures/calm_1/png1/calm2.PNG");
+const calm3_1 = require("../assets/textures/calm_1/png1/calm3.PNG");
+const calm4_1 = require("../assets/textures/calm_1/png1/calm4.PNG");
+const calm5_1 = require("../assets/textures/calm_1/png1/calm5.PNG");
+const calm6_1 = require("../assets/textures/calm_1/png1/calm6.PNG");
+const calm7_1 = require("../assets/textures/calm_1/png1/calm7.PNG");
+
+const calm1_2 = require("../assets/textures/calm_1/png2/calm1.PNG");
+const calm2_2 = require("../assets/textures/calm_1/png2/calm2.PNG");
+const calm3_2 = require("../assets/textures/calm_1/png2/calm3.PNG");
+const calm4_2 = require("../assets/textures/calm_1/png2/calm4.PNG");
+const calm5_2 = require("../assets/textures/calm_1/png2/calm5.PNG");
+const calm6_2 = require("../assets/textures/calm_1/png2/calm6.PNG");
+const calm7_2 = require("../assets/textures/calm_1/png2/calm7.PNG");
+const calm1Cards = [calm1_1, calm2_1, calm3_1, calm4_1, calm5_1, calm6_1, calm7_1,
+							      calm1_2, calm2_2, calm3_2, calm4_2, calm5_2, calm6_2, calm7_2];
 
 
 // Import all the required images for first_letter_1
-const fl1 = require("../assets/textures/first_letter_1/png/fl1.PNG");
-const fl2 = require("../assets/textures/first_letter_1/png/fl2.PNG");
-const fl3 = require("../assets/textures/first_letter_1/png/fl3.PNG");
-const fl4 = require("../assets/textures/first_letter_1/png/fl4.PNG");
-const fl5 = require("../assets/textures/first_letter_1/png/fl5.PNG");
-const fl6 = require("../assets/textures/first_letter_1/png/fl6.PNG");
+const fl1_1 = require("../assets/textures/first_letter_1/png1/fl1.PNG");
+const fl2_1 = require("../assets/textures/first_letter_1/png1/fl2.PNG");
+const fl3_1 = require("../assets/textures/first_letter_1/png1/fl3.PNG");
+const fl4_1 = require("../assets/textures/first_letter_1/png1/fl4.PNG");
+const fl5_1 = require("../assets/textures/first_letter_1/png1/fl5.PNG");
+const fl6_1 = require("../assets/textures/first_letter_1/png1/fl6.PNG");
 
-
+const fl1_2 = require("../assets/textures/first_letter_1/png2/fl1.PNG");
+const fl2_2 = require("../assets/textures/first_letter_1/png2/fl2.PNG");
+const fl3_2 = require("../assets/textures/first_letter_1/png2/fl3.PNG");
+const fl4_2 = require("../assets/textures/first_letter_1/png2/fl4.PNG");
+const fl5_2 = require("../assets/textures/first_letter_1/png2/fl5.PNG");
+const fl6_2 = require("../assets/textures/first_letter_1/png2/fl6.PNG");
 // Create separate arrays for each room's card set
-const emotions1Cards = [em1, em2, em3, em4];
-const emotions2Cards = [em5, em6, em7, em8, em9, em10];
-const intimacy1Cards = [inti1, inti2, inti3, inti4, inti5, inti6, inti7, inti8, inti9, inti10, inti11, inti12];
-const calm1Cards = [calm1, calm2, calm3, calm4, calm5, calm6, calm7];
-const firstLetter1Cards = [fl1, fl2, fl3, fl4, fl5, fl6];
+const firstLetter1Cards = [fl1_1, fl2_1, fl3_1, fl4_1, fl5_1, fl6_1,
+								           fl1_2, fl2_2, fl3_2, fl4_2, fl5_2, fl6_2];
 
 console.log("init - server - CHOSEN_PROXY_URL: ", CHOSEN_PROXY_URL)
 
@@ -140,7 +187,7 @@ const initCardsInRoomsFromJson = async (rooms) => {
           imageImportName: importArr[room.id][index]
         }));
         // Duplicate each card and use spread operator
-        gameCards = gameCards.flatMap((card) => [{ ...card }, { ...card }]);
+        // gameCards = gameCards.flatMap((card) => [{ ...card }, { ...card }]);  // already in pairs
         gameCards = shuffle(gameCards);
         // Assign the shuffled gameCards array back to the room's cardsData property
         room.cardsData = gameCards;
