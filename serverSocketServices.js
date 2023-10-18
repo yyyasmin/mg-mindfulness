@@ -36,9 +36,11 @@ createNewRoom = (chosenRoom, roomId) => {
 setRoomToAddPlayer = (chosenRoom) => {
   let updatedRoom; 
 
+  console.log("setRoomToAddPlayer -- chosenRoom: ", chosenRoom)
+
   updatedRoom = getRoomFromActiveRooms(chosenRoom)
 
-  if ( updatedRoom.currentPlayers.length === 0)  {
+  if ( updatedRoom.currentPlayers===undefined || updatedRoom.currentPlayers.length===0)  {
     updatedRoom = createNewRoom(updatedRoom, updatedRoom.id)
   }
   else {if ( updatedRoom.currentPlayers.length < updatedRoom.maxMembers)  {
@@ -126,6 +128,7 @@ const serverSocketServices = (io) => {
       updatedRoom = setRoomToAddPlayer(chosenRoom, playerName)
       updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
       updateActiveRoomsWithUpdatedRoom(updatedRoom)
+      console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- updatedRoom: ", updatedRoom)
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
 
@@ -168,9 +171,6 @@ const serverSocketServices = (io) => {
     updateActiveRoomsWithUpdatedRoom(updatedRoom)
     // Notify other players about the departure
     socket.broadcast.emit("PLAYER_LEFT_ROOM", playerName);
-
-
-    console.log("IINDEX 0000 -- EMITTING AFTER PLAYER ", playerName, " LEFT: updatedRoom.currentPlayers: ", updatedRoom.currentPlayers)
     // io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     socket.broadcast.emit("UPDATED_CURRENT_ROOM", updatedRoom);
 

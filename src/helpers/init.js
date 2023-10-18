@@ -201,8 +201,10 @@ const initCardsInRoomsFromJson = async (rooms) => {
 
           default:
             console.log("NO ROOM WITH ID ", room.id, "in database-Cards.json file")
+            // Handle other cases or provide a default card set
             break;
         }
+        console.log("init - server - importArr: ", importArr)
 
         let gameCards1 = gameCards.map((card, index) => ({
           ...card,
@@ -217,7 +219,7 @@ const initCardsInRoomsFromJson = async (rooms) => {
         gameCards = shuffle(gameCards);
         room.cardsData = gameCards;
 
-        console.log("INIT -- AFTER SHUFFLE -- room.cardsData: ", room.cardsData);
+        console.log("INIT -- AFTER SHUFFLE -- room: ", room);
       }
     });
   }
@@ -225,6 +227,8 @@ const initCardsInRoomsFromJson = async (rooms) => {
 };
 
 
+
+// Export a function that initializes rooms with cardsData
 export const initRoomsFunc = async () => {
   console.log("11-11-11-11")
 

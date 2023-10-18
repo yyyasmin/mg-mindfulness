@@ -1,7 +1,7 @@
 [
    {
       "gameName":"Emotions-1",
-      "id":0,
+      "id": 0,
       "gameCards":[
          {
             "id":"1",
@@ -58,7 +58,7 @@
    },
    {
       "gameName":"Emotions-2",
-      "id":"1",
+      "id": 1,
       "gameCards":[
          {
             "id": "5",
@@ -122,7 +122,7 @@
          },		 
          {
             "id":"10",
-            "name":"em1",
+            "name":"em10",
 
             "fileFolder":"../assets/textures/emotions_2/png",
             "fileFullPath":"../assets/textures/emotions_2/png/em10.png",
@@ -136,7 +136,7 @@
    },
    {
       "gameName":"Intimacy-1",
-      "id":2,
+      "id": 2,
       "gameCards":[
          {
             "id":"11",
@@ -287,7 +287,7 @@
    },
    {
       "gameName":"Calm-1",
-      "id":3,
+      "id": 3,
       "gameCards":[
          {
             "id":"23",
@@ -378,7 +378,7 @@
    },		 
    {
       "gameName":"First-Letter-1",
-      "gameIndex":4,
+      "gameIndex": 4,
       "gameCards":[
          {
             "id":"30",

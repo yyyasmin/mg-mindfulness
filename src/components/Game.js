@@ -60,6 +60,7 @@ function Game() {
 
   
   useEffect(() => {
+    console.log("Game -- useEffect[currentRoom] -- currentRoom: ", currentRoom)
     setCr(currentRoom);
   }, [currentRoom]);
 
@@ -139,10 +140,13 @@ function Game() {
   };
 
   const togglePlayerTurn = async () => {
-    const updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
-      ...player,
-      isActive: cr.currentPlayers.length > 1 ? !player.isActive : true,
-    }));
+    let updatedCurrentPlayers
+    if (cr.currentPlayers.length > 1)  {
+      updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
+        ...player,
+        isActive: !player.isActive,
+      }));
+    } 
   
     const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
     await emitCurentRoomChanged(updatedRoom);
@@ -197,7 +201,7 @@ function Game() {
 		  <div>Wellcome to room: {cr.name}</div>
 		</Wellcome>
 
-		{cr !== undefined && parseInt(cr.id) >= 0 && 
+		{cr!==undefined && parseInt(cr.id)>=0 && cr.currentPlayers!==undefined && cr.currentPlayers.length>0 && 
     <Players 
       players={cr.currentPlayers}
       playerName={userName}
