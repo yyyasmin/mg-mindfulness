@@ -1,0 +1,13 @@
+git init
+git remote add origin https://github.com/yyyasmin/react-multi-match-game.git
+git fetch origin
+git checkout -b new-branch origin/existing-branch
+
+cd /path/to/parent/folder
+mkdir new-folder
+cd new-folder
+git init
+git remote add origin <remote-url>
+git fetch origin
+git checkout -b new-branch origin/existing-branch
+

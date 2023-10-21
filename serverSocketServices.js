@@ -28,6 +28,7 @@ createNewRoom = (chosenRoom, roomId) => {
   
   let newRoom = {
     ...chosenRoom,
+    currentPlayers: [],
     id: roomId,
   }
   return newRoom
@@ -47,6 +48,7 @@ setRoomToAddPlayer = (chosenRoom) => {
     updatedRoom = {...updatedRoom}
   }}
   if (updatedRoom.currentPlayers.length >= updatedRoom.maxMembers)  {  // ROOM FULL - OPEN NEW ONE WITH NEW ID
+    console.log("CREATING NEW ROOM WITH NEW ID: ", updatedRoom.id+updatedRoom.id)
     updatedRoom = createNewRoom(updatedRoom, updatedRoom.id+updatedRoom.id)
   }
   
@@ -124,11 +126,15 @@ console.log("IN serverSocketServices.js");
 const serverSocketServices = (io) => {
   io.on("connection", (socket) => {
     socket.on("CREATE_ROOM_AND_ADD_PLAYER", ({ playerName, chosenRoom }) => {
-      let updatedRoom;
-      updatedRoom = setRoomToAddPlayer(chosenRoom, playerName)
-      updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
-      updateActiveRoomsWithUpdatedRoom(updatedRoom)
-      console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- updatedRoom: ", updatedRoom)
+      let updatedRoom = {...chosenRoom};
+
+      if (playerName != undefined)  {
+        updatedRoom = setRoomToAddPlayer(chosenRoom, playerName)
+        updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
+        updateActiveRoomsWithUpdatedRoom(updatedRoom)
+      }
+      console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- updatedRoom.playerName: ", updatedRoom.playerName)
+      console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- updatedRoom.currentPlayers: ", updatedRoom.currentPlayers)
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
 

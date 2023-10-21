@@ -90,10 +90,12 @@ function Game() {
   
     await updatePlayerLeft(setPlayerLeft);
     await updateCr(setCr);
-    await emitRemoveMemberFromRoom({
-      playerName: userName,
-      chosenRoom: cr,
-    });
+    if ( !isEmpty(userName) && !isEmpty(cr) )   {
+      await emitRemoveMemberFromRoom({
+        playerName: userName,
+        chosenRoom: cr,
+      });
+   }
     var dialogText = 'Are you really sure you want to leave?';
     console.log("Game -- handleBeforeUnload -- dialogText: ", dialogText);
     e.returnValue = dialogText;

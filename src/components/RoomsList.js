@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import isEmpty from "../helpers/isEmpty";
+
 import {
   updateCr,
   removeUpdatedRoomDataListener,
@@ -66,10 +68,15 @@ const RoomsList = ({ userName, roomsInitialData }) => {
   const navigate = useNavigate();
 
   const handleJoinRoom = async (chosenRoom) => {
-    emitAddMemberToRoom({
-      playerName: userName,
-      chosenRoom: chosenRoom,
-    });
+    console.log("Room - handleJoinRoom --userName: ", userName)
+    console.log( "Room - handleJoinRoom -- isEmpty(userName) : ", isEmpty(userName) )
+
+    if ( !isEmpty(userName) )   {
+      emitAddMemberToRoom({
+        playerName: userName,
+        chosenRoom: chosenRoom,
+      });
+    }
   };
 
   useEffect(() => {
