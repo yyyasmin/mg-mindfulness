@@ -1,7 +1,6 @@
 import React from 'react';
 
 // CHECK IF OBJ OF ANY TYPE IS EMPTY 
-
 function isEmpty(obj) {
   if (typeof obj === 'undefined' || obj === null) {
     return true;
