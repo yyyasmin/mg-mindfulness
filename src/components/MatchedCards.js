@@ -58,9 +58,18 @@ const CardText = styled.div`
 const MatchedCards = (props) => {
   const { index, playerName, players, card } = props;
 
+  console.log("MatchCards -- props: ", props)
+
   const activePlayerIndex = players.findIndex((player) => player.isActive);
 
-  const secondPlayerIndex = players.findIndex((player) => !player.isActive);
+  let secondPlayerIndex = players.findIndex((player) => !player.isActive);
+  if ( secondPlayerIndex==-1 || secondPlayerIndex==undefined )  {
+    secondPlayerIndex = 0
+  }
+
+  console.log("MatchCards -- secondPlayerIndex: ", secondPlayerIndex)
+  console.log("MatchCards -- players[secondPlayerIndex]: ", players[secondPlayerIndex])
+
 
   const currentPlayer = activePlayerIndex === index ? players[activePlayerIndex] : players[secondPlayerIndex]
 

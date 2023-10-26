@@ -60,7 +60,6 @@ function Game() {
 
   
   useEffect(() => {
-    console.log("Game -- useEffect[currentRoom] -- currentRoom: ", currentRoom)
     setCr(currentRoom);
   }, [currentRoom]);
 
@@ -85,8 +84,6 @@ function Game() {
 
 
   window.onbeforeunload = async function (e) {
-
-    await console.log("onbeforeunload is firing");
   
     await updatePlayerLeft(setPlayerLeft);
     await updateCr(setCr);
@@ -125,9 +122,12 @@ function Game() {
   }, [flippCount, isMatched]);
 
   const handleFlippCount = async () => {
+
+    console.log("handleFlippCount -- flippCount: ", flippCount)
+
     if (flippCount === 4)  {  // ITS IN HERE TO PREVENT INFINITE USEEFFECT LOOP
-        await setFlippCount(0)
-		await togglePlayerTurn()
+      await setFlippCount(0)
+		  await togglePlayerTurn()
     } 
   };
 
@@ -142,29 +142,45 @@ function Game() {
   };
 
   const togglePlayerTurn = async () => {
-    let updatedCurrentPlayers
-    if (cr.currentPlayers.length > 1)  {
+
+    console.log("Game -- togglePlayerTurn -- cr: ", cr)
+
+    let updatedCurrentPlayers = [...cr.currentPlayers]
+    let updatedRoom
+    if (updatedCurrentPlayers.length > 1)  {
       updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
         ...player,
         isActive: !player.isActive,
       }));
     } 
-  
-    const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
-    await emitCurentRoomChanged(updatedRoom);
+    console.log("Game -- 0000 - updatedRoom -- updatedCurrentPlayers , ", updatedCurrentPlayers)
+
+    if ( updatedCurrentPlayers!==undefined && updatedCurrentPlayers.length>0 )  {
+      console.log("Game -- 1111 - updatedRoom -- updatedCurrentPlayers , ", updatedCurrentPlayers)
+
+      updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
+      await emitCurentRoomChanged(updatedRoom);
+    }
     return updatedRoom;
   };
     
 
   const checkForMatch = async (updatedCard) => {
+
+    console.log("Game -- checkForMatch -- updatedCard: ", updatedCard)
+
     // Update allFlippedCards by appending the updated card
     const newAllFlippedCards = [...allFlippedCards, updatedCard];
     setAllFlippedCards(newAllFlippedCards);
+
+    console.log("Game -- checkForMatch -- newAllFlippedCards: ", newAllFlippedCards)
+    console.log("Game -- checkForMatch -- allFlippedCards: ", allFlippedCards)
+
+
     // If 2 cards have been flipped, check for a match directly from newAllFlippedCards
     if (newAllFlippedCards.length % 2 === 0) {
       const lastTwoFlippedCards = newAllFlippedCards.slice(-2);
       // Check for a match here...
-      // if (lastTwoFlippedCards[0].imageImportName === lastTwoFlippedCards[1].imageImportName) {
       if (lastTwoFlippedCards[0].name === lastTwoFlippedCards[1].name) {
 
         // Found a match
@@ -178,6 +194,7 @@ function Game() {
         // }, 1000); // Delayed flip-back after 1 second
       }
     }  // END 2 CARDS FLIPPED
+
     return isMatched
   };
   
@@ -191,7 +208,6 @@ function Game() {
       }
   }
 
-  console.log("GAME - before render -- playerLeft: ", playerLeft, playerLeft===true)
 
 	return (
 	  <GameContainer>
@@ -224,7 +240,7 @@ function Game() {
         allFlippedCards.length > 0 &&
         cr !== undefined && 
         cr.currentPlayers !== undefined &&
-        cr.currentPlayers.length === 2 ? (
+        cr.currentPlayers.length > 0 ? (
 
         allFlippedCards.slice(-2).map((card, index) => (
           <MatchedCards
@@ -237,7 +253,7 @@ function Game() {
         ))
       ) :  (
         <>
-          { cr !== undefined && parseInt(cr.id) >= 0 && cr.currentPlayer!== undefined && cr.currentPlayer.length !== 2 ? (
+          { cr !== undefined && parseInt(cr.id) >= 0 && cr.currentPlayer!== undefined && cr.currentPlayer.length > 0 ? (
             <WaitingMsg />
           ) : (
             cr.cardsData?.map((card, index) => (
@@ -248,12 +264,13 @@ function Game() {
                 isFlipped={card.isFlipped}
                 
                 toggleCardFlip={(cardId) => {
+
                   const activePlayerIndex = cr.currentPlayers.findIndex(player => player.name === userName);
+                  
                   if (activePlayerIndex !== -1 && cr.currentPlayers[activePlayerIndex].isActive) {
                     toggleCardFlip(cardId);
                   }
                 }}
-
 
               />
             ))
