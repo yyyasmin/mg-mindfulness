@@ -4,6 +4,9 @@ import { CHOSEN_PROXY_URL } from "./helpers/ServerRoutes.js";
 export const socket = io(CHOSEN_PROXY_URL);
 
 export const emitAddMemberToRoom = ({ playerName, chosenRoom }) => {
+  console.log("clientSocketServices -- emitAddMemberToRoom -- playerName: ", playerName)
+  console.log("clientSocketServices -- emitAddMemberToRoom -- chosenRoom: ", chosenRoom)
+
   socket.emit('CREATE_ROOM_AND_ADD_PLAYER', { playerName, chosenRoom });
 };
 

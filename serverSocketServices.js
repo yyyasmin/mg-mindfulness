@@ -37,8 +37,6 @@ createNewRoom = (chosenRoom, roomId) => {
 setRoomToAddPlayer = (chosenRoom) => {
   let updatedRoom; 
 
-  console.log("setRoomToAddPlayer -- chosenRoom: ", chosenRoom)
-
   updatedRoom = getRoomFromActiveRooms(chosenRoom)
 
   if ( updatedRoom.currentPlayers===undefined || updatedRoom.currentPlayers.length===0)  {
@@ -87,7 +85,7 @@ addPlayerToRoom = (room, playerName, socketId) => {
        
   const existingPlayer = room.currentPlayers && room.currentPlayers.find((player) => player.name === playerName);
   if (existingPlayer) {
-    console.log("Player ", playerName , " already present in room ", room,  "- MOVING HIM TO BE LAST IN PLAYERS ARRAY ")
+    // console.log("Player ", playerName , " already present in room ", room,  "- MOVING HIM TO BE LAST IN PLAYERS ARRAY ")
     updatedPlayers = movePlayerToEnd(room.currentPlayers, playerName)  // MOVE EXISTING PLAYER TO END OF currentPlayers ARR
     updatedRoom = { ...room, currentPlayers: updatedPlayers  }
     return updatedRoom
@@ -99,6 +97,7 @@ addPlayerToRoom = (room, playerName, socketId) => {
       email: "",
       isWinner: false,
       isActive: false,
+      flippCount: 0
     };
    
     room.currentPlayers.push(newPlayer);
@@ -125,9 +124,11 @@ addPlayerToRoom = (room, playerName, socketId) => {
 console.log("IN serverSocketServices.js");
 const serverSocketServices = (io) => {
   io.on("connection", (socket) => {
+    
     socket.on("CREATE_ROOM_AND_ADD_PLAYER", ({ playerName, chosenRoom }) => {
       let updatedRoom = {...chosenRoom};
-
+      console.log("ON-CREATE_ROOM_AND_ADD_PLAYER -- playerName: ", playerName)
+    
       if (playerName != undefined)  {
         updatedRoom = setRoomToAddPlayer(chosenRoom, playerName)
         updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
@@ -135,6 +136,8 @@ const serverSocketServices = (io) => {
       }
       console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- updatedRoom.playerName: ", updatedRoom.playerName)
       console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- updatedRoom.currentPlayers: ", updatedRoom.currentPlayers)
+      console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- playerNames: ", playerName)
+
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
 

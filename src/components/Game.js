@@ -17,9 +17,6 @@ import {
   updatePlayerLeft,
   updateMatchedCards,
   removeUpdatedMatchedCards,
-  updateFlippCount,
-  removeUpdatedFlippCount,
-  emitCurentFlippCount
 } from "../clientSocketServices";
 
 const GameContainer = styled.div`
@@ -49,42 +46,34 @@ function Game() {
   const location = useLocation();
   const { userName, currentRoom } = location.state;
 
+  console.log("GAme -- location.state: ", location.state)
+
   const [cr, setCr] = useState({});
   const [isMatched, setIsMatched] = useState(false);
   const [allFlippedCards, setAllFlippedCards] = useState([]);
   const [lastFlippedCards, setLastFlippedCards] = useState([]);
   const [clearFlippedCards, setClearFlippedCards] = useState(false);
-  const [flippCount, setFlippCount] = useState(0);
   const [playerLeft, setPlayerLeft] = useState(null);
-
 
   
   useEffect(() => {
+    console.log("Game -- useEffect[currentRoom] -- currentRoom: ", currentRoom)
+    console.log("Game -- useEffect[currentRoom] -- userName: ", userName)
     setCr(currentRoom);
   }, [currentRoom]);
 
-  useEffect(() => {
-    console.log("Game -- useEffect[] -- flippCount: ", flippCount);
-    if ( flippCount === 0)  {
-      emitCurentFlippCount(flippCount); // Emit the initial flippCount value when the component mounts
-    }
-  }, []);
-
-  
+ 
   useEffect(() => {
     if (clearFlippedCards) {
       setLastFlippedCards([]);
       emitCurentRoomChanged(cr);
       setClearFlippedCards(false);
       setIsMatched(false)
-	    setFlippCount(0)
     }
   }, [clearFlippedCards]);
 
 
-
   window.onbeforeunload = async function (e) {
-  
     await updatePlayerLeft(setPlayerLeft);
     await updateCr(setCr);
     if ( !isEmpty(userName) && !isEmpty(cr) )   {
@@ -100,67 +89,57 @@ function Game() {
   };
   
 
-
   useEffect(() => {
+    console.log("Game -- useEffect[] -- cr: ", cr)
+    console.log("Game -- useEffect[] -- userName: ", userName)
+
     updateCr(setCr);
     updateMatchedCards(setIsMatched);
-    updateFlippCount(setFlippCount);
     
     return () => {
       // removeUpdatedRoomDataListener();
       removeUpdatedMatchedCards();
-      removeUpdatedFlippCount();
     };
   }, []);
 
-
-
-  useEffect(() => {
-	if ( !isEmpty(cr) )  {
-		handleFlippCount()
-	}
-  }, [flippCount, isMatched]);
-
-  const handleFlippCount = async () => {
-
-    console.log("handleFlippCount -- flippCount: ", flippCount)
-
-    if (flippCount === 4)  {  // ITS IN HERE TO PREVENT INFINITE USEEFFECT LOOP
-      await setFlippCount(0)
-		  await togglePlayerTurn()
-    } 
-  };
-
   
-  const handleFlippedCard = async (cardIndex) => {
-    const updatedCard = { ...cr.cardsData[cardIndex] };
-    updatedCard.isFlipped = !updatedCard.isFlipped;
-    const updatedRoom = { ...cr };
-    updatedRoom.cardsData[cardIndex] = updatedCard;
-    await emitCurentRoomChanged(updatedRoom);
-    return updatedCard;
-  };
+  // const handleFlippedCard = async (cardIndex) => {  // Fliip specific card
+  //   const updatedCard = { ...cr.cardsData[cardIndex] };
+  //   updatedCard.isFlipped = !updatedCard.isFlipped;
+  //   const updatedRoom = { ...cr };
+  //   updatedRoom.cardsData[cardIndex] = updatedCard;
+    
+  //   const activePlayerIndex = updatedRoom.currentPlayers.findIndex((player) => player.name === userName);
+
+  //   if (activePlayerIndex !== -1 && cr.currentPlayers[activePlayerIndex].isActive) {
+  //     await toggleCardFlip(cardId);
+  //     // Increment the flippCount for the active player
+  //     const updatedRoom = { ...cr };
+  //     updatedRoom.currentPlayers[activePlayerIndex].flippCount++;
+  //     await emitCurentRoomChanged(updatedRoom);
+  //   }
+
+  //   await emitCurentRoomChanged(updatedRoom);
+  //   return updatedCard;
+
+  // };
 
   const togglePlayerTurn = async () => {
-
     console.log("Game -- togglePlayerTurn -- cr: ", cr)
 
     let updatedCurrentPlayers = [...cr.currentPlayers]
     let updatedRoom
-    if (updatedCurrentPlayers.length > 1)  {
+
+    if (cr.currentPlayers !== undefined && cr.currentPlayers.length > 1) { 
+
       updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
         ...player,
         isActive: !player.isActive,
-      }));
-    } 
-    console.log("Game -- 0000 - updatedRoom -- updatedCurrentPlayers , ", updatedCurrentPlayers)
-
-    if ( updatedCurrentPlayers!==undefined && updatedCurrentPlayers.length>0 )  {
-      console.log("Game -- 1111 - updatedRoom -- updatedCurrentPlayers , ", updatedCurrentPlayers)
-
-      updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
-      await emitCurentRoomChanged(updatedRoom);
+      } ))
     }
+    console.log("Game -- 1111 - updatedRoom -- updatedCurrentPlayers , ", updatedCurrentPlayers)
+    updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
+    await emitCurentRoomChanged(updatedRoom);
     return updatedRoom;
   };
     
@@ -197,17 +176,70 @@ function Game() {
 
     return isMatched
   };
+
+
+	const getActivePlayer = () => {
+		const activePlayer = cr.currentPlayers.find((player) => player.isActive);
+		console.log("getActivePlayer -- activePlayer: ", activePlayer)
+		return activePlayer
+	};
+
+    
+  const handleFlippCount = async () => {
+    let activePlayer = await getActivePlayer();
+    let updatedPlayers;
+    if (!isEmpty(activePlayer)) {
+      if (activePlayer.flippCount < 4) {
+        activePlayer.flippCount++;
+      }
+      if (isMatched) {
+        activePlayer.flippCount = 0;
+      }  
+      // Now, you need to emit the updated player's information along with the room  
+      updatedPlayers = await cr.currentPlayers.map((player) => {
+        if (player.name === activePlayer.name) {
+          return { ...activePlayer };
+        } else {
+          return { ...player };
+        }
+      });
+      const updatedRoom = await { ...cr, currentPlayers: updatedPlayers }; // Declare updatedRoom here
+      // Emit the updated room with the modified player's information
+      await emitCurentRoomChanged(updatedRoom);
+    }
+  };
   
+
+  
+  const updateCardsArrWithFlippedCard = async (cardIndex) => {  // Fliip specific card
+    const updatedCard = { ...cr.cardsData[cardIndex] };
+    updatedCard.isFlipped = !updatedCard.isFlipped;
+    let updatedRoom = { ...cr };
+    updatedRoom.cardsData[cardIndex] = updatedCard;
+    await emitCurentRoomChanged(updatedRoom);
+    return updatedCard;
+  };
+
   const toggleCardFlip = async (cardId) => {
-    await setFlippCount(flippCount+1)
     const cardIndex = cr.cardsData.findIndex((card) => card.id === cardId);
     if (cardIndex !== -1) {
-      let updatedCard = await handleFlippedCard(cardId, cardIndex);     
+      let updatedCard = await updateCardsArrWithFlippedCard(cardIndex);     
       await checkForMatch(updatedCard)
       await handleFlippCount()
+      console.log("Game -- toggleCardFlip -- cr: ", cr)
+      if ( cr.currentPlayers!==undefined && cr.currentPlayers.length>1 && getActivePlayer().flippCount >= 4 )  {
+		    await togglePlayerTurn()
       }
+    }
   }
 
+	const handleCardFlip = (cardId) => {
+	  const currentUserIndex = cr.currentPlayers.findIndex((player) => player.name === userName);
+
+	  if (currentUserIndex !== -1 && cr.currentPlayers[currentUserIndex].isActive) {
+		toggleCardFlip(cardId);
+	  }
+	};
 
 	return (
 	  <GameContainer>
@@ -257,22 +289,15 @@ function Game() {
             <WaitingMsg />
           ) : (
             cr.cardsData?.map((card, index) => (
-              <NikeCard
-                key={index}
-                playerName={userName}
-                card={card}
-                isFlipped={card.isFlipped}
-                
-                toggleCardFlip={(cardId) => {
 
-                  const activePlayerIndex = cr.currentPlayers.findIndex(player => player.name === userName);
-                  
-                  if (activePlayerIndex !== -1 && cr.currentPlayers[activePlayerIndex].isActive) {
-                    toggleCardFlip(cardId);
-                  }
-                }}
+			<NikeCard
+			  key={index}
+			  playerName={userName}
+			  card={card}
+			  isFlipped={card.isFlipped}
+        toggleCardFlip={() => handleCardFlip(card.id)} // Pass card.id as the parameter
+        />
 
-              />
             ))
           )}
         </>

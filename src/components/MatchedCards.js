@@ -67,10 +67,6 @@ const MatchedCards = (props) => {
     secondPlayerIndex = 0
   }
 
-  console.log("MatchCards -- secondPlayerIndex: ", secondPlayerIndex)
-  console.log("MatchCards -- players[secondPlayerIndex]: ", players[secondPlayerIndex])
-
-
   const currentPlayer = activePlayerIndex === index ? players[activePlayerIndex] : players[secondPlayerIndex]
 
   const currentText = activePlayerIndex === index ? card.text1 : card.text2
