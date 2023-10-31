@@ -134,10 +134,6 @@ const serverSocketServices = (io) => {
         updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
         updateActiveRoomsWithUpdatedRoom(updatedRoom)
       }
-      console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- updatedRoom.playerName: ", updatedRoom.playerName)
-      console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- updatedRoom.currentPlayers: ", updatedRoom.currentPlayers)
-      console.log("CCCCCCCCCCCCCCCCCCCCCCREATE_ROOM_AND_ADD_PLAYER -- playerNames: ", playerName)
-
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });
 
@@ -155,19 +151,15 @@ const serverSocketServices = (io) => {
     if (existingPlayer) {
       // let updatedPlayers = [...updatedRoom.currentPlayers];
       let updatedPlayers = [...updatedRoom.currentPlayers.filter((player) => player.name !== playerName)]
-      
       if ( updatedPlayers.length === 1 )  {
         updatedPlayers[0].isActive = true
       } 
-
       updatedRoom = {
         ... updatedRoom,
         currentPlayers: updatedPlayers,
       }
-
       if ( updatedPlayers.length == 0 )  {  // NO PLAYERS IN THE ROOM
         console.log("ALL PLAYERS LEFT THE ROOM")
-
         updatedRoom = {
           ... updatedRoom,
           currentPlayers: updatedPlayers,
@@ -176,7 +168,6 @@ const serverSocketServices = (io) => {
         }
       }
     }
-    
     updateActiveRoomsWithUpdatedRoom(updatedRoom)
     // Notify other players about the departure
     socket.broadcast.emit("PLAYER_LEFT_ROOM", playerName);
@@ -187,6 +178,7 @@ const serverSocketServices = (io) => {
     
 
     socket.on("CURENT_ROOM_CHANGED", (updatedRoom) => {
+      console.log("ON-CURENT_ROOM_CHANGED -- updatedRoom.currentPlayers: ", updatedRoom.currentPlayers)
       updateActiveRoomsWithUpdatedRoom(updatedRoom) 
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });

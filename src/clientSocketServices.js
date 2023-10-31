@@ -15,6 +15,7 @@ export const emitRemoveMemberFromRoom = ({ playerName, chosenRoom }) => {
 };
 
 export const emitCurentRoomChanged = (curentRoom) => {
+  console.log("emitCurentRoomChanged -- curentRoom: ", curentRoom)
   socket.emit("CURENT_ROOM_CHANGED", curentRoom);
 };
 
@@ -28,6 +29,8 @@ export const emitCurentFlippCount = (matchedCards) => {
 
 export const updateCr = (setCr) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
+    console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom-count: ",
+                  serverUpdatedCurentRoom, serverUpdatedCurentRoom.currentPlayers[0].flippCount)
     setCr(serverUpdatedCurentRoom);
   });
 };
