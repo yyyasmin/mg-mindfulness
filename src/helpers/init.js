@@ -129,6 +129,122 @@ const firstLetter1Cards = [
 ];
 
 
+// Import all the required images for Deep-1
+const d1_1 = require("../assets/textures/deep_1/png1/d1.png");
+const d1_2 = require("../assets/textures/deep_1/png2/d1.png");
+const d2_1 = require("../assets/textures/deep_1/png1/d2.PNG");
+const d2_2 = require("../assets/textures/deep_1/png2/d2.PNG");
+const d3_1 = require("../assets/textures/deep_1/png1/d3.PNG");
+const d3_2 = require("../assets/textures/deep_1/png2/d3.PNG");
+const d4_1 = require("../assets/textures/deep_1/png1/d4.PNG");
+const d4_2 = require("../assets/textures/deep_1/png2/d4.PNG");
+const d5_1 = require("../assets/textures/deep_1/png1/d5.png");
+const d5_2 = require("../assets/textures/deep_1/png2/d5.png");
+const d6_1 = require("../assets/textures/deep_1/png1/d6.png");
+const d6_2 = require("../assets/textures/deep_1/png2/d6.png");
+const d7_1 = require("../assets/textures/deep_1/png1/d7.png");
+const d7_2 = require("../assets/textures/deep_1/png2/d7.png");
+const d8_1 = require("../assets/textures/deep_1/png1/d8.png");
+const d8_2 = require("../assets/textures/deep_1/png2/d8.png");
+const d9_1 = require("../assets/textures/deep_1/png1/d9.png");
+const d9_2 = require("../assets/textures/deep_1/png2/d9.png");
+const d10_1 = require("../assets/textures/deep_1/png1/d10.png");
+const d10_2 = require("../assets/textures/deep_1/png2/d10.png");
+const d11_1 = require("../assets/textures/deep_1/png1/d11.png");
+const d11_2 = require("../assets/textures/deep_1/png2/d11.png");
+const d12_1 = require("../assets/textures/deep_1/png1/d12.png");
+const d12_2 = require("../assets/textures/deep_1/png2/d12.png");
+const d13_1 = require("../assets/textures/deep_1/png1/d13.png");
+const d13_2 = require("../assets/textures/deep_1/png2/d13.png");
+const d14_1 = require("../assets/textures/deep_1/png1/d14.png");
+const d14_2 = require("../assets/textures/deep_1/png2/d14.png");
+const d15_1 = require("../assets/textures/deep_1/png1/d15.png");
+const d15_2 = require("../assets/textures/deep_1/png2/d15.png");
+const d16_1 = require("../assets/textures/deep_1/png1/d16.png");
+const d16_2 = require("../assets/textures/deep_1/png2/d16.png");
+const d17_1 = require("../assets/textures/deep_1/png1/d17.png");
+const d17_2 = require("../assets/textures/deep_1/png2/d17.png");
+const d18_1 = require("../assets/textures/deep_1/png1/d18.png");
+const d18_2 = require("../assets/textures/deep_1/png2/d18.png");
+const d19_1 = require("../assets/textures/deep_1/png1/d19.png");
+const d19_2 = require("../assets/textures/deep_1/png2/d19.png");
+const d20_1 = require("../assets/textures/deep_1/png1/d20.png");
+const d20_2 = require("../assets/textures/deep_1/png2/d20.png");
+const d21_1 = require("../assets/textures/deep_1/png1/d21.png");
+const d21_2 = require("../assets/textures/deep_1/png2/d21.png");
+const d22_1 = require("../assets/textures/deep_1/png1/d22.png");
+const d22_2 = require("../assets/textures/deep_1/png2/d22.png");
+const d23_1 = require("../assets/textures/deep_1/png1/d23.png");
+const d23_2 = require("../assets/textures/deep_1/png2/d23.png");
+const d24_1 = require("../assets/textures/deep_1/png1/d24.PNG");
+const d24_2 = require("../assets/textures/deep_1/png2/d24.PNG");
+const d25_1 = require("../assets/textures/deep_1/png1/d25.png");
+const d25_2 = require("../assets/textures/deep_1/png2/d25.png");
+const d26_1 = require("../assets/textures/deep_1/png1/d26.PNG");
+const d26_2 = require("../assets/textures/deep_1/png2/d26.PNG");
+const d27_1 = require("../assets/textures/deep_1/png1/d27.PNG");
+const d27_2 = require("../assets/textures/deep_1/png2/d27.PNG");
+const d28_1 = require("../assets/textures/deep_1/png1/d28.png");
+const d28_2 = require("../assets/textures/deep_1/png2/d28.png");
+const d29_1 = require("../assets/textures/deep_1/png1/d29.PNG");
+const d29_2 = require("../assets/textures/deep_1/png2/d29.PNG");
+const d30_1 = require("../assets/textures/deep_1/png1/d30.png");
+const d30_2 = require("../assets/textures/deep_1/png2/d30.png");
+const d31_1 = require("../assets/textures/deep_1/png1/d31.png");
+const d31_2 = require("../assets/textures/deep_1/png2/d31.png");
+const d32_1 = require("../assets/textures/deep_1/png1/d32.png");
+const d32_2 = require("../assets/textures/deep_1/png2/d32.png");
+const d33_1 = require("../assets/textures/deep_1/png1/d33.png");
+const d33_2 = require("../assets/textures/deep_1/png2/d33.png");
+const d34_1 = require("../assets/textures/deep_1/png1/d34.png");
+const d34_2 = require("../assets/textures/deep_1/png2/d34.png");
+const d35_1 = require("../assets/textures/deep_1/png1/d35.png");
+const d35_2 = require("../assets/textures/deep_1/png2/d35.png");
+const d36_1 = require("../assets/textures/deep_1/png1/d36.png");
+const d36_2 = require("../assets/textures/deep_1/png2/d36.png");
+
+// Deep-1 cards array
+const deep_1Cards = [
+  [d1_1, d1_2],
+  [d2_1, d2_2],
+  [d3_1, d3_2],
+  [d4_1, d4_2],
+  [d5_1, d5_2],
+  [d6_1, d6_2],
+  [d7_1, d7_2],
+  [d8_1, d8_2],
+  [d9_1, d9_2],
+  [d10_1, d10_2],
+  [d11_1, d11_2],
+  [d12_1, d12_2],
+  [d13_1, d13_2],
+  [d14_1, d14_2],
+  [d15_1, d15_2],
+  [d16_1, d16_2],
+  [d17_1, d17_2],
+  [d18_1, d18_2],
+  [d19_1, d19_2],
+  [d20_1, d20_2],
+  [d21_1, d21_2],
+  [d22_1, d22_2],
+  [d23_1, d23_2],
+  [d24_1, d24_2],
+  [d25_1, d25_2],
+  [d26_1, d26_2],
+  [d27_1, d27_2],
+  [d28_1, d28_2],
+  [d29_1, d29_2],
+  [d30_1, d30_2],
+  [d31_1, d31_2],
+  [d32_1, d32_2],
+  [d33_1, d33_2],
+  [d34_1, d34_2],
+  [d35_1, d35_2],
+  [d36_1, d36_2]
+];
+
+
+
 console.log("init - server - CHOSEN_PROXY_URL: ", CHOSEN_PROXY_URL)
 
 
@@ -199,6 +315,13 @@ const initCardsInRoomsFromJson = async (rooms) => {
             importArr[room.id] = firstLetter1Cards;
             break;
 
+          case "5":
+            importArr[room.id] = deep_1Cards;
+            console.log("Init -- importArr[room.id].length", importArr[room.id].length)
+            console.log("Init -- gameCards.length", gameCards.length)
+
+            break;
+
           default:
             console.log("NO ROOM WITH ID ", room.id, "in database-Cards.json file")
             // Handle other cases or provide a default card set
@@ -206,10 +329,16 @@ const initCardsInRoomsFromJson = async (rooms) => {
         }
         console.log("init - server - importArr: ", importArr)
 
-        let gameCards1 = gameCards.map((card, index) => ({
-          ...card,
-          imageImportName: importArr[room.id][index][0]
-        }));
+        let gameCards1 = gameCards.map((card, index) => {
+          // console.log('Init -- Index:', index); // Log the index
+          // console.log('Init -- importArr[room.id][index][0]:', importArr[room.id][index][0]); // Log the index
+
+          return {
+            ...card,
+            imageImportName: importArr[room.id][index][0]
+          };
+        });
+        
         let gameCards2 = gameCards.map((card, index) => ({
           ...card,
           imageImportName: importArr[room.id][index][1]

@@ -63,6 +63,7 @@ function Game() {
     updateCr(setCr)
     updateMatchedCards(setIsMatched)
     if (!isEmpty(currentRoom) && !isEmpty(userName)) {
+      console.log("useEffect[currentRoom] -- currentRoom: ", currentRoom)
       broadcastChangeCr(currentRoom);
     }
   }, [currentRoom]);
