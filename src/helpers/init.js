@@ -130,117 +130,126 @@ const firstLetter1Cards = [
 
 
 // Import all the required images for Deep-1
-const d1_1 = require("../assets/textures/deep_1/png1/d1.png");
-const d1_2 = require("../assets/textures/deep_1/png2/d1.png");
-const d2_1 = require("../assets/textures/deep_1/png1/d2.PNG");
-const d2_2 = require("../assets/textures/deep_1/png2/d2.PNG");
-const d3_1 = require("../assets/textures/deep_1/png1/d3.PNG");
-const d3_2 = require("../assets/textures/deep_1/png2/d3.PNG");
-const d4_1 = require("../assets/textures/deep_1/png1/d4.PNG");
-const d4_2 = require("../assets/textures/deep_1/png2/d4.PNG");
-const d5_1 = require("../assets/textures/deep_1/png1/d5.png");
-const d5_2 = require("../assets/textures/deep_1/png2/d5.png");
-const d6_1 = require("../assets/textures/deep_1/png1/d6.png");
-const d6_2 = require("../assets/textures/deep_1/png2/d6.png");
-const d7_1 = require("../assets/textures/deep_1/png1/d7.png");
-const d7_2 = require("../assets/textures/deep_1/png2/d7.png");
-const d8_1 = require("../assets/textures/deep_1/png1/d8.png");
-const d8_2 = require("../assets/textures/deep_1/png2/d8.png");
-const d9_1 = require("../assets/textures/deep_1/png1/d9.png");
-const d9_2 = require("../assets/textures/deep_1/png2/d9.png");
-const d10_1 = require("../assets/textures/deep_1/png1/d10.png");
-const d10_2 = require("../assets/textures/deep_1/png2/d10.png");
-const d11_1 = require("../assets/textures/deep_1/png1/d11.png");
-const d11_2 = require("../assets/textures/deep_1/png2/d11.png");
-const d12_1 = require("../assets/textures/deep_1/png1/d12.png");
-const d12_2 = require("../assets/textures/deep_1/png2/d12.png");
-const d13_1 = require("../assets/textures/deep_1/png1/d13.png");
-const d13_2 = require("../assets/textures/deep_1/png2/d13.png");
-const d14_1 = require("../assets/textures/deep_1/png1/d14.png");
-const d14_2 = require("../assets/textures/deep_1/png2/d14.png");
-const d15_1 = require("../assets/textures/deep_1/png1/d15.png");
-const d15_2 = require("../assets/textures/deep_1/png2/d15.png");
-const d16_1 = require("../assets/textures/deep_1/png1/d16.png");
-const d16_2 = require("../assets/textures/deep_1/png2/d16.png");
-const d17_1 = require("../assets/textures/deep_1/png1/d17.png");
-const d17_2 = require("../assets/textures/deep_1/png2/d17.png");
-const d18_1 = require("../assets/textures/deep_1/png1/d18.png");
-const d18_2 = require("../assets/textures/deep_1/png2/d18.png");
-const d19_1 = require("../assets/textures/deep_1/png1/d19.png");
-const d19_2 = require("../assets/textures/deep_1/png2/d19.png");
-const d20_1 = require("../assets/textures/deep_1/png1/d20.png");
-const d20_2 = require("../assets/textures/deep_1/png2/d20.png");
-const d21_1 = require("../assets/textures/deep_1/png1/d21.png");
-const d21_2 = require("../assets/textures/deep_1/png2/d21.png");
-const d22_1 = require("../assets/textures/deep_1/png1/d22.png");
-const d22_2 = require("../assets/textures/deep_1/png2/d22.png");
-const d23_1 = require("../assets/textures/deep_1/png1/d23.png");
-const d23_2 = require("../assets/textures/deep_1/png2/d23.png");
-const d24_1 = require("../assets/textures/deep_1/png1/d24.PNG");
-const d24_2 = require("../assets/textures/deep_1/png2/d24.PNG");
-const d25_1 = require("../assets/textures/deep_1/png1/d25.png");
-const d25_2 = require("../assets/textures/deep_1/png2/d25.png");
-const d26_1 = require("../assets/textures/deep_1/png1/d26.PNG");
-const d26_2 = require("../assets/textures/deep_1/png2/d26.PNG");
-const d27_1 = require("../assets/textures/deep_1/png1/d27.PNG");
-const d27_2 = require("../assets/textures/deep_1/png2/d27.PNG");
-const d28_1 = require("../assets/textures/deep_1/png1/d28.png");
-const d28_2 = require("../assets/textures/deep_1/png2/d28.png");
-const d29_1 = require("../assets/textures/deep_1/png1/d29.PNG");
-const d29_2 = require("../assets/textures/deep_1/png2/d29.PNG");
-const d30_1 = require("../assets/textures/deep_1/png1/d30.png");
-const d30_2 = require("../assets/textures/deep_1/png2/d30.png");
-const d31_1 = require("../assets/textures/deep_1/png1/d31.png");
-const d31_2 = require("../assets/textures/deep_1/png2/d31.png");
-const d32_1 = require("../assets/textures/deep_1/png1/d32.png");
-const d32_2 = require("../assets/textures/deep_1/png2/d32.png");
-const d33_1 = require("../assets/textures/deep_1/png1/d33.png");
-const d33_2 = require("../assets/textures/deep_1/png2/d33.png");
-const d34_1 = require("../assets/textures/deep_1/png1/d34.png");
-const d34_2 = require("../assets/textures/deep_1/png2/d34.png");
-const d35_1 = require("../assets/textures/deep_1/png1/d35.png");
-const d35_2 = require("../assets/textures/deep_1/png2/d35.png");
-const d36_1 = require("../assets/textures/deep_1/png1/d36.png");
-const d36_2 = require("../assets/textures/deep_1/png2/d36.png");
-
+const deep1_1_1 = require("../assets/textures/deep_1/png1/d1.png");
+const deep1_1_2 = require("../assets/textures/deep_1/png2/d1.png");
+const deep1_2_1 = require("../assets/textures/deep_1/png1/d2.PNG");
+const deep1_2_2 = require("../assets/textures/deep_1/png2/d2.PNG");
+const deep1_3_1 = require("../assets/textures/deep_1/png1/d3.PNG");
+const deep1_3_2 = require("../assets/textures/deep_1/png2/d3.PNG");
+const deep1_4_1 = require("../assets/textures/deep_1/png1/d4.PNG");
+const deep1_4_2 = require("../assets/textures/deep_1/png2/d4.PNG");
+const deep1_5_1 = require("../assets/textures/deep_1/png1/d5.png");
+const deep1_5_2 = require("../assets/textures/deep_1/png2/d5.png");
+const deep1_6_1 = require("../assets/textures/deep_1/png1/d6.png");
+const deep1_6_2 = require("../assets/textures/deep_1/png2/d6.png");
+const deep1_7_1 = require("../assets/textures/deep_1/png1/d7.png");
+const deep1_7_2 = require("../assets/textures/deep_1/png2/d7.png");
+const deep1_8_1 = require("../assets/textures/deep_1/png1/d8.png");
+const deep1_8_2 = require("../assets/textures/deep_1/png2/d8.png");
+const deep1_9_1 = require("../assets/textures/deep_1/png1/d9.png");
+const deep1_9_2 = require("../assets/textures/deep_1/png2/d9.png");
+const deep1_10_1 = require("../assets/textures/deep_1/png1/d10.png");
+const deep1_10_2 = require("../assets/textures/deep_1/png2/d10.png");
+const deep1_11_1 = require("../assets/textures/deep_1/png1/d11.png");
+const deep1_11_2 = require("../assets/textures/deep_1/png2/d11.png");
+const deep1_12_1 = require("../assets/textures/deep_1/png1/d12.png");
+const deep1_12_2 = require("../assets/textures/deep_1/png2/d12.png");
 // Deep-1 cards array
-const deep_1Cards = [
-  [d1_1, d1_2],
-  [d2_1, d2_2],
-  [d3_1, d3_2],
-  [d4_1, d4_2],
-  [d5_1, d5_2],
-  [d6_1, d6_2],
-  [d7_1, d7_2],
-  [d8_1, d8_2],
-  [d9_1, d9_2],
-  [d10_1, d10_2],
-  [d11_1, d11_2],
-  [d12_1, d12_2],
-  [d13_1, d13_2],
-  [d14_1, d14_2],
-  [d15_1, d15_2],
-  [d16_1, d16_2],
-  [d17_1, d17_2],
-  [d18_1, d18_2],
-  [d19_1, d19_2],
-  [d20_1, d20_2],
-  [d21_1, d21_2],
-  [d22_1, d22_2],
-  [d23_1, d23_2],
-  [d24_1, d24_2],
-  [d25_1, d25_2],
-  [d26_1, d26_2],
-  [d27_1, d27_2],
-  [d28_1, d28_2],
-  [d29_1, d29_2],
-  [d30_1, d30_2],
-  [d31_1, d31_2],
-  [d32_1, d32_2],
-  [d33_1, d33_2],
-  [d34_1, d34_2],
-  [d35_1, d35_2],
-  [d36_1, d36_2]
+const deep1Cards = [
+  [deep1_1_1, deep1_1_2],
+  [deep1_2_1, deep1_2_2],
+  [deep1_3_1, deep1_3_2],
+  [deep1_4_1, deep1_4_2],
+  [deep1_5_1, deep1_5_2],
+  [deep1_6_1, deep1_6_2],
+  [deep1_7_1, deep1_7_2],
+  [deep1_8_1, deep1_8_2],
+  [deep1_9_1, deep1_9_2],
+  [deep1_10_1, deep1_10_2],
+  [deep1_11_1, deep1_11_2],
+  [deep1_12_1, deep1_12_2]
+];
+
+// Import all the required images for Deep-2
+const deep2_1_1 = require("../assets/textures/deep_2/png1/d1.png");
+const deep2_1_2 = require("../assets/textures/deep_2/png2/d1.png");
+const deep2_2_1 = require("../assets/textures/deep_2/png1/d2.png");
+const deep2_2_2 = require("../assets/textures/deep_2/png2/d2.png");
+const deep2_3_1 = require("../assets/textures/deep_2/png1/d3.png");
+const deep2_3_2 = require("../assets/textures/deep_2/png2/d3.png");
+const deep2_4_1 = require("../assets/textures/deep_2/png1/d4.png");
+const deep2_4_2 = require("../assets/textures/deep_2/png2/d4.png");
+const deep2_5_1 = require("../assets/textures/deep_2/png1/d5.png");
+const deep2_5_2 = require("../assets/textures/deep_2/png2/d5.png");
+const deep2_6_1 = require("../assets/textures/deep_2/png1/d6.png");
+const deep2_6_2 = require("../assets/textures/deep_2/png2/d6.png");
+const deep2_7_1 = require("../assets/textures/deep_2/png1/d7.png");
+const deep2_7_2 = require("../assets/textures/deep_2/png2/d7.png");
+const deep2_8_1 = require("../assets/textures/deep_2/png1/d8.png");
+const deep2_8_2 = require("../assets/textures/deep_2/png2/d8.png");
+const deep2_9_1 = require("../assets/textures/deep_2/png1/d9.png");
+const deep2_9_2 = require("../assets/textures/deep_2/png2/d9.png");
+const deep2_10_1 = require("../assets/textures/deep_2/png1/d10.png");
+const deep2_10_2 = require("../assets/textures/deep_2/png2/d10.png");
+const deep2_11_1 = require("../assets/textures/deep_2/png1/d11.png");
+const deep2_11_2 = require("../assets/textures/deep_2/png2/d11.png");
+const deep2_12_1 = require("../assets/textures/deep_2/png1/d12.PNG");
+const deep2_12_2 = require("../assets/textures/deep_2/png2/d12.PNG");
+// Deep-2 cards array
+const deep2Cards = [
+  [deep2_1_1, deep2_1_2],
+  [deep2_2_1, deep2_2_2],
+  [deep2_3_1, deep2_3_2],
+  [deep2_4_1, deep2_4_2],
+  [deep2_5_1, deep2_5_2],
+  [deep2_6_1, deep2_6_2],
+  [deep2_7_1, deep2_7_2],
+  [deep2_8_1, deep2_8_2],
+  [deep2_9_1, deep2_9_2],
+  [deep2_10_1, deep2_10_2],
+  [deep2_11_1, deep2_11_2],
+  [deep2_12_1, deep2_12_2]
+];
+
+// Import all the required images for Deep-3
+const deep3_1_1 = require("../assets/textures/deep_3/png1/d1.png");
+const deep3_1_2 = require("../assets/textures/deep_3/png2/d1.png");
+const deep3_2_1 = require("../assets/textures/deep_3/png1/d2.PNG");
+const deep3_2_2 = require("../assets/textures/deep_3/png2/d2.PNG");
+const deep3_3_1 = require("../assets/textures/deep_3/png1/d3.PNG");
+const deep3_3_2 = require("../assets/textures/deep_3/png2/d3.PNG");
+const deep3_4_1 = require("../assets/textures/deep_3/png1/d4.png");
+const deep3_4_2 = require("../assets/textures/deep_3/png2/d4.png");
+const deep3_5_1 = require("../assets/textures/deep_3/png1/d5.PNG");
+const deep3_5_2 = require("../assets/textures/deep_3/png2/d5.PNG");
+const deep3_6_1 = require("../assets/textures/deep_3/png1/d6.png");
+const deep3_6_2 = require("../assets/textures/deep_3/png2/d6.png");
+const deep3_7_1 = require("../assets/textures/deep_3/png1/d7.png");
+const deep3_7_2 = require("../assets/textures/deep_3/png2/d7.png");
+const deep3_8_1 = require("../assets/textures/deep_3/png1/d8.png");
+const deep3_8_2 = require("../assets/textures/deep_3/png2/d8.png");
+const deep3_9_1 = require("../assets/textures/deep_3/png1/d9.png");
+const deep3_9_2 = require("../assets/textures/deep_3/png2/d9.png");
+const deep3_10_1 = require("../assets/textures/deep_3/png1/d10.png");
+const deep3_10_2 = require("../assets/textures/deep_3/png2/d10.png");
+const deep3_11_1 = require("../assets/textures/deep_3/png1/d11.png");
+const deep3_11_2 = require("../assets/textures/deep_3/png2/d11.png");
+const deep3_12_1 = require("../assets/textures/deep_3/png1/d12.png");
+const deep3_12_2 = require("../assets/textures/deep_3/png2/d12.png");
+// Deep-3 cards array
+const deep3Cards = [
+  [deep3_1_1, deep3_1_2],
+  [deep3_2_1, deep3_2_2],
+  [deep3_3_1, deep3_3_2],
+  [deep3_4_1, deep3_4_2],
+  [deep3_5_1, deep3_5_2],
+  [deep3_6_1, deep3_6_2],
+  [deep3_7_1, deep3_7_2],
+  [deep3_8_1, deep3_8_2],
+  [deep3_9_1, deep3_9_2],
+  [deep3_10_1, deep3_10_2],
+  [deep3_11_1, deep3_11_2],
+  [deep3_12_1, deep3_12_2]
 ];
 
 
@@ -316,9 +325,17 @@ const initCardsInRoomsFromJson = async (rooms) => {
             break;
 
           case "5":
-            importArr[room.id] = deep_1Cards;
+            importArr[room.id] = deep1Cards;
             break;
 
+          case "6":
+            importArr[room.id] = deep2Cards;
+            break;
+
+          case "7":
+            importArr[room.id] = deep3Cards;
+            break;
+      
           default:
             console.log("NO ROOM WITH ID ", room.id, "in database-Cards.json file")
             // Handle other cases or provide a default card set

@@ -58,7 +58,7 @@
   },
   {
     "id": "5",
-    "name": "Meaningful ID:5",
+    "name": "Meaningful-1 ID:5",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
@@ -66,6 +66,27 @@
     "endGame": false,
     "info": "<a href=\"https://www.youtube.com/shorts/pvJtxQWPcgA\" target=\"_blank\">MEANINGFUL PICTURES</a>"
 
-  }    
+  },
+  {
+    "id": "6",
+    "name": "Meaningful-2 ID:6",
+    "difficulty": 2,
+    "maxMembers": 2,
+    "currentPlayers": [],
+    "startGame": false,
+    "endGame": false,
+    "info": "<a href=\"https://www.youtube.com/shorts/pvJtxQWPcgA\" target=\"_blank\">MEANINGFUL PICTURES</a>"
+
+  },
+  {
+    "id": "7",
+    "name": "Meaningful-3 ID:7",
+    "difficulty": 2,
+    "maxMembers": 2,
+    "currentPlayers": [],
+    "startGame": false,
+    "endGame": false,
+    "info": "<a href=\"https://www.youtube.com/shorts/pvJtxQWPcgA\" target=\"_blank\">MEANINGFUL PICTURES</a>"
+  }  
 
 ]
