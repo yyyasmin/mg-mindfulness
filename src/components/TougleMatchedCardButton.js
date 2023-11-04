@@ -74,6 +74,7 @@ const ReturnButton = styled.button`
   }
 `;
 
+
 const TougleMatchedCardButton = (props) => {
   let { isMatched, setIsMatched, setClearFlippedCards } = props;
 
@@ -85,7 +86,6 @@ const TougleMatchedCardButton = (props) => {
             <MsgContainer>"You've got a match!"</MsgContainer>
             <ReturnButton
               onClick={() => {
-                setIsMatched(!isMatched);
                 setClearFlippedCards(true);
               }}
             >

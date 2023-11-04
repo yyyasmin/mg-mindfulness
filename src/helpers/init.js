@@ -317,9 +317,6 @@ const initCardsInRoomsFromJson = async (rooms) => {
 
           case "5":
             importArr[room.id] = deep_1Cards;
-            console.log("Init -- importArr[room.id].length", importArr[room.id].length)
-            console.log("Init -- gameCards.length", gameCards.length)
-
             break;
 
           default:

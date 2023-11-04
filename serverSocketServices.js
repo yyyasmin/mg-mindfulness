@@ -187,8 +187,8 @@ const serverSocketServices = (io) => {
       io.emit("UPDATED_MATCHED_CARDS", matchedCards);
     });
 
-    socket.on("FLIPP_COUNT_CHANGED", (flippCount) => {
-      io.emit("UPDATED_FLIPP_COUNT", flippCount);
+    socket.on("IS_MATCHED_CHANGED", (isMatched) => {
+      io.emit("UPDATED_IS_MATCHED", isMatched);
     });
     
     socket.on("START_GAME", () => {

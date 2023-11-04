@@ -4,9 +4,6 @@ import { CHOSEN_PROXY_URL } from "./helpers/ServerRoutes.js";
 export const socket = io(CHOSEN_PROXY_URL);
 
 export const emitAddMemberToRoom = ({ playerName, chosenRoom }) => {
-  console.log("clientSocketServices -- emitAddMemberToRoom -- playerName: ", playerName)
-  console.log("clientSocketServices -- emitAddMemberToRoom -- chosenRoom: ", chosenRoom)
-
   socket.emit('CREATE_ROOM_AND_ADD_PLAYER', { playerName, chosenRoom });
 };
 
@@ -15,7 +12,6 @@ export const emitRemoveMemberFromRoom = ({ playerName, chosenRoom }) => {
 };
 
 export const emitCurentRoomChanged = (curentRoom) => {
-  console.log("emitCurentRoomChanged -- curentRoom: ", curentRoom)
   socket.emit("CURENT_ROOM_CHANGED", curentRoom);
 };
 
@@ -23,14 +19,14 @@ export const emitCurentMatchedCards = (matchedCards) => {
   socket.emit("MATCHED_CARDS_CHANGED", matchedCards);
 };
 
-export const emitCurentFlippCount = (matchedCards) => {
-  socket.emit("FLIPP_COUNT_CHANGED", matchedCards);
+export const emitCurentIsMatched = (isMatched) => {
+  socket.emit("IS_MATCHED_CHANGED", isMatched);
 };
 
 export const updateCr = (setCr) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
-    console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom-count: ",
-                  serverUpdatedCurentRoom, serverUpdatedCurentRoom.currentPlayers[0].flippCount)
+    console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom-currentPlayers: ",
+                  serverUpdatedCurentRoom, serverUpdatedCurentRoom.currentPlayers)
     setCr(serverUpdatedCurentRoom);
   });
 };
@@ -48,9 +44,9 @@ export const updateMatchedCards = (setMatchedCards) => {
   });
 };
 
-export const updateFlippCount = (setFlippCount) => {
-  socket.on("UPDATED_FLIPP_COUNT", (flippCount) => {
-    setFlippCount(flippCount);
+export const updateIsMatched = (setIsMatched) => {
+  socket.on("UPDATED_IS_MATCHED", (isMatched) => {
+    setIsMatched(isMatched);
   });
 };
 
@@ -64,6 +60,6 @@ export const removeUpdatedMatchedCards = () => {
 };
 
 
-export const removeUpdatedFlippCount = () => {
-  socket.off("UPDATED_FLIPP_COUNT");
+export const removeUpdatedIsMatched = () => {
+  socket.off("UPDATED_IS_MATCHED");
 };
