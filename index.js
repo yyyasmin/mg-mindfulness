@@ -44,6 +44,15 @@ app.get("/database/rooms.json", (req, res) => {
   res.sendFile(filePath);
 });
 
+
+app.get("/database/GameCards/:filename", (req, res) => {
+  const filePath = path.join(__dirname, "database/GameCards", req.params.filename);
+  console.log("IN INDEX -- GameCards -- filePath: ", filePath);
+  res.sendFile(filePath);
+});
+
+
+
 const serverSocketServices = require("./serverSocketServices");
 serverSocketServices(io);
 

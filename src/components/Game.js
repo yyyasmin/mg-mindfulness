@@ -220,6 +220,7 @@ function Game() {
     }
   };
 
+console.log("BEFORE RENDER -- cr: ", cr)
 
   return (
     <GameContainer>

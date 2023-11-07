@@ -2,6 +2,7 @@
   {
     "id": "0",
     "name": "Emotions-1 ID:0",
+    "gameName": "Emotions_1",
     "difficulty": 0,
     "maxMembers": 2,
     "currentPlayers": [],
@@ -13,6 +14,7 @@
   {
     "id": "1",
     "name": "Emotions-2 ID:1",
+    "gameName": "Emotions_1",
     "difficulty": 1,
     "maxMembers": 2,
     "currentPlayers": [],
@@ -24,7 +26,8 @@
 
   {
   "id": "2",
-  "name": "IntiIntimacy-1 ID:2",
+  "name": "Intimacy_1 ID:2",
+  "gameName": "Intimacy_1",
   "difficulty": 2,
   "maxMembers": 2,
   "currentPlayers": [],
@@ -37,6 +40,7 @@
   {
     "id": "3",
     "name": "Calm down ID:3",
+    "gameName": "Calm_1",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
@@ -48,6 +52,7 @@
   {
     "id": "4",
     "name": "First Letter ID:4",
+    "gameName": "First_Letter_1",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
@@ -59,6 +64,7 @@
   {
     "id": "5",
     "name": "Meaningful-1 ID:5",
+    "gameName": "Deep_1",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
@@ -70,6 +76,7 @@
   {
     "id": "6",
     "name": "Meaningful-2 ID:6",
+    "gameName": "Deep_2",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
@@ -81,6 +88,7 @@
   {
     "id": "7",
     "name": "Meaningful-3 ID:7",
+    "gameName": "Deep_3",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
@@ -88,5 +96,4 @@
     "endGame": false,
     "info": "<a href=\"https://www.youtube.com/shorts/pvJtxQWPcgA\" target=\"_blank\">MEANINGFUL PICTURES</a>"
   }  
-
 ]
