@@ -95,5 +95,16 @@
     "startGame": false,
     "endGame": false,
     "info": "<a href=\"https://www.youtube.com/shorts/pvJtxQWPcgA\" target=\"_blank\">MEANINGFUL PICTURES</a>"
-  }  
+  },
+  {
+    "id": "8",
+    "name": "adva ID:8",
+    "gameName": "Adva",
+    "difficulty": 2,
+    "maxMembers": 2,
+    "currentPlayers": [],
+    "startGame": false,
+    "endGame": false,
+    "info": "<a href=\"https://www.youtube.com/shorts/pvJtxQWPcgA\" target=\"_blank\">Adva Paintings</a>"
+  }    
 ]
