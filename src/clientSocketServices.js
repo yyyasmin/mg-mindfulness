@@ -15,12 +15,12 @@ export const emitCurentRoomChanged = (curentRoom) => {
   socket.emit("CURENT_ROOM_CHANGED", curentRoom);
 };
 
-export const emitCurentMatchedCards = (matchedCards) => {
-  socket.emit("MATCHED_CARDS_CHANGED", matchedCards);
+export const emitCurentMatchedCards = (cr, matchedCards) => {
+  socket.emit("MATCHED_CARDS_CHANGED", cr, matchedCards);
 };
 
-export const emitCurentIsMatched = (isMatched) => {
-  socket.emit("IS_MATCHED_CHANGED", isMatched);
+export const emitCurentIsMatched = (cr, isMatched) => {
+  socket.emit("IS_MATCHED_CHANGED", cr, isMatched);
 };
 
 export const updateCr = (setCr) => {

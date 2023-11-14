@@ -3,7 +3,6 @@ let activeRooms = [];  // KEEP TRACK OF PLAYERS
 // const isEmpty = obj => !Object.keys(obj).length;
 
 const updateActiveRoomsWithUpdatedRoom = (updatedRoom) =>  {
-
   const existingRoomIndex = activeRooms.findIndex((room) => room.id === updatedRoom.id);
   if (existingRoomIndex !== -1) {
     activeRooms[existingRoomIndex] = updatedRoom;
@@ -13,19 +12,8 @@ const updateActiveRoomsWithUpdatedRoom = (updatedRoom) =>  {
   }
 }
 
-const getRoomFromActiveRooms = (room) =>  {
-  const existingRoomIndex = activeRooms.findIndex((r) => r.id === room.id);
-  if (existingRoomIndex !== -1) {
-    return activeRooms[existingRoomIndex]
-  }
-  else  {
-    activeRooms.push(room)
-    return room
-  }
-}
 
-createNewRoom = (chosenRoom, roomId) => {
-  
+createNewRoom = (chosenRoom, roomId) => { 
   let newRoom = {
     ...chosenRoom,
     currentPlayers: [],
@@ -34,22 +22,28 @@ createNewRoom = (chosenRoom, roomId) => {
   return newRoom
 }
 
+
+const getRoomFromActiveRooms = (room) =>  {
+	newRoomId = room.id
+	while (activeRooms.some((r) => r.id === newRoomId && r.currentPlayers.length >= r.maxMembers)) {
+	  newRoomId += "0";
+	}
+	const existingRoomIndex = activeRooms.findIndex((r) => r.id === newRoomId);
+		if (existingRoomIndex !== -1) {
+		return activeRooms[existingRoomIndex]
+	}
+	else  {
+    let newRoom = createNewRoom(room, newRoomId)
+		activeRooms.push(newRoom)
+		return newRoom
+	}
+}
+
+
 setRoomToAddPlayer = (chosenRoom) => {
   let updatedRoom; 
-
   updatedRoom = getRoomFromActiveRooms(chosenRoom)
-
-  if ( updatedRoom.currentPlayers===undefined || updatedRoom.currentPlayers.length===0)  {
-    updatedRoom = createNewRoom(updatedRoom, updatedRoom.id)
-  }
-  else {if ( updatedRoom.currentPlayers.length < updatedRoom.maxMembers)  {
-    updatedRoom = {...updatedRoom}
-  }}
-  if (updatedRoom.currentPlayers.length >= updatedRoom.maxMembers)  {  // ROOM FULL - OPEN NEW ONE WITH NEW ID
-    console.log("CREATING NEW ROOM WITH NEW ID: ", updatedRoom.id+updatedRoom.id)
-    updatedRoom = createNewRoom(updatedRoom, updatedRoom.id+updatedRoom.id)
-  }
-  
+  console.log("0000 -- updatedRoom.currentPlayers: ", updatedRoom.id, updatedRoom.currentPlayers)
   updatedRoom.cardsData.map( (card, index) =>  {
     // Reset all game cards to be on thier back side - when a new players joins - to start the game from start
     card.isFlipped = true
@@ -57,15 +51,14 @@ setRoomToAddPlayer = (chosenRoom) => {
   return updatedRoom
 }
 
+
 function movePlayerToEnd(currentPlayers, playerName) {   // FOR A RECONECTED USER
   // Find the index of the player to move
   const playerIndex = currentPlayers.findIndex((player) => player.name === playerName);
-
   // If the player is found in the array
   if (playerIndex !== -1) {
     // Remove the player from the array
     const playerToMove = currentPlayers.splice(playerIndex, 1)[0];
-
     // Push the player back to the end of the array
     currentPlayers.push(playerToMove);
     currentPlayers.forEach((player) => {
@@ -82,14 +75,11 @@ addPlayerToRoom = (room, playerName, socketId) => {
   let updatedRoom
   let startGame = room.startGame
   let updatedPlayers
-       
   const existingPlayer = room.currentPlayers && room.currentPlayers.find((player) => player.name === playerName);
   if (existingPlayer) {
-    // console.log("Player ", playerName , " already present in room ", room,  "- MOVING HIM TO BE LAST IN PLAYERS ARRAY ")
     updatedPlayers = movePlayerToEnd(room.currentPlayers, playerName)  // MOVE EXISTING PLAYER TO END OF currentPlayers ARR
     updatedRoom = { ...room, currentPlayers: updatedPlayers  }
     return updatedRoom
-
   } else {
     newPlayer = {
       socketId: socketId,
@@ -99,43 +89,54 @@ addPlayerToRoom = (room, playerName, socketId) => {
       isActive: false,
       flippCount: 0
     };
-   
     room.currentPlayers.push(newPlayer);
-
     if ( room.currentPlayers.length === room.maxMembers )  {  // ALL PLAYERS HERE - START GAME
       startGame = true
     }
-
     room.currentPlayers.forEach((player) => {  // FIRST JOINED GO FIRST
       player.isActive = false 
     });
     room.currentPlayers[0].isActive = true
-
     updatedRoom = {
       ...room,
       startGame: startGame,
     }
     return updatedRoom
   }
-}
+}  // END addPlayerToRoom
+
 
 // SOCKET SERVICES
 
 console.log("IN serverSocketServices.js");
+
 const serverSocketServices = (io) => {
+
   io.on("connection", (socket) => {
-    
+
     socket.on("CREATE_ROOM_AND_ADD_PLAYER", ({ playerName, chosenRoom }) => {
       let updatedRoom = {...chosenRoom};
+      console.log("")
       console.log("ON-CREATE_ROOM_AND_ADD_PLAYER -- playerName: ", playerName)
-    
       if (playerName != undefined)  {
         updatedRoom = setRoomToAddPlayer(chosenRoom, playerName)
         updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
         updateActiveRoomsWithUpdatedRoom(updatedRoom)
+        console.log("START 4444 -- activeRooms:  ")
+        activeRooms.forEach(room => {
+          console.log("Room ID: ", room.id, "Current Players: ", room.currentPlayers, "CP-length: ", room.currentPlayers.length);
+        });
+        console.log("END 4444 -- activeRooms:  ")
+        console.log("")
+
       }
-      io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
-    });
+      // io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
+      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
+      // Broadcast to specific sockets
+      playerSocketIDs.forEach(socketID => {
+        io.to(socketID).emit("UPDATED_CURRENT_ROOM", updatedRoom);
+      });
+    });  // END ON-CREATE_ROOM_AND_ADD_PLAYER
 
     
 	socket.on("REMOVE_PLAYER_FROM_ROOM", ({ playerName, chosenRoom }) => {
@@ -169,27 +170,52 @@ const serverSocketServices = (io) => {
       }
     }
     updateActiveRoomsWithUpdatedRoom(updatedRoom)
-    // Notify other players about the departure
-    socket.broadcast.emit("PLAYER_LEFT_ROOM", playerName);
-    // io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
-    socket.broadcast.emit("UPDATED_CURRENT_ROOM", updatedRoom);
 
-  });
+    // Emit "PLAYER_LEFT_ROOM" to all players in the room except the current user
+    const currentSocketID = socket.id;
+    updatedRoom.currentPlayers.forEach(player => {
+      const playerSocketID = player.socketId;
+      if (playerSocketID !== currentSocketID) {
+        io.to(playerSocketID).emit("PLAYER_LEFT_ROOM", playerName);
+        io.to(playerSocketID).emit("UPDATED_CURRENT_ROOM", updatedRoom);
+
+      }
+    });
+  });  // END ON-REMOVE_PLAYER_FROM_ROOM
     
 
+
     socket.on("CURENT_ROOM_CHANGED", (updatedRoom) => {
-      console.log("ON-CURENT_ROOM_CHANGED -- updatedRoom.currentPlayers: ", updatedRoom.currentPlayers)
       updateActiveRoomsWithUpdatedRoom(updatedRoom) 
-      io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
+      // io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
+      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
+      // Broadcast to specific sockets
+      playerSocketIDs.forEach(socketID => {
+        io.to(socketID).emit("UPDATED_CURRENT_ROOM", updatedRoom);
+      });
     });
 
-    socket.on("MATCHED_CARDS_CHANGED", (matchedCards) => {
-      io.emit("UPDATED_MATCHED_CARDS", matchedCards);
+
+    socket.on("MATCHED_CARDS_CHANGED", (updatedRoom, matchedCards) => {
+      // io.emit("UPDATED_MATCHED_CARDS", matchedCards);
+      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
+      // Broadcast to specific sockets
+      playerSocketIDs.forEach(socketID => {
+        io.to(socketID).emit("UPDATED_MATCHED_CARDS", matchedCards);
+      });
+
     });
 
-    socket.on("IS_MATCHED_CHANGED", (isMatched) => {
-      io.emit("UPDATED_IS_MATCHED", isMatched);
+
+    socket.on("IS_MATCHED_CHANGED", (updatedRoom, isMatched) => {
+      // io.emit("UPDATED_IS_MATCHED", isMatched);
+      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
+      // Broadcast to specific sockets
+      playerSocketIDs.forEach(socketID => {
+        io.to(socketID).emit("UPDATED_IS_MATCHED", isMatched);
+      });
     });
+
     
     socket.on("START_GAME", () => {
       io.emit("UPDATED_START_GAME");

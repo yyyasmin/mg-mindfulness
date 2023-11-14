@@ -16,7 +16,7 @@ import {
   emitAddMemberToRoom,
   emitRemoveMemberFromRoom,
   emitCurentRoomChanged,
-  emitCurentMatchedCards,
+  // emitCurentMatchedCards,
   
   emitCurentIsMatched,
   removeUpdatedMatchedCards,
@@ -71,7 +71,8 @@ function Game() {
 
 
   const broadcastChangeIsMatched = async (isMatched) => {
-    await emitCurentIsMatched(isMatched);
+    if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) )
+    await emitCurentIsMatched({...cr}, isMatched);
   }
 
   
@@ -107,16 +108,7 @@ function Game() {
     e.returnValue = dialogText;
     return dialogText;
   };
-
-  // useEffect(() => {
-  //   if (clearFlippedCards) {
-  //     setAllFlippedCards([]);
-  //     broadcastChangeIsMatched(false);
-  //     resetPlayersFlippCount()
-  //     setClearFlippedCards(false);
-  //   }
-  // }, [clearFlippedCards]);
-  
+ 
   useEffect( () => {
     const asyncClear = async() =>  {
       if (clearFlippedCards) {
@@ -249,9 +241,7 @@ console.log("BEFORE RENDER -- cr: ", cr)
     ))
   )  : (
     <>
-      { !isEmpty(cr) && !isEmpty(cr.currentPlayers) &&  cr.currentPlayers.length<2 ? (
-        <WaitingMsg />
-      ) : (
+       {  
         cr.cardsData &&
         cr.cardsData.map((card, index) => (
           <NikeCard
@@ -264,7 +254,7 @@ console.log("BEFORE RENDER -- cr: ", cr)
             }}
           />
         ))
-      ) }
+       }
     </>
   )}
 </CardGallery>
