@@ -19,8 +19,8 @@ export const emitCurentMatchedCards = (cr, matchedCards) => {
   socket.emit("MATCHED_CARDS_CHANGED", cr, matchedCards);
 };
 
-export const emitCurentIsMatched = (cr, isMatched) => {
-  socket.emit("IS_MATCHED_CHANGED", cr, isMatched);
+export const emitCurentIsMatched = (cr, isMatched, lastTwoFlippedCards) => {
+  socket.emit("IS_MATCHED_CHANGED", cr, isMatched, lastTwoFlippedCards );
 };
 
 export const updateCr = (setCr) => {
@@ -44,9 +44,11 @@ export const updateMatchedCards = (setMatchedCards) => {
   });
 };
 
-export const updateIsMatched = (setIsMatched) => {
-  socket.on("UPDATED_IS_MATCHED", (isMatched) => {
+export const updateIsMatched = (setIsMatched, setLastTwoFlippedCards) => {
+  socket.on("UPDATED_IS_MATCHED", (isMatched, lastTwoFlippedCards) => {
+    console.log("IN updateIsMatched -- ON-UPDATED_IS_MATCHED -- lastTwoFlippedCards: ", lastTwoFlippedCards)
     setIsMatched(isMatched);
+    setLastTwoFlippedCards(lastTwoFlippedCards);
   });
 };
 

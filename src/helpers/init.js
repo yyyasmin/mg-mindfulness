@@ -7,6 +7,8 @@ import { Deep_1 } from "./GameCards/Deep_1.js";
 import { Deep_2 } from "./GameCards/Deep_2.js";
 import { Deep_3 } from "./GameCards/Deep_3.js";
 import { Adva } from "./GameCards/Adva.js";
+import { Jana_1 } from "./GameCards/Jana_1.js";
+
 
 import { shuffle } from "./shuffle"; // Import all exports for images loading
 import { CHOSEN_PROXY_URL } from "./ServerRoutes.js";
@@ -53,6 +55,7 @@ const initCardsInRoomsFromJson = async (rooms) => {
         Deep_2: Deep_2,
         Deep_3: Deep_3,
         Adva: Adva,
+        Jana_1: Jana_1
 
         // Add more gameName mappings as needed
       };

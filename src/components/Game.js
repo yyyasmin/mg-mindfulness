@@ -47,10 +47,12 @@ const CardGallery = styled.div`
 
 function Game() {
   const location = useLocation();
-  const { userName, currentRoom } = location.state;
+  const { userName, currentRoom } = location.state
 
   const [cr, setCr] = useState({});
   const [isMatched, setIsMatched] = useState(false);
+  const [lastTwoFlippedCards, setLastTwoFlippedCards] = useState([]);
+
   const [allFlippedCards, setAllFlippedCards] = useState([]);
   const [clearFlippedCards, setClearFlippedCards] = useState(false);
   const [playerLeft, setPlayerLeft] = useState(null);
@@ -70,9 +72,9 @@ function Game() {
     }
 
 
-  const broadcastChangeIsMatched = async (isMatched) => {
+  const broadcastChangeIsMatched = async (isMatched, lastTwoFlippedCards) => {
     if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) )
-    await emitCurentIsMatched({...cr}, isMatched);
+    await emitCurentIsMatched({...cr}, isMatched, lastTwoFlippedCards);
   }
 
   
@@ -87,7 +89,7 @@ function Game() {
 
    useEffect(() => {
     updateCr(setCr)
-    updateIsMatched(setIsMatched)
+    updateIsMatched(setIsMatched, setLastTwoFlippedCards)
     if (!isEmpty(currentRoom) && !isEmpty(userName)) {
       broadcastChangeCr(currentRoom);
     }
@@ -113,7 +115,7 @@ function Game() {
     const asyncClear = async() =>  {
       if (clearFlippedCards) {
         await setAllFlippedCards([]);
-        await broadcastChangeIsMatched(false)
+        await broadcastChangeIsMatched(false, [])
         await resetPlayersFlippCount()
         await setClearFlippedCards(false);
         console.log( "useEffect[clearFlippedCards] -- isMatched, cr.currentPlayers: ",
@@ -142,9 +144,9 @@ function Game() {
       const lastTwoFlippedCards = newAllFlippedCards.slice(-2);
 
       if (lastTwoFlippedCards[0].name === lastTwoFlippedCards[1].name) {
-        broadcastChangeIsMatched(true);
+        broadcastChangeIsMatched(true, lastTwoFlippedCards);
       } else {
-        broadcastChangeIsMatched(false);
+        broadcastChangeIsMatched(false, lastTwoFlippedCards);
         // Handle non-matching cards here...
       }
     }
@@ -229,15 +231,21 @@ console.log("BEFORE RENDER -- cr: ", cr)
       {cr && parseInt(cr.id) >= 0 && (
         <TougleMatchedCardButton
           isMatched={isMatched}
-          broadcastChangeIsMatched={(isMatched) => broadcastChangeIsMatched(isMatched)}
+          broadcastChangeIsMatched={(isMatched, lastTwoFlippedCards) => broadcastChangeIsMatched(isMatched, lastTwoFlippedCards)}
           setClearFlippedCards={setClearFlippedCards}
         />
       )}
 
 <CardGallery>
   {isMatched && allFlippedCards && allFlippedCards.length > 0 && cr && cr.currentPlayers && cr.currentPlayers.length > 0 ? (
-    allFlippedCards.slice(-2).map((card, index) => (
-      <MatchedCards key={index} index={index} playerName={userName} players={cr.currentPlayers} card={card} />
+    lastTwoFlippedCards.map((card, index) => (
+      <MatchedCards
+          key={index} 
+          index={index}
+          playerName={userName} 
+          players={cr.currentPlayers} 
+          card={card} 
+          lastTwoFlippedCards={lastTwoFlippedCards} />
     ))
   )  : (
     <>

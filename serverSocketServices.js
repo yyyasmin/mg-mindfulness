@@ -207,12 +207,13 @@ const serverSocketServices = (io) => {
     });
 
 
-    socket.on("IS_MATCHED_CHANGED", (updatedRoom, isMatched) => {
+    socket.on("IS_MATCHED_CHANGED", (updatedRoom, isMatched, lastTwoFlippedCards) => {
       // io.emit("UPDATED_IS_MATCHED", isMatched);
       const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
       // Broadcast to specific sockets
       playerSocketIDs.forEach(socketID => {
-        io.to(socketID).emit("UPDATED_IS_MATCHED", isMatched);
+        console.log("IN SERVER - ON-IS_MATCHED_CHANGED -- LLLLLLLLLLLLL  -- lastTwoFlippedCards: ", lastTwoFlippedCards)
+        io.to(socketID).emit("UPDATED_IS_MATCHED", isMatched, lastTwoFlippedCards);
       });
     });
 

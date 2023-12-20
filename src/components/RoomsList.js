@@ -101,6 +101,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
     "lightseagreen",
     "#E6BF83",
     "#C7A317",
+    "#8DB600",
 
   ];
 
