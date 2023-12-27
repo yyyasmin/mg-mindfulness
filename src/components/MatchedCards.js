@@ -56,14 +56,14 @@ const CardText = styled.div`
 `;
 
 const MatchedCards = (props) => {
-  const { index, playerName, players, card } = props;
+  const { index, players, card } = props;
 
   console.log("MatchCards -- props: ", props)
 
   const activePlayerIndex = players.findIndex((player) => player.isActive);
 
   let secondPlayerIndex = players.findIndex((player) => !player.isActive);
-  if ( secondPlayerIndex==-1 || secondPlayerIndex==undefined )  {
+  if ( secondPlayerIndex===-1 || secondPlayerIndex===undefined )  {
     secondPlayerIndex = 0
   }
 

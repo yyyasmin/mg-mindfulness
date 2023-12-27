@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import NikeCard from "./NikeCard";
 import Players from "./Players";
-import WaitingMsg from "./WaitingMsg";
 import isEmpty from "../helpers/isEmpty";
 
 import MatchedCards from "./MatchedCards";
@@ -18,7 +17,6 @@ import {
   emitRemoveMemberFromRoom,
   emitCurentRoomChanged,
   emitCurentIsMatched,
-  emitCurentCardSize,
 } from "../clientSocketServices";
 
 const GameContainer = styled.div`
