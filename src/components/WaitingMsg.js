@@ -20,8 +20,7 @@ const MsgSection = styled.div`
   font-size: 2.3rem;
 `;
 
-const WaitingMsg = (props) => {
-  const Msg = props.Msg;
+const WaitingMsg = () => {
 
   return (
     <Container>
