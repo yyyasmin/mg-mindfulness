@@ -5,38 +5,71 @@ import ReactCardFlip from "react-card-flip";
 // const catImage = require("../assets/textures/catImage.png");
 const yasminLogo = require("../assets/textures/yasminLogo.PNG");
 
+
+const computeCardSize = (cardSize) => {
+  
+  console.log("IN computeCardSize -- Card Size: ", cardSize); // Log the cardSize
+
+  let cWidth = `${cardSize.card.width}px`;
+  let cHeight = `${cardSize.card.height}px`;
+
+  let gWidth = `${cardSize.gap.width}px`;
+  gWidth = gWidth ? gWidth : "100px";
+
+  let gHeight = `${cardSize.card.height}px`;
+  gHeight = gHeight ? gHeight : "100px";
+
+  //gWidth = "100px";  // SHOULD BE GAP_FIXED_SIZE
+  //gHeight = "100px";
+
+
+  console.log("Card width: ", cWidth);
+  console.log("Card height: ", cHeight);
+  console.log("Gap width: ", gWidth);
+  console.log("Gap height: ", gHeight);
+
+  let resCardSize = {
+    width: cWidth,
+    height: cHeight,
+    gap: `${gHeight} ${gWidth}`, // Adjusted gap style attribute here
+  };
+
+  console.log("resCardSize: ", resCardSize);
+
+  return resCardSize;
+};
+
+
+
 const CardContainer = styled.div`
-  width: 250px;
-  height: 350px;
+  ${({ cardSize }) => computeCardSize(cardSize)}
+
   display: flex;
   flex-direction: column;
   cursor: grab;
   overflow: hidden;
   position: relative;
-  margin: 10px;
-
+  /*** margin: 10px; ***/
   border-radius: 25px;
-  border: 10px solid brown; /* Border around the entire card */
-  /*
-  transition: transform 0.2s ease;
-  transform-style: preserve-3d;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-  */
+  border: 10px solid brown;
+  box-sizing: border-box;
+  max-width: 100%;
 `;
 
 const CardImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   border-radius: 25px;
-  object-fit: cover; /* Ensure the image fills the entire container */
+  object-fit: fill;
+  resizeMode:'contain'
 `;
 
 const NikeCard =  ( props ) =>  {
   
-  let { card, isFlipped, toggleCardFlip } = props
+  let { key, playerName, card, cardSize, isFlipped, toggleCardFlip } = props;
+  
+  let cardW = cardSize.width ? cardSize.width.toString()+"px" : null;
+  let cardH = cardSize.height ? cardSize.height.toString()+"px" : null;
 
   const handleCardClick = () => {
     if ( toggleCardFlip != null )  {
@@ -47,11 +80,11 @@ const NikeCard =  ( props ) =>  {
   return (
     <ReactCardFlip isFlipped={isFlipped}>
 
-      <CardContainer onClick={handleCardClick}>
-          <CardImage src={card.imageImportName} alt={card.name} />
+      <CardContainer cardSize={cardSize} onClick={handleCardClick}>
+        <CardImage src={card.imageImportName} alt={card.name} />
       </CardContainer>
 
-      <CardContainer onClick={handleCardClick}>
+      <CardContainer cardSize={cardSize} onClick={handleCardClick}>
           <CardImage src={yasminLogo} alt={card.name} />
       </CardContainer>
 

@@ -216,6 +216,17 @@ const serverSocketServices = (io) => {
         io.to(socketID).emit("UPDATED_IS_MATCHED", isMatched, lastTwoFlippedCards);
       });
     });
+    
+
+    socket.on("CARD_SIZE_CHANGED", (updatedRoom, cardSize) => {
+      // io.emit("UPDATED_CARD_SIZE", cardSize);
+      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
+      // Broadcast to specific sockets
+      playerSocketIDs.forEach(socketID => {
+        console.log("IN SERVER - ON-CARD_SIZE_CHANGED -- SSSSSSSSSSSSSS  -- cardSize: ", cardSize)
+        io.to(socketID).emit("UPDATED_CARD_SIZE", cardSize);
+      });
+    });
 
     
     socket.on("START_GAME", () => {

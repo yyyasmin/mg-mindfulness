@@ -23,10 +23,14 @@ export const emitCurentIsMatched = (cr, isMatched, lastTwoFlippedCards) => {
   socket.emit("IS_MATCHED_CHANGED", cr, isMatched, lastTwoFlippedCards );
 };
 
+export const emitCurentCardSize = (cr, cardSize) => {
+  socket.emit("CARD_SIZE_CHANGED", cr, cardSize );
+};
+
 export const updateCr = (setCr) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
-    console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom-currentPlayers: ",
-                  serverUpdatedCurentRoom, serverUpdatedCurentRoom.currentPlayers)
+    console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom: ",
+                  serverUpdatedCurentRoom)
     setCr(serverUpdatedCurentRoom);
   });
 };
@@ -49,6 +53,13 @@ export const updateIsMatched = (setIsMatched, setLastTwoFlippedCards) => {
     console.log("IN updateIsMatched -- ON-UPDATED_IS_MATCHED -- lastTwoFlippedCards: ", lastTwoFlippedCards)
     setIsMatched(isMatched);
     setLastTwoFlippedCards(lastTwoFlippedCards);
+  });
+};
+
+export const updateCardSize = (setCardSize) => {
+  socket.on("UPDATED_CARD_SIZE", (cardSize) => {
+    console.log("IN updateCardSize -- ON-UPDATED_CARD_SIZE -- cardSize: ", cardSize)
+    setCardSize(cardSize);
   });
 };
 
