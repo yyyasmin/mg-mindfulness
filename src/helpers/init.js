@@ -13,10 +13,10 @@ import { Jana_1 } from "./GameCards/Jana_1.js";
 import { shuffle } from "./shuffle"; // Import all exports for images loading
 import { CHOSEN_PROXY_URL } from "./ServerRoutes.js";
 
-const MIN_CARD_WIDTH = 150; // Adjust this value based on your design preference
+//const MIN_CARD_WIDTH = 150; // Adjust this value based on your design preference
 const TITLE_SIZE = "2.5rem";
-const CARD_RATIO = 0.8; // WIDTH/HEIGHT
-const FIXED_GAP_SIZE = 10; // height/width
+//const CARD_RATIO = 0.8; // WIDTH/HEIGHT
+//const FIXED_GAP_SIZE = 10; // height/width
 
 console.log("init - server - CHOSEN_PROXY_URL: ", CHOSEN_PROXY_URL);
 
