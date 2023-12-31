@@ -15,17 +15,18 @@ export const emitCurentRoomChanged = (curentRoom) => {
   socket.emit("CURENT_ROOM_CHANGED", curentRoom);
 };
 
-export const emitCurentMatchedCards = (cr, matchedCards) => {
-  socket.emit("MATCHED_CARDS_CHANGED", cr, matchedCards);
+export const emitCurentIsMatched = (isMatched, lastTwoFlippedCards) => {
+  socket.emit("IS_MATCHED_CHANGED", isMatched, lastTwoFlippedCards );
 };
 
-export const emitCurentIsMatched = (cr, isMatched, lastTwoFlippedCards) => {
-  socket.emit("IS_MATCHED_CHANGED", cr, isMatched, lastTwoFlippedCards );
+export const emitAllFlippedCards = (allFlippedCards) => {
+  socket.emit("ALL_FLIPPRD_CARDS_CHANGED", allFlippedCards );
 };
 
-export const emitCurentCardSize = (cr, cardSize) => {
-  socket.emit("CARD_SIZE_CHANGED", cr, cardSize );
+export const emitClearFlippedCards = (clearFlippedCards) => {
+  socket.emit("CLEAR_FLIPPED_CARDS_CHANGED", clearFlippedCards );
 };
+
 
 export const updateCr = (setCr) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
@@ -42,37 +43,28 @@ export const updatePlayerLeft = (setPlayerLeft) => {
   });
 };
 
-export const updateMatchedCards = (setMatchedCards) => {
-  socket.on("UPDATED_MATCHED_CARDS", (matchedCards) => {
-    setMatchedCards(matchedCards);
-  });
-};
-
 export const updateIsMatched = (setIsMatched, setLastTwoFlippedCards) => {
   socket.on("UPDATED_IS_MATCHED", (isMatched, lastTwoFlippedCards) => {
     console.log("IN updateIsMatched -- ON-UPDATED_IS_MATCHED -- lastTwoFlippedCards: ", lastTwoFlippedCards)
     setIsMatched(isMatched);
-    setLastTwoFlippedCards(lastTwoFlippedCards);
   });
 };
 
-export const updateCardSize = (setCardSize) => {
-  socket.on("UPDATED_CARD_SIZE", (cardSize) => {
-    console.log("IN updateCardSize -- ON-UPDATED_CARD_SIZE -- cardSize: ", cardSize)
-    setCardSize(cardSize);
+export const updateAllFlippedCards = (setAllFlippedCards) => {
+  socket.on("UPDATED_ALL_FLIPPED_CARDS", (allFlippedCards) => {
+    console.log("IN updateAllFlippedCards -- ON-UPDATED_ALL_FLIPPED_CARDS -- allFlippedCards: ", allFlippedCards)
+    setAllFlippedCards(allFlippedCards);
+  });
+};
+
+export const updateClearFlippedCards = (setClearFlippedCards) => {
+  socket.on("UPDATED_CLEAR_FLIPPED_CARDS", (clearFlippedCards) => {
+    console.log("IN updateIsMatched -- ON-UPDATED_CLEAR_FLIPPED_CARDS -- clearFlippedCards: ", clearFlippedCards)
+    setClearFlippedCards(clearFlippedCards);
   });
 };
 
 export const removeUpdatedRoomDataListener = () => {
   console.log("removeUpdatedRoomDataListener -- REMOVING SOCKER from UPDATED_CURRENT_ROOM")
   socket.off("UPDATED_CURRENT_ROOM");
-};
-
-export const removeUpdatedMatchedCards = () => {
-  socket.off("UPDATED_MATCHED_CARDS");
-};
-
-
-export const removeUpdatedIsMatched = () => {
-  socket.off("UPDATED_IS_MATCHED");
 };

@@ -78,7 +78,7 @@ addPlayerToRoom = (room, playerName, socketId) => {
   const existingPlayer = room.currentPlayers && room.currentPlayers.find((player) => player.name === playerName);
   if (existingPlayer) {
     updatedPlayers = movePlayerToEnd(room.currentPlayers, playerName)  // MOVE EXISTING PLAYER TO END OF currentPlayers ARR
-    updatedRoom = { ...room, currentPlayers: updatedPlayers  }
+    updatedRoom = { ...room, currentPlayers:updatedPlayers  }
     return updatedRoom
   } else {
     newPlayer = {
@@ -126,16 +126,8 @@ const serverSocketServices = (io) => {
         activeRooms.forEach(room => {
           console.log("Room ID: ", room.id, "Current Players: ", room.currentPlayers, "CP-length: ", room.currentPlayers.length);
         });
-        console.log("END 4444 -- activeRooms:  ")
-        console.log("")
-
       }
-      // io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
-      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
-      // Broadcast to specific sockets
-      playerSocketIDs.forEach(socketID => {
-        io.to(socketID).emit("UPDATED_CURRENT_ROOM", updatedRoom);
-      });
+      io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });  // END ON-CREATE_ROOM_AND_ADD_PLAYER
 
     
@@ -178,54 +170,31 @@ const serverSocketServices = (io) => {
       if (playerSocketID !== currentSocketID) {
         io.to(playerSocketID).emit("PLAYER_LEFT_ROOM", playerName);
         io.to(playerSocketID).emit("UPDATED_CURRENT_ROOM", updatedRoom);
-
       }
     });
   });  // END ON-REMOVE_PLAYER_FROM_ROOM
     
+	
+	socket.on("CURENT_ROOM_CHANGED", (updatedRoom) => {
+		updateActiveRoomsWithUpdatedRoom(updatedRoom) 
+		io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
+	});
 
 
-    socket.on("CURENT_ROOM_CHANGED", (updatedRoom) => {
-      updateActiveRoomsWithUpdatedRoom(updatedRoom) 
-      // io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
-      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
-      // Broadcast to specific sockets
-      playerSocketIDs.forEach(socketID => {
-        io.to(socketID).emit("UPDATED_CURRENT_ROOM", updatedRoom);
-      });
+    socket.on("IS_MATCHED_CHANGED", (isMatched, lastTwoFlippedCards) => {
+		io.emit("UPDATED_IS_MATCHED", isMatched, lastTwoFlippedCards);
     });
-
-
-    socket.on("MATCHED_CARDS_CHANGED", (updatedRoom, matchedCards) => {
-      // io.emit("UPDATED_MATCHED_CARDS", matchedCards);
-      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
-      // Broadcast to specific sockets
-      playerSocketIDs.forEach(socketID => {
-        io.to(socketID).emit("UPDATED_MATCHED_CARDS", matchedCards);
-      });
-
+  
+    socket.on("ALL_FLIPPRD_CARDS_CHANGED", (allFlippedCards) => {
+		io.emit("UPDATED_ALL_FLIPPRD_CARDS", allFlippedCards);
     });
-
-
-    socket.on("IS_MATCHED_CHANGED", (updatedRoom, isMatched, lastTwoFlippedCards) => {
-      // io.emit("UPDATED_IS_MATCHED", isMatched);
-      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
-      // Broadcast to specific sockets
-      playerSocketIDs.forEach(socketID => {
-        console.log("IN SERVER - ON-IS_MATCHED_CHANGED -- LLLLLLLLLLLLL  -- lastTwoFlippedCards: ", lastTwoFlippedCards)
-        io.to(socketID).emit("UPDATED_IS_MATCHED", isMatched, lastTwoFlippedCards);
-      });
+      
+    socket.on("CLEAR_FLIPPED_CARDS_CHANGED", (clearFlippedCards) => {
+		io.emit("UPDATED_CLEAR_FLIPPED_CARDS", clearFlippedCards);
     });
-    
-
-    socket.on("CARD_SIZE_CHANGED", (updatedRoom, cardSize) => {
-      // io.emit("UPDATED_CARD_SIZE", cardSize);
-      const playerSocketIDs = updatedRoom.currentPlayers.map(player => player.socketId);
-      // Broadcast to specific sockets
-      playerSocketIDs.forEach(socketID => {
-        console.log("IN SERVER - ON-CARD_SIZE_CHANGED -- SSSSSSSSSSSSSS  -- cardSize: ", cardSize)
-        io.to(socketID).emit("UPDATED_CARD_SIZE", cardSize);
-      });
+		
+    socket.on("CARD_SIZE_CHANGED", (cardSize) => {
+      io.emit("UPDATED_CARD_SIZE", cardSize);
     });
 
     
