@@ -12,7 +12,6 @@ const updateActiveRoomsWithUpdatedRoom = (updatedRoom) =>  {
   }
 }
 
-
 createNewRoom = (chosenRoom, roomId) => { 
   let newRoom = {
     ...chosenRoom,
@@ -22,32 +21,39 @@ createNewRoom = (chosenRoom, roomId) => {
   return newRoom
 }
 
+const getRoomFromActiveRooms = (room) => {
+  console.log("IN getRoomFromActiveRooms -- input room: ", room.id);
 
-const getRoomFromActiveRooms = (room) =>  {
-	newRoomId = room.id
-	while (activeRooms.some((r) => r.id === newRoomId && r.currentPlayers.length >= r.maxMembers)) {
-	  newRoomId += "0";
-	}
-	const existingRoomIndex = activeRooms.findIndex((r) => r.id === newRoomId);
-		if (existingRoomIndex !== -1) {
-		return activeRooms[existingRoomIndex]
-	}
-	else  {
-    let newRoom = createNewRoom(room, newRoomId)
-		activeRooms.push(newRoom)
-		return newRoom
-	}
-}
+  let newRoomId = room.id;
+  while (activeRooms.some((r) => r.id === newRoomId && r.currentPlayers.length >= r.maxMembers)) {
+    newRoomId += "0";
+  }
+
+  const existingRoomIndex = activeRooms.findIndex((r) => r.id === newRoomId);
+
+  if (existingRoomIndex !== -1) {
+    console.log("IN getRoomFromActiveRooms -- returning activeRooms[existingRoomIndex] : ", activeRooms[existingRoomIndex].id);
+    return activeRooms[existingRoomIndex];
+  } else {
+    let newRoom = createNewRoom(room, newRoomId);
+    activeRooms.push(newRoom);
+    console.log("IN getRoomFromActiveRooms -- returning newRoom : ", newRoom.id);
+    return newRoom;
+  }
+};
 
 
 setRoomToAddPlayer = (chosenRoom) => {
   let updatedRoom; 
   updatedRoom = getRoomFromActiveRooms(chosenRoom)
-  console.log("0000 -- updatedRoom.currentPlayers: ", updatedRoom.id, updatedRoom.currentPlayers)
+  //console.log("0000 -- updatedRoom.currentPlayers: ", updatedRoom.id, updatedRoom.currentPlayers)
   updatedRoom.cardsData.map( (card, index) =>  {
     // Reset all game cards to be on thier back side - when a new players joins - to start the game from start
     card.isFlipped = true
   } )
+  console.log("IN setRoomToAddPlayer -- updatedRoom.id: ", updatedRoom.id)
+  console.log("IN setRoomToAddPlayer -- updatedRoom.currentPlayers: ", updatedRoom.currentPlayers)
+
   return updatedRoom
 }
 
@@ -78,7 +84,7 @@ addPlayerToRoom = (room, playerName, socketId) => {
   const existingPlayer = room.currentPlayers && room.currentPlayers.find((player) => player.name === playerName);
   if (existingPlayer) {
     updatedPlayers = movePlayerToEnd(room.currentPlayers, playerName)  // MOVE EXISTING PLAYER TO END OF currentPlayers ARR
-    updatedRoom = { ...room, currentPlayers:updatedPlayers  }
+    updatedRoom = { ...room, currentPlayers: updatedPlayers  }
     return updatedRoom
   } else {
     newPlayer = {
@@ -106,6 +112,18 @@ addPlayerToRoom = (room, playerName, socketId) => {
 }  // END addPlayerToRoom
 
 
+
+// Function to remove a room from activeRooms when the last player leaves
+const removeRoomFromActiveRooms = (roomId) => {
+  const roomIndex = activeRooms.findIndex((r) => r.id === roomId);
+
+  if (roomIndex !== -1) {
+    activeRooms.splice(roomIndex, 1);
+    //console.log("Room removed from activeRooms. Updated activeRooms:", activeRooms);
+  }
+};
+
+
 // SOCKET SERVICES
 
 console.log("IN serverSocketServices.js");
@@ -116,16 +134,11 @@ const serverSocketServices = (io) => {
 
     socket.on("CREATE_ROOM_AND_ADD_PLAYER", ({ playerName, chosenRoom }) => {
       let updatedRoom = {...chosenRoom};
-      console.log("")
-      console.log("ON-CREATE_ROOM_AND_ADD_PLAYER -- playerName: ", playerName)
+      console.log("ON-CCCCCCCCCCCCCCCCCC -- CREATE_ROOM_AND_ADD_PLAYER -- playerName: ", playerName)
       if (playerName != undefined)  {
         updatedRoom = setRoomToAddPlayer(chosenRoom, playerName)
         updatedRoom = addPlayerToRoom(updatedRoom, playerName, socket.id)
         updateActiveRoomsWithUpdatedRoom(updatedRoom)
-        console.log("START 4444 -- activeRooms:  ")
-        activeRooms.forEach(room => {
-          console.log("Room ID: ", room.id, "Current Players: ", room.currentPlayers, "CP-length: ", room.currentPlayers.length);
-        });
       }
       io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
     });  // END ON-CREATE_ROOM_AND_ADD_PLAYER
@@ -170,30 +183,36 @@ const serverSocketServices = (io) => {
       if (playerSocketID !== currentSocketID) {
         io.to(playerSocketID).emit("PLAYER_LEFT_ROOM", playerName);
         io.to(playerSocketID).emit("UPDATED_CURRENT_ROOM", updatedRoom);
+
       }
     });
   });  // END ON-REMOVE_PLAYER_FROM_ROOM
     
-	
-	socket.on("CURENT_ROOM_CHANGED", (updatedRoom) => {
-		updateActiveRoomsWithUpdatedRoom(updatedRoom) 
-		io.emit("UPDATED_CURRENT_ROOM", updatedRoom);
-	});
+
+    socket.on("REMOVE_ROOM_FROM_ACTIVE_ROOMS", roomId => {
+	  //console.log("ON-REMOVE_ROOM_FROM_ACTIVE_ROOMS") 
+      removeRoomFromActiveRooms(roomId) 
+    });
+
+    socket.on("CURENT_ROOM_CHANGED", (updatedRoom) => {
+      updateActiveRoomsWithUpdatedRoom(updatedRoom) 
+      io.emit("UPDATED_CURRENT_ROOM", updatedRoom);   
+    });
 
 
-    socket.on("IS_MATCHED_CHANGED", (isMatched, lastTwoFlippedCards) => {
-		io.emit("UPDATED_IS_MATCHED", isMatched, lastTwoFlippedCards);
+    socket.on("MATCHED_CARDS_CHANGED", (updatedRoom, matchedCards) => {
+      io.emit("UPDATED_MATCHED_CARDS", matchedCards);
     });
-  
-    socket.on("ALL_FLIPPRD_CARDS_CHANGED", (allFlippedCards) => {
-		io.emit("UPDATED_ALL_FLIPPRD_CARDS", allFlippedCards);
+
+
+    socket.on("IS_MATCHED_CHANGED", (isMatched, last2FlippedCards, have_has_word_idx) => {
+	  console.log("0N - IS_MATCHED_CHANGED -- isMatched: ", isMatched)
+	  console.log("0N - IS_MATCHED_CHANGED -- last2FlippedCards: ", last2FlippedCards)
+      io.emit("UPDATED_IS_MATCHED", isMatched, last2FlippedCards);
     });
-      
-    socket.on("CLEAR_FLIPPED_CARDS_CHANGED", (clearFlippedCards) => {
-		io.emit("UPDATED_CLEAR_FLIPPED_CARDS", clearFlippedCards);
-    });
-		
-    socket.on("CARD_SIZE_CHANGED", (cardSize) => {
+    
+
+    socket.on("CARD_SIZE_CHANGED", (updatedRoom, cardSize) => {
       io.emit("UPDATED_CARD_SIZE", cardSize);
     });
 
