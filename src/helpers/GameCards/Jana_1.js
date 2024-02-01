@@ -29,6 +29,9 @@ export const jana_1_9_2 = require("../../assets/textures/jana_1/png2/jan9.png");
 export const jana_1_10_1 = require("../../assets/textures/jana_1/png1/jan10.png");
 export const jana_1_10_2 = require("../../assets/textures/jana_1/png2/jan10.png");
 
+export const jana_1_11_1 = require("../../assets/textures/jana_1/png1/jan11.png");
+export const jana_1_11_2 = require("../../assets/textures/jana_1/png2/jan11.png");
+
 // Jana-1 cards array
 export const Jana_1 = [
   [jana_1_1, jana_1_2],
@@ -40,6 +43,7 @@ export const Jana_1 = [
   [jana_1_7_1, jana_1_7_2],
   [jana_1_8_1, jana_1_8_2],
   [jana_1_9_1, jana_1_9_2],
-  [jana_1_10_1, jana_1_10_2]
+  [jana_1_10_1, jana_1_10_2],
+  [jana_1_11_1, jana_1_11_2]
 
 ];

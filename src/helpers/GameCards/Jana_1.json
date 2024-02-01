@@ -111,6 +111,17 @@
          "text1": "התחדשות",
          "text2": "איך מאיפה ולאן אתה רוצה לצ",
          "isFlipped": true
+      },
+      {
+         "id": "89",
+         "name": "jan11",
+         "fileFolder": "../../assets/textures/jana_1/png",
+         "fileFullPath": "../../assets/textures/jana_1/png/jan11.png",
+         "fileNameWithSuffix": "jan11.png",
+         "background": "lightblue",
+         "text1": "תפילה",
+         "text2": "הגד משפט תפילה שמוביל אותך",
+         "isFlipped": true
       }
 
    ]
