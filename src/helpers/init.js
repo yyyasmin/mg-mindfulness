@@ -13,17 +13,17 @@ const TITLE_SIZE = "2.5rem";
 //const CARD_RATIO = 0.8; // WIDTH/HEIGHT
 //const FIXED_GAP_SIZE = 10; // height/width
 
-console.log("init - server - CHOSEN_PROXY_URL: ", CHOSEN_PROXY_URL);
+//console.log("init - server - CHOSEN_PROXY_URL: ", CHOSEN_PROXY_URL);
 
 // This function fetches data from a JSON file
 const fetchDataFromJSON = async (filePath) => {
   try {
     const response = await fetch(filePath);
     const data = await response.json();
-    console.log("INIT -- fetchDataFromJSON -- data: ", data)
+    //console.log("INIT -- fetchDataFromJSON -- data: ", data)
     return data;
   } catch (error) {
-    console.error("Error fetching data from JSON file:", error);
+    //console.error("Error fetching data from JSON file:", error);
     return null;
   }
 };
@@ -42,7 +42,7 @@ export const calculateCardSize = (cardsNum) => {
   const containerHeight = initialSize.height;
   let cols, rows
 
-  console.log("IN calculateCardSize -- cardsNum: ", cardsNum)
+  //console.log("IN calculateCardSize -- cardsNum: ", cardsNum)
 
   switch(cardsNum)  {
     case 8:
@@ -140,7 +140,7 @@ export const calculateCardSize = (cardsNum) => {
     },
   };
 
-  console.log("IN calculateCardSize -- cardSize: ", cardSize);
+  //console.log("IN calculateCardSize -- cardSize: ", cardSize);
   return cardSize;
 };
 
@@ -149,15 +149,15 @@ export const calculateCardSize = (cardsNum) => {
 const initCardsInRoomsFromJson = async (rooms) => {
   for (const room of rooms) {
 
-    console.log("initCardsInRoomsFromJson -- room: ", room)
+    //console.log("initCardsInRoomsFromJson -- room: ", room)
 
     const jsonURL = `${CHOSEN_PROXY_URL}/database/GameCards/${room.gameName}.json`;
 
-    console.log("initCardsInRoomsFromJson -- jsonURL: ", jsonURL)
+    //console.log("initCardsInRoomsFromJson -- jsonURL: ", jsonURL)
 
     const cardsData = await fetchDataFromJSON(jsonURL);
 
-    console.log("initCardsInRoomsFromJson -- cardsData: ", cardsData)
+    //console.log("initCardsInRoomsFromJson -- cardsData: ", cardsData)
 
 
     if (cardsData) {
@@ -177,7 +177,7 @@ const initCardsInRoomsFromJson = async (rooms) => {
           ...card,
           imageImportName: importArr[room.gameName][index+1][0],
         })); 
-        console.log("INIT -- initCardsInRoomsFromJson -- gameCards1: ", gameCards1)
+        //console.log("INIT -- initCardsInRoomsFromJson -- gameCards1: ", gameCards1)
   
         const gameCards2 = gameCards.map((card, index) => ({
           ...card,
@@ -188,7 +188,7 @@ const initCardsInRoomsFromJson = async (rooms) => {
         room.cardSize = calculateCardSize(gameCards.length)
         room.backgroundImage = backgroundImage;
 
-        console.log("INIT -- AFTER SHUFFLE -- room: ", room);
+        //console.log("INIT -- AFTER SHUFFLE -- room: ", room);
       }      
     }
   }
@@ -213,7 +213,7 @@ const initRoomsFromJson = async () => {
 
 // Export a function that initializes rooms with cardsData
 export const initRoomsFunc = async () => {
-  console.log("11-11-11-11");
+  //console.log("11-11-11-11");
   let rooms = await initRoomsFromJson();
   rooms = await initCardsInRoomsFromJson(rooms); // Make sure to await this function
   return rooms;

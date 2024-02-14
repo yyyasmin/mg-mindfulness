@@ -48,7 +48,7 @@ function Game() {
   const location = useLocation();
   const { userName, currentRoom } = location.state
 
-  console.log("IN GAME -- currentRoom: ", currentRoom)
+  //console.log("IN GAME -- currentRoom: ", currentRoom)
 
   const [cr, setCr] = useState({});
 
@@ -62,7 +62,7 @@ function Game() {
 
 
   const broadcastChangeCr = async (updatedCr) => {
-    await console.log("broadcastChangeCr -- 1111 - updatedCr: ", updatedCr)
+    await //console.log("broadcastChangeCr -- 1111 - updatedCr: ", updatedCr)
     if ( !isEmpty(updatedCr) )  {
         await emitCurentRoomChanged({ ...updatedCr });
       }
@@ -77,7 +77,7 @@ function Game() {
   const broadcastChangeCardSize = async (cr) => {
     let updateCrWithNewCardSize
     if ( !isEmpty(cr) ) {
-      console.log("IN broadcastChangeCardSize -- cr.cardsData: ", cr.cardsData)
+      //console.log("IN broadcastChangeCardSize -- cr.cardsData: ", cr.cardsData)
       if ( !isEmpty(cr.cardsData) ) {
         let cardSize = calculateCardSize(cr.cardsData.length)
         updateCrWithNewCardSize = {...cr, cardSize: cardSize}
@@ -88,7 +88,7 @@ function Game() {
 
 
   const resetPlayersFlippCount = () => {
-    console.log("IN resetPlayersFlippCount -- cr: ", cr)
+    //console.log("IN resetPlayersFlippCount -- cr: ", cr)
     let updatedCurrentPlayers
     if  ( !isEmpty(cr.currentPlayers) )  {
       updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
@@ -136,7 +136,7 @@ function Game() {
 	  }
     }
     var dialogText = 'Are you really sure you want to leave?';
-    console.log("Game -- handleBeforeUnload -- dialogText: ", dialogText);
+    //console.log("Game -- handleBeforeUnload -- dialogText: ", dialogText);
     e.returnValue = dialogText;
     return dialogText;
   };
@@ -149,7 +149,7 @@ function Game() {
         await broadcastChangeIsMatched(false, [], 0)
         await resetPlayersFlippCount()
         await setClearFlippedCards(false);
-        console.log( "useEffect[clearFlippedCards] -- isMatched, cr.currentPlayers: ",
+        //console.log( "useEffect[clearFlippedCards] -- isMatched, cr.currentPlayers: ",
                                                       isMatched, cr.currentPlayers )
       }
     }
@@ -177,7 +177,7 @@ function Game() {
     if (newAllFlippedCards.length % 3 === 0) {
       const last3FlippedCards = newAllFlippedCards.slice(-3);
 
-      console.log("IN checkForMatch -- last3FlippedCards: ", last3FlippedCards)
+      //console.log("IN checkForMatch -- last3FlippedCards: ", last3FlippedCards)
       
       if ( last3FlippedCards[1].name_1 === last3FlippedCards[2].name_3 &&
            last3FlippedCards[0].name_2.includes(last3FlippedCards[1].correctChoice) ) {
@@ -224,7 +224,7 @@ function Game() {
         }
       });
       const updatedRoom = { ...cr, currentPlayers: updatedPlayers };
-      console.log("handleFlippCount -- FFFFFFF - currentPlayers: isMatched, updatedPlayers", isMatched, updatedPlayers)
+      //console.log("handleFlippCount -- FFFFFFF - currentPlayers: isMatched, updatedPlayers", isMatched, updatedPlayers)
       broadcastChangeCr(updatedRoom);
     }
   };
@@ -247,7 +247,7 @@ function Game() {
       await handleFlippCount();
       let activePlayer = getActivePlayer();
 
-      console.log("toggleCardFlip - 3333 - isMatched, CONDITION: ",
+      //console.log("toggleCardFlip - 3333 - isMatched, CONDITION: ",
                     isMatched,
                     !isEmpty(cr) && !isEmpty(cr.currentPlayers) && 
                     cr.currentPlayers.length > 1 && activePlayer.flippCount >= 5,
@@ -255,7 +255,7 @@ function Game() {
       )
       
       if (!isEmpty(cr) && !isEmpty(cr.currentPlayers) && cr.currentPlayers.length > 1 ) {
-        console.log("IN toggleCardFlip --activePlayer: ", activePlayer)
+        //console.log("IN toggleCardFlip --activePlayer: ", activePlayer)
       }
 
       if (!isEmpty(cr) && !isEmpty(cr.currentPlayers) && cr.currentPlayers.length > 1 && activePlayer.flippCount >= 5) {
@@ -271,9 +271,9 @@ function Game() {
     }
   };
 
-console.log("BEFORE RENDER -- isMatched: ", isMatched)
-console.log("BEFORE RENDER -- last3FlippedCards: ", last3FlippedCards)
-console.log("BEFORE RENDER -- have_has_word_idx: ", have_has_word_idx)
+//console.log("BEFORE RENDER -- isMatched: ", isMatched)
+//console.log("BEFORE RENDER -- last3FlippedCards: ", last3FlippedCards)
+//console.log("BEFORE RENDER -- have_has_word_idx: ", have_has_word_idx)
 
   return (
     <GameContainer>

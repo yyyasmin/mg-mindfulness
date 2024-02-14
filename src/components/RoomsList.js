@@ -6,6 +6,8 @@ import {
   updateCr,
   removeUpdatedRoomDataListener,
   emitAddMemberToRoom,
+  emitCurentRoomChanged,
+
 } from "../clientSocketServices";
 
 const GameContainer = styled.div`
@@ -97,6 +99,14 @@ const RoomsList = ({ userName, roomsInitialData }) => {
     }
   }, [currentRoom, navigate, userName]);
 
+  
+  const broadcastChangeCr = async (updatedCr) => {
+    console.log("IN RoomsList -- broadcastChangeCr -- updatedCr: ", updatedCr)
+    if ( !isEmpty(updatedCr) )  {
+        await emitCurentRoomChanged({ ...updatedCr });
+    }
+  }
+
   const handleJoinRoom = async (room) => {
     if (!isEmpty(userName)) {
       await emitAddMemberToRoom({
@@ -104,7 +114,8 @@ const RoomsList = ({ userName, roomsInitialData }) => {
         chosenRoom: room,
       });
       // Potentially set current room here if immediate feedback is needed
-      // setCr(room);
+      broadcastChangeCr(room);
+      console.log("IN handleJoinRoom -- after broadcastChangeCr -- currentRoom-currentPlayers: ", currentRoom.currentPlayers)
     }
   };
 

@@ -9,7 +9,7 @@ function CardApp() {
     fetch("cards.json")
       .then((response) => response.json())
       .then((data) => setCards(data))
-      .catch((error) => console.error("Error loading cards", error));
+      .catch((error) => //console.error("Error loading cards", error));
   }, []);
 
   // Function to add a new card and write to the JSON file
@@ -28,9 +28,9 @@ function CardApp() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Card added and JSON file updated", data);
+        //console.log("Card added and JSON file updated", data);
       })
-      .catch((error) => console.error("Error adding card", error));
+      .catch((error) => //console.error("Error adding card", error));
   };
 
   return (

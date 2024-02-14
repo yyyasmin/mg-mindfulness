@@ -24,7 +24,7 @@ export const emitCurentMatchedCards = (cr, matchedCards) => {
 };
 
 export const emitCurentIsMatched = (isMatched, last2FlippedCards, have_has_word_idx) => {
-  console.log("IN emitCurentIsMatched -- have_has_word_idx: ", have_has_word_idx)
+  //console.log("IN emitCurentIsMatched -- have_has_word_idx: ", have_has_word_idx)
   socket.emit("IS_MATCHED_CHANGED", isMatched, last2FlippedCards, have_has_word_idx );
 };
 
@@ -34,15 +34,14 @@ export const emitCurentCardSize = (cr, cardSize) => {
 
 export const updateCr = (setCr) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
-    console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom: ",
-                  serverUpdatedCurentRoom)
+    console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom.currentPlayers)           
     setCr(serverUpdatedCurentRoom);
   });
 };
 
 export const updatePlayerLeft = (setPlayerLeft) => {
   socket.on("PLAYER_LEFT_ROOM", (playerName) => {
-    console.log("clientSocketServices -- updatePlayerLeft -- ON-PLAYER_LEFT_ROOM -- playerName: ", playerName)
+    //console.log("clientSocketServices -- updatePlayerLeft -- ON-PLAYER_LEFT_ROOM -- playerName: ", playerName)
     setPlayerLeft(playerName);
   });
 };
@@ -55,7 +54,7 @@ export const updateMatchedCards = (setMatchedCards) => {
 
 export const updateIsMatched = (setIsMatched, setLast2FlippedCards) => {
   socket.on("UPDATED_IS_MATCHED", (isMatched, last2FlippedCards, have_has_word_idx) => {
-    console.log("IN updateIsMatched -- ON-UPDATED_IS_MATCHED -- last2FlippedCards: ", last2FlippedCards)
+    //console.log("IN updateIsMatched -- ON-UPDATED_IS_MATCHED -- last2FlippedCards: ", last2FlippedCards)
     setIsMatched(isMatched);
     setLast2FlippedCards(last2FlippedCards);
   });
@@ -63,13 +62,13 @@ export const updateIsMatched = (setIsMatched, setLast2FlippedCards) => {
 
 export const updateCardSize = (setCardSize) => {
   socket.on("UPDATED_CARD_SIZE", (cardSize) => {
-    console.log("IN updateCardSize -- ON-UPDATED_CARD_SIZE -- cardSize: ", cardSize)
+    //console.log("IN updateCardSize -- ON-UPDATED_CARD_SIZE -- cardSize: ", cardSize)
     setCardSize(cardSize);
   });
 };
 
 export const removeUpdatedRoomDataListener = () => {
-  console.log("removeUpdatedRoomDataListener -- REMOVING SOCKER from UPDATED_CURRENT_ROOM")
+  //console.log("removeUpdatedRoomDataListener -- REMOVING SOCKER from UPDATED_CURRENT_ROOM")
   socket.off("UPDATED_CURRENT_ROOM");
 };
 

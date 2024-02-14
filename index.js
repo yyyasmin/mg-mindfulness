@@ -33,21 +33,17 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/database/Cards.json", (req, res) => {
   const filePath = path.join(__dirname, "database", "Cards.json");
-  console.log("IN INDEX -- Cards -- filePath: ", filePath)
   res.sendFile(filePath);
 });
 
 app.get("/database/rooms.json", (req, res) => {
   const filePath = path.join(__dirname, "database", "rooms.json");
-  console.log("IN INDEX -- Rooms -- filePath: ", filePath)
-
   res.sendFile(filePath);
 });
 
 
 app.get("/database/GameCards/:filename", (req, res) => {
   const filePath = path.join(__dirname, "database/GameCards", req.params.filename);
-  console.log("IN INDEX -- GameCards -- filePath: ", filePath);
   res.sendFile(filePath);
 });
 
@@ -58,5 +54,4 @@ serverSocketServices(io);
 
 // Use process.env.PORT for flexibility in choosing the port
 const PORT = process.env.PORT || 5000;
-console.log("INDEX -- PORT: ", PORT)
 server.listen(PORT, console.log(`Listening to ${PORT}!`));

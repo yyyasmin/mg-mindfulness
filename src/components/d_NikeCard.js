@@ -8,7 +8,7 @@ const yasminLogo = require("../assets/textures/yasminLogo.PNG");
 
 const computeCardSize = (cardSize) => {
   
-  //console.log("IN computeCardSize -- Card Size: ", cardSize); // Log the cardSize
+  ////console.log("IN computeCardSize -- Card Size: ", cardSize); // Log the cardSize
 
   let cWidth = `${cardSize.card.width}px`;
   let cHeight = `${cardSize.card.height}px`;
@@ -23,10 +23,10 @@ const computeCardSize = (cardSize) => {
   //gHeight = "100px";
 
 
-  //console.log("Card width: ", cWidth);
-  //console.log("Card height: ", cHeight);
-  //console.log("Gap width: ", gWidth);
-  //console.log("Gap height: ", gHeight);
+  ////console.log("Card width: ", cWidth);
+  ////console.log("Card height: ", cHeight);
+  ////console.log("Gap width: ", gWidth);
+  ////console.log("Gap height: ", gHeight);
 
   let resCardSize = {
     width: cWidth,
