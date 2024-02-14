@@ -19,15 +19,6 @@ const computeCardSize = (cardSize) => {
   let gHeight = `${cardSize.card.height}px`;
   gHeight = gHeight ? gHeight : "100px";
 
-  //gWidth = "100px";  // SHOULD BE GAP_FIXED_SIZE
-  //gHeight = "100px";
-
-
-  //console.log("Card width: ", cWidth);
-  //console.log("Card height: ", cHeight);
-  //console.log("Gap width: ", gWidth);
-  //console.log("Gap height: ", gHeight);
-
   let resCardSize = {
     width: cWidth,
     height: cHeight,
@@ -37,6 +28,13 @@ const computeCardSize = (cardSize) => {
   return resCardSize;
 };
 
+const computeBorderColor = (frameColor) => {
+  // Here you can add any logic needed to determine the border color.
+  // For simplicity, we'll just return the frameColor as the border color.
+  // Ensure that frameColor is a valid CSS color string.
+  console.log("IN computeBorderColor -- frameColor:",frameColor )
+  return `border: 10px solid ${frameColor};`;
+};
 
 
 const CardContainer = styled.div`
@@ -47,12 +45,14 @@ const CardContainer = styled.div`
   cursor: grab;
   overflow: hidden;
   position: relative;
-  /*** margin: 10px; ***/
   border-radius: 25px;
-  border: 10px solid brown;
+
+  ${({ frameColor }) => computeBorderColor(frameColor)}
+
   box-sizing: border-box;
   max-width: 100%;
 `;
+
 
 const CardImage = styled.img`
   width: 100%;
@@ -64,7 +64,9 @@ const CardImage = styled.img`
 
 const NikeCard =  ( props ) =>  {
   
-  let { key, playerName, card, cardSize, isFlipped, toggleCardFlip } = props;
+  let { key, playerName, card, cardSize, isFlipped, frameColor, toggleCardFlip } = props;
+
+  console.log("FRAME-COLR: ", frameColor)
   
   let cardW = cardSize.width ? cardSize.width.toString()+"px" : null;
   let cardH = cardSize.height ? cardSize.height.toString()+"px" : null;
@@ -78,11 +80,11 @@ const NikeCard =  ( props ) =>  {
   return (
     <ReactCardFlip isFlipped={isFlipped}>
 
-      <CardContainer cardSize={cardSize} onClick={handleCardClick}>
+      <CardContainer cardSize={cardSize} frameColor={frameColor} onClick={handleCardClick}>
         <CardImage src={card.imageImportName} alt={card.name} />
       </CardContainer>
 
-      <CardContainer cardSize={cardSize} onClick={handleCardClick}>
+      <CardContainer cardSize={cardSize} frameColor={frameColor} onClick={handleCardClick}>
           <CardImage src={yasminLogo} alt={card.name} />
       </CardContainer>
 

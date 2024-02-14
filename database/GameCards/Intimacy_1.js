@@ -1,5 +1,7 @@
 
 // Import all the required images for Intimacy-1
+export const roomSelectionBackgroundImage = require("../../assets/textures/acquaintance_1/roomSelectionBackgroundImage.png");
+
 export const inti1_1 = require("../../assets/textures/intimacy_1/png1/inti1.png");
 export const inti1_2 = require("../../assets/textures/intimacy_1/png2/inti1.png");
 export const inti2_1 = require("../../assets/textures/intimacy_1/png1/inti2.png");
@@ -25,6 +27,8 @@ export const inti11_2 = require("../../assets/textures/intimacy_1/png2/inti11.pn
 export const inti12_1 = require("../../assets/textures/intimacy_1/png1/inti12.png");
 export const inti12_2 = require("../../assets/textures/intimacy_1/png2/inti12.png");
 export const Intimacy_1 = [
+  roomSelectionBackgroundImage,  // UPDATE INIT , RoomsList, RoomItem 
+
   [inti1_1, inti1_2],
   [inti2_1, inti2_2],
   [inti3_1, inti3_2],

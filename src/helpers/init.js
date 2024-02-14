@@ -1,13 +1,8 @@
-import { Emotions_1 } from "./GameCards/Emotions_1.js";
-import { Emotions_2 } from "./GameCards/Emotions_2.js";
+
 import { Intimacy_1 } from "./GameCards/Intimacy_1.js";
 import { Calm_1 } from "./GameCards/Calm_1.js";
-import { First_Letter_1 } from "./GameCards/First_Letter_1.js";
-import { Deep_1 } from "./GameCards/Deep_1.js";
-import { Deep_2 } from "./GameCards/Deep_2.js";
-import { Deep_3 } from "./GameCards/Deep_3.js";
-import { Adva } from "./GameCards/Adva.js";
-import { Jana_1 } from "./GameCards/Jana_1.js";
+import { Acquaintance_1 } from "./GameCards/Acquaintance_1.js";
+
 
 
 import { shuffle } from "./shuffle"; // Import all exports for images loading
@@ -168,34 +163,31 @@ const initCardsInRoomsFromJson = async (rooms) => {
     if (cardsData) {
       let gameCards = cardsData.gameCards || [];
       const importArr = {
-        Emotions_1: Emotions_1,
-        Emotions_2: Emotions_2,
+        Acquaintance_1: Acquaintance_1,
         Intimacy_1: Intimacy_1,
-        Calm_1: Calm_1,
-        First_Letter_1: First_Letter_1,
-        Deep_1: Deep_1,
-        Deep_2: Deep_2,
-        Deep_3: Deep_3,
-        Adva: Adva,
-        Jana_1: Jana_1
-
+        Calm_1: Calm_1
         // Add more gameName mappings as needed
       };
+
+      const backgroundImage = importArr[room.gameName] ? importArr[room.gameName][0] : null;
+
 
       if (importArr[room.gameName]) {
         const gameCards1 = gameCards.map((card, index) => ({
           ...card,
-          imageImportName: importArr[room.gameName][index][0],
+          imageImportName: importArr[room.gameName][index+1][0],
         })); 
         console.log("INIT -- initCardsInRoomsFromJson -- gameCards1: ", gameCards1)
   
         const gameCards2 = gameCards.map((card, index) => ({
           ...card,
-          imageImportName: importArr[room.gameName][index][1],
+          imageImportName: importArr[room.gameName][index+1][1],
         }));
         gameCards = shuffle(gameCards1.concat(gameCards2));
         room.cardsData = gameCards; 
         room.cardSize = calculateCardSize(gameCards.length)
+        room.backgroundImage = backgroundImage;
+
         console.log("INIT -- AFTER SHUFFLE -- room: ", room);
       }      
     }

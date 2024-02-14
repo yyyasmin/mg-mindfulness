@@ -1,4 +1,6 @@
 // Import all the required images for Calm-1
+export const roomSelectionBackgroundImage = require("../../assets/textures/acquaintance_1/roomSelectionBackgroundImage.png");
+
 export const calm1_1 = require("../../assets/textures/calm_1/png1/calm1.PNG");
 export const calm1_2 = require("../../assets/textures/calm_1/png2/calm1.PNG");
 export const calm2_1 = require("../../assets/textures/calm_1/png1/calm2.PNG");
@@ -14,6 +16,8 @@ export const calm6_2 = require("../../assets/textures/calm_1/png2/calm6.PNG");
 export const calm7_1 = require("../../assets/textures/calm_1/png1/calm7.PNG");
 export const calm7_2 = require("../../assets/textures/calm_1/png2/calm7.PNG");
 export const Calm_1 = [
+  roomSelectionBackgroundImage,  // UPDATE INIT , RoomsList, RoomItem 
+
   [calm1_1, calm1_2],
   [calm2_1, calm2_2],
   [calm3_1, calm3_2],

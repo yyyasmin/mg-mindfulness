@@ -303,6 +303,7 @@ console.log("BEFORE RENDER -- last2FlippedCards: ", last2FlippedCards)
             card={card}
             isFlipped={card.isFlipped}
             cardSize={cr.cardSize}
+            frameColor={cr.frameColor}
 
             toggleCardFlip={() => {
               handleCardFlip(card.id);
