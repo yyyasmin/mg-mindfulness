@@ -107,6 +107,7 @@ addPlayerToRoom = (room, playerName, socketId) => {
       ...room,
       startGame: startGame,
     }
+    console.log("IN addPlayerToRoom -- updatedRoom.currentPlayers:",updatedRoom.currentPlayers )
     return updatedRoom
   }
 }  // END addPlayerToRoom
