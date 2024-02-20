@@ -64,12 +64,15 @@ const CardImage = styled.img`
 
 const NikeCard =  ( props ) =>  {
   
-  let { key, playerName, card, cardSize, isFlipped, frameColor, toggleCardFlip } = props;
+  let { key, playerName, card, cardSize, faceType, frameColor, toggleCardFlip } = props;
 
   //console.log("FRAME-COLR: ", frameColor)
   
   let cardW = cardSize.width ? cardSize.width.toString()+"px" : null;
   let cardH = cardSize.height ? cardSize.height.toString()+"px" : null;
+  
+  //console.log("IN NikeCard -- faceType: ", faceType, faceType==="front")
+  //console.log("IN NikeCard -- faceType: ", card, card)
 
   const handleCardClick = () => {
     if ( toggleCardFlip != null )  {
@@ -78,7 +81,7 @@ const NikeCard =  ( props ) =>  {
   };
 
   return (
-    <ReactCardFlip isFlipped={isFlipped}>
+    <ReactCardFlip isFlipped={faceType==="back"}>
 
       <CardContainer cardSize={cardSize} frameColor={frameColor} onClick={handleCardClick}>
         <CardImage src={card.imageImportName} alt={card.name} />

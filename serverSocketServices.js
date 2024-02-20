@@ -42,7 +42,7 @@ setRoomToAddPlayer = (chosenRoom) => {
   updatedRoom = getRoomFromActiveRooms(chosenRoom)
   updatedRoom.cardsData.map( (card, index) =>  {
     // Reset all game cards to be on thier back side - when a new players joins - to start the game from start
-    card.isFlipped = true
+    card.faceType = "back"
   } )
   return updatedRoom
 }

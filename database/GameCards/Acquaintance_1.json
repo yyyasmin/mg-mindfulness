@@ -13,8 +13,8 @@
             "text2": "נסה להגדיר עם חברך למשחק מטרה ישימה לשבוע הקרוב",
             "text3": "Tell us about an area of ​​your life where you have an important goal",
             "text4": "Try to set an actionable goal for the coming week with your game partner",
-            "isFlipped": true,
-            "isMatched": false
+            "faceType": "back"
+            
         },
         {
             "id": "32",
@@ -27,8 +27,8 @@
             "text2": "תאר איך אתה מדמיין את הטקס הזה שחברך הזכיר",
             "text3": "Tell about a traditional or other ritual that speaks to you",
             "text4": "Describe how you imagine this ritual your friend mentioned",
-            "isFlipped": true,
-            "isMatched": false
+            "faceType": "back"
+            
         },
         {
             "id": "33",
@@ -41,8 +41,8 @@
             "text2": "איזה תכונת אופי לדעתך נדרשת בשביל להשיג את מה שחברך סיפר",
             "text3": "Tell about a small achievement you are proud of and the path you took to reach it",
             "text4": "What character trait do you think is required to achieve what your friend said",
-            "isFlipped": true,
-            "isMatched": false
+            "faceType": "back"
+            
         },
         {
             "id": "34",
@@ -55,8 +55,8 @@
             "text2": "למה לדעתך הטעות שחברך סיפר עליה חשובה",
             "text3": "Tell about an important mistake you made and what you learned from it",
             "text4": "Why do you think the mistake your friend told you about is important",
-            "isFlipped": true,
-            "isMatched": false
+            "faceType": "back"
+            
         },
         {
             "id": "35",
@@ -69,8 +69,8 @@
             "text2": "אם הייתי חווה את החוויה שיברך למשחק סיפר - מה היית מרגיש? ",
             "text3": "Tell about a pleasant experience that comes to your mind right now",
             "text4": "If I had had the experience that blessed the game narrated - how would you feel?",
-            "isFlipped": true,
-            "isMatched": false
+            "faceType": "back"
+            
         },
         {
             "id": "36",
@@ -83,8 +83,8 @@
             "text2": "סכם בקצרה את מה שאמר חברך למשחק",
             "text3": "Talk about whatever you want for 30 seconds",
             "text4": "Briefly summarize what your playmate said",
-            "isFlipped": true,
-            "isMatched": false
+            "faceType": "back"
+            
         }
     ]
 }

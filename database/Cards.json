@@ -13,7 +13,7 @@
             "background":"red",
             "text1":"כעס",
             "text2":"כעס",
-            "isFlipped": true
+            "faceType": "back"
 
          },
          {
@@ -26,7 +26,7 @@
             "background":"red",
             "text1":"Silly",
             "text2":"מטופש",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id":"3",
@@ -38,7 +38,7 @@
             "background":"red",
             "text1":"שמח",
             "text2":"Happy",
-            "isFlipped": true
+            "faceType": "back"
 
          },
          {
@@ -51,7 +51,7 @@
             "background":"red",
             "text1":"מופתע",
             "text2":"Shocked",
-            "isFlipped": true
+            "faceType": "back"
 
          }
       ]
@@ -70,7 +70,7 @@
             "background":"red",
             "text1":"הסתכל בפנים ונסה לזהות איזה רגש הם מביעים",
             "text2":"תאר מצב שבו הרגשת את הרגש הזה",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id": "6",
@@ -82,7 +82,7 @@
             "background":"red",
             "text1":"הסתכל בפנים ונסה לזהות איזה רגש הם מביעים",
             "text2":"תאר מצב שבו הרגשת את הרגש הזה",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id": "7",
@@ -94,7 +94,7 @@
             "background":"red",
             "text1":"הסתכל בפנים ונסה לזהות איזה רגש הם מביעים",
             "text2":"תאר מצב שבו הרגשת את הרגש הזה",
-            "isFlipped": true
+            "faceType": "back"
          }, 
          {
             "id": "8",
@@ -106,7 +106,7 @@
             "background":"red",
             "text1":"הסתכל בפנים ונסה לזהות איזה רגש הם מביעים",
             "text2":"תאר מצב שבו הרגשת את הרגש הזה",
-            "isFlipped": true
+            "faceType": "back"
          },	 
          {
             "id": "9",
@@ -118,7 +118,7 @@
             "background":"red",
             "text1":"הסתכל בפנים ונסה לזהות איזה רגש הם מביעים",
             "text2":"תאר מצב שבו הרגשת את הרגש הזה",
-            "isFlipped": true
+            "faceType": "back"
          },		 
          {
             "id":"10",
@@ -130,7 +130,7 @@
             "background":"red",
             "text1":"הסתכל בפנים ונסה לזהות איזה רגש הם מביעים",
             "text2":"תאר מצב שבו הרגשת את הרגש הזה",
-            "isFlipped": true
+            "faceType": "back"
          }
       ]
    },
@@ -148,7 +148,7 @@
             "background":"red",
             "text1":"בחר נושא שמעניין אותך ודבר עליו במשך דקה",
             "text2":"סכם בשלושה משפטים את מה שחברך למשחק אמר",
-            "isFlipped": true
+            "faceType": "back"
 
          },
          {
@@ -161,7 +161,7 @@
             "background":"red",
             "text1":"אמור חמישה דברים שאתה אוהב בחברך למשחק",
             "text2":"תן 3 דוגמאות ל-איך הדברים שאמר  חברך למשחק מתבטאים",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id":"13",
@@ -173,7 +173,7 @@
             "background":"red",
             "text1":"ספר על חוויה מעצבנת שקרתה לך",
             "text2":"חזור על מה שסיפר חברך למשחק אבל הפוך",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id":"14",
@@ -185,7 +185,7 @@
             "background":"red",
             "text1":"אמור 4 דברים שהיית רוצה לעשות עם חברך למשחק השבוע",
             "text2":"בחר 2 דברים מתוך מה שאמר חברך למשחק וקבע זמן לעשות אותם בתוך השבוע הקרוב",
-            "isFlipped": true
+            "faceType": "back"
          },   
          {
             "id": "15",
@@ -197,7 +197,7 @@
             "background":"red",
             "text1":"אמור 4 דברים שיהיו ביום המושלם שלך",
             "text2":"בחר 2 דברים מתוך מה שאמר חברך למשחק ותאר איך תשתתף בהם",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id": "16",
@@ -209,7 +209,7 @@
             "background":"red",
             "text1":"אמור 4 דברים שמעוררים בך השראה בחברך למשחק",
             "text2":"תן 2 דוגמאות לאיך מה שאמר חברך למשחק מתבטאים",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id": "17",
@@ -221,7 +221,7 @@
             "background":"red",
             "text1":"אמור 4 דברים שמצא חן בעיניכם שחברכם למשחק עשה",
             "text2":"תאר את הרגש שמה שאמר חברך למשחק מעורר בך",
-            "isFlipped": true
+            "faceType": "back"
          }, 
          {
             "id": "18",
@@ -233,7 +233,7 @@
             "background":"red",
             "text1":"אמור 4 משפטים שחברך למשחק אמר שהכי השפיעו עליך.",
             "text2":"אמור מה הכי הפתיע אותך מתוך 4 הדברים שחברך למשחק ציין.",
-            "isFlipped": true
+            "faceType": "back"
          },	 
          {
             "id": "19",
@@ -245,7 +245,7 @@
             "background":"red",
             "text1":"תאר משהו שחברך למשחק היציע , ואתה התנגדת ובסוף זה הסתבר כמשהו טוב בשבילך",
             "text2":"תאר משהו שחברך למשחק היציע , ואתה התנגדת ובסוף זה הסתבר כמשהו טוב בשבילך",
-            "isFlipped": true
+            "faceType": "back"
          },		 
          {
             "id":"20",
@@ -257,7 +257,7 @@
             "background":"red",
             "text1":"אם היית חיה , איזה חיה היית? ",
             "text2":"תן 3 דוגמאות שמתארות איך החיה שבחר חברך למשחק מתאימה לו",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
          "id":"21",
@@ -269,7 +269,7 @@
          "background":"red",
          "text1":"בחר חפץ שלדעתך יכול לייצג את האישיות שלך",
          "text2":"תן 3 דוגמאות לאיך שהחפץ שחברך למשחק בחר מתאר אותו.",
-         "isFlipped": true
+         "faceType": "back"
          },
          {
          "id":"22",
@@ -281,7 +281,7 @@
          "background":"red",
          "text1":"בחר תכונה שמתאימה לך מבין: מצחיק, מפרגן, מקשיב, דעתן",
          "text2":"תן דוגמא ל - איך התכונה שבחר חברך למשחק מאפיינת אותו",
-         "isFlipped": true
+         "faceType": "back"
          }
       ]
    },
@@ -299,7 +299,7 @@
             "background":"red",
             "text1":"אמור 5 דברים שאתה רואה",
             "text2":"אמור: אתה רואה – וחזור אחרי 5 הדברים שחברך למשחק ציין",
-            "isFlipped": true
+            "faceType": "back"
 
          },
          {
@@ -312,7 +312,7 @@
             "background":"red",
             "text1":"אמור 5 דברים שאתה שומע",
             "text2":"אמור: אתה שומע – וחזור אחרי 5 הדברים שחברך למשחק ציין",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id":"25",
@@ -324,7 +324,7 @@
             "background":"red",
             "text1":"כך נשימה , תעצור אותה, ספור עד 4 ותשחר אותה בספירה עד 4 ",
             "text2":"תספור את קצב הנשימה לחברך למשחק: כך אוויר...1...2...3...4...עצור...1.. 2...3...4...שחרר...1...2...3...4...",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id":"26",
@@ -336,7 +336,7 @@
             "background":"red",
             "text1":"אמור 3 דברים שאתה מריח",
             "text2":"אמור: אתה מריח – וחזור אחרי 3 הדברים שחברך למשחק ציין",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id":"27",
@@ -348,7 +348,7 @@
             "background":"red",
             "text1":"אמור מה הדבר שהכי מפחיד אותך ברגע זה",
             "text2":"סכם במשפט אחר את מה שחברך למשחק אמר ותאר את ההרגשה שהוא מרגיש עכשיו . בסיום אמור: אתה מרגיש ככה עכשיו אבל זה זמני",
-            "isFlipped": true
+            "faceType": "back"
          },
 		 {
             "id":"28",
@@ -360,7 +360,7 @@
             "background":"red",
             "text1":"תחשוב על 3 דברים שגורמים לך לחייך",
             "text2":"ספר מה 3 הדברים שציין חברך למשחק גורמים לך להרגיש",
-            "isFlipped": true
+            "faceType": "back"
          },
 		 {
             "id":"29",
@@ -372,7 +372,7 @@
             "background":"red",
             "text1":"אמור 3 דברים שאתה אומר עליהם תודה היום",
             "text2":"ספר מה 3 הדברים שציין חברך למשחק גורמים לך להרגיש",
-            "isFlipped": true
+            "faceType": "back"
          }
       ]
    },		 
@@ -390,7 +390,7 @@
             "background":"red",
             "text1":"Yarden  ירדן",
             "text2":"Ya י",
-            "isFlipped": true
+            "faceType": "back"
 
          },
          {
@@ -403,7 +403,7 @@
             "background":"red",
             "text1":"Yinon  ינון",
             "text2":"Y  י",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id":"32",
@@ -415,7 +415,7 @@
             "background":"red",
             "text1":"Doron  דורון",
             "text2":"D ד",
-            "isFlipped": true
+            "faceType": "back"
          },
          {
             "id":"33",
@@ -427,7 +427,7 @@
             "background":"red",
             "text1":"Lior  ליאור",
             "text2":"L  ל",
-            "isFlipped": true
+            "faceType": "back"
          },
 		 {
             "id":"34",
@@ -439,7 +439,7 @@
             "background":"red",
             "text1":"Guy  גיא",
             "text2":"G  ג",
-            "isFlipped": true
+            "faceType": "back"
          },
 		 {
             "id":"35",
@@ -451,7 +451,7 @@
             "background":"red",
             "text1":"Or אור",
             "text2":"O או",
-            "isFlipped": true
+            "faceType": "back"
          }
       ]
    },
@@ -468,7 +468,7 @@
          "background": "red",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "37",
@@ -479,7 +479,7 @@
          "background": "green",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "38",
@@ -490,7 +490,7 @@
          "background": "blue",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "39",
@@ -501,7 +501,7 @@
          "background": "yellow",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "40",
@@ -512,7 +512,7 @@
          "background": "orange",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "41",
@@ -523,7 +523,7 @@
          "background": "purple",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "42",
@@ -534,7 +534,7 @@
          "background": "pink",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "43",
@@ -545,7 +545,7 @@
          "background": "red",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "44",
@@ -556,7 +556,7 @@
          "background": "green",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "45",
@@ -567,7 +567,7 @@
          "background": "blue",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "46",
@@ -578,7 +578,7 @@
          "background": "yellow",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "47",
@@ -589,7 +589,7 @@
          "background": "orange",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       }
    ]
    },		 
@@ -606,7 +606,7 @@
          "background": "red",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "49",
@@ -617,7 +617,7 @@
          "background": "green",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "50",
@@ -628,7 +628,7 @@
          "background": "blue",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "51",
@@ -639,7 +639,7 @@
          "background": "yellow",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "52",
@@ -650,7 +650,7 @@
          "background": "orange",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "53",
@@ -661,7 +661,7 @@
          "background": "purple",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "54",
@@ -672,7 +672,7 @@
          "background": "pink",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "55",
@@ -683,7 +683,7 @@
          "background": "red",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "56",
@@ -694,7 +694,7 @@
          "background": "green",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "57",
@@ -705,7 +705,7 @@
          "background": "blue",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "58",
@@ -716,7 +716,7 @@
          "background": "yellow",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "59",
@@ -727,7 +727,7 @@
          "background": "orange",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       }
    ]
    },		 
@@ -744,7 +744,7 @@
          "background": "red",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "61",
@@ -755,7 +755,7 @@
          "background": "green",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "62",
@@ -766,7 +766,7 @@
          "background": "blue",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "63",
@@ -777,7 +777,7 @@
          "background": "yellow",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "64",
@@ -788,7 +788,7 @@
          "background": "orange",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
       },
       {
          "id": "65",
@@ -799,7 +799,7 @@
          "background": "purple",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
 
       },
       {
@@ -811,7 +811,7 @@
          "background": "pink",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
 
       },
       {
@@ -823,7 +823,7 @@
          "background": "red",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
 
       },
       {
@@ -835,7 +835,7 @@
          "background": "green",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
 
       },
       {
@@ -847,7 +847,7 @@
          "background": "blue",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
 
       },
       {
@@ -859,7 +859,7 @@
          "background": "yellow",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
 
       },
       {
@@ -871,7 +871,7 @@
          "background": "orange",
          "text1": "What do you see?",
          "text2": "מה אתה רואה?",
-         "isFlipped": true
+         "faceType": "back"
 
          }
       ]

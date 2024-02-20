@@ -25,7 +25,7 @@ def generate_card(id, name, fileFullPath, text1, text2):
         "background": "red",
         "text1": text1,
         "text2": text2,
-        "isFlipped": True
+        "faceType": "back"
     }
 
 # Define the game information
