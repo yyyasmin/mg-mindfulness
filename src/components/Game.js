@@ -265,14 +265,14 @@ function Game() {
     ////console.log("IN updateCardSide -- CCCC checkForMatch -- updatedCard.faceType: ", updatedCard.faceType, updatedCard)
     ////console.log("IN updateCardSide -- DDDD checkForMatch -- cr: ", cr)
 
-    await handleFlippCount();
-    let activePlayer = getActivePlayer();
-    if ( !isEmpty(cr) &&
-        !isEmpty(cr.currentPlayers) &&
-        cr.currentPlayers.length > 1 &&
-        activePlayer.flippCount >= 3 ) {
-      await togglePlayerTurn();
-    }
+    // await handleFlippCount();
+    // let activePlayer = getActivePlayer();
+    // if ( !isEmpty(cr) &&
+    //     !isEmpty(cr.currentPlayers) &&
+    //     cr.currentPlayers.length > 1 &&
+    //     activePlayer.flippCount >= 3 ) {
+    //   await togglePlayerTurn();
+    // }
   }
 
   const cardInLast2FlippedCards = (cardId) => {
@@ -286,6 +286,11 @@ function Game() {
       setSecondCardFlippedBack(false);
       setFirstCardFlipped(false);
       setSecondCardFlipped(false);
+      tougleAsyncFunc = async()  => {
+        await togglePlayerTurn()
+      }
+      tougleAsyncFunc()
+      
     }
   }, [firstCardFlippedBack, secondCardFlippedBack, isMatched]);
 
