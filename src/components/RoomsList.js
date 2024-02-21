@@ -101,7 +101,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
 
   
   const broadcastChangeCr = async (updatedCr) => {
-    console.log("IN RoomsList -- broadcastChangeCr -- updatedCr: ", updatedCr)
+    //console.log("IN RoomsList -- broadcastChangeCr -- updatedCr: ", updatedCr)
     if ( !isEmpty(updatedCr) )  {
         await emitCurentRoomChanged({ ...updatedCr });
     }
@@ -115,7 +115,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
       });
       // Potentially set current room here if immediate feedback is needed
       broadcastChangeCr(room);
-      console.log("IN handleJoinRoom -- after broadcastChangeCr -- currentRoom-currentPlayers: ", currentRoom.currentPlayers)
+      //console.log("IN handleJoinRoom -- after broadcastChangeCr -- currentRoom-currentPlayers: ", currentRoom.currentPlayers)
     }
   };
 

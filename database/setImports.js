@@ -18,7 +18,7 @@ async function setImports(data) {
 const importArr = [${importArr.join(', ')}];
 export default importArr;`;
 
-  //console.log("IN setImports -- jsCode: ", importCode);
+  ////console.log("IN setImports -- jsCode: ", importCode);
   fs.writeFileSync('../src/helpers/importCardFullPath.js', importCode);
 }
 

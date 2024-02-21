@@ -8,7 +8,7 @@ const yasminLogo = require("../assets/textures/yasminLogo.PNG");
 
 const computeCardSize = (cardSize) => {
   
-  ////console.log("IN computeCardSize -- Card Size: ", cardSize); // Log the cardSize
+  //////console.log("IN computeCardSize -- Card Size: ", cardSize); // Log the cardSize
 
   let cWidth = `${cardSize.card.width}px`;
   let cHeight = `${cardSize.card.height}px`;
@@ -32,7 +32,7 @@ const computeBorderColor = (frameColor) => {
   // Here you can add any logic needed to determine the border color.
   // For simplicity, we'll just return the frameColor as the border color.
   // Ensure that frameColor is a valid CSS color string.
-  //console.log("IN computeBorderColor -- frameColor:",frameColor )
+  ////console.log("IN computeBorderColor -- frameColor:",frameColor )
   return `border: 10px solid ${frameColor};`;
 };
 
@@ -66,13 +66,13 @@ const NikeCard =  ( props ) =>  {
   
   let { key, playerName, card, cardSize, faceType, frameColor, toggleCardFlip } = props;
 
-  //console.log("FRAME-COLR: ", frameColor)
+  ////console.log("FRAME-COLR: ", frameColor)
   
   let cardW = cardSize.width ? cardSize.width.toString()+"px" : null;
   let cardH = cardSize.height ? cardSize.height.toString()+"px" : null;
   
-  //console.log("IN NikeCard -- faceType: ", faceType, faceType==="front")
-  //console.log("IN NikeCard -- faceType: ", card, card)
+  ////console.log("IN NikeCard -- faceType: ", faceType, faceType==="front")
+  ////console.log("IN NikeCard -- faceType: ", card, card)
 
   const handleCardClick = () => {
     if ( toggleCardFlip != null )  {

@@ -58,7 +58,7 @@ const CardText = styled.div`
 const MatchedCards = (props) => {
   const { index, players, card } = props;
 
-  console.log("MatchCards -- props: ", props)
+  //console.log("MatchCards -- props: ", props)
 
   const activePlayerIndex = players.findIndex((player) => player.isActive);
 
