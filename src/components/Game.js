@@ -68,7 +68,7 @@ function Game() {
   const [secondCardFlipped, setSecondCardFlipped] = useState(false);
   const [secondCardFlippedBack, setSecondCardFlippedBack] = useState(false);
 
-  const [interactionAllowed, setInteractionAllowed] = useState(true);
+  const [toggleFlag, setToggleFlag] = useState(false);
 
   const broadcastChangeCr = async (updatedCr) => {
     if ( !isEmpty(updatedCr) )  {
@@ -168,12 +168,15 @@ function Game() {
 
 
   const togglePlayerTurn = () => {
+    console.log("IN togglePlayerTurn")
     const updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
       ...player,
       isActive: !player.isActive,
       flippCount: 0
     }));
     const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
+    console.log("IN togglePlayerTurn -- updatedRoom: ", updatedRoom)
+
     broadcastChangeCr(updatedRoom);
   };
 
@@ -279,27 +282,28 @@ function Game() {
     return last2FlippedCards.some(card => card.id === cardId);
   };
   
-  useEffect(() => {  // RESET FORCE FLIIPING CORRECT FLOW RESET VARS
+  useEffect( () => {  // RESET FORCE FLIIPING CORRECT FLOW RESET VARS
     if ( (firstCardFlippedBack && secondCardFlippedBack) || isMatched ) {
       console.log("6666 -- RESET VARS");
       setFirstCardFlippedBack(false);
       setSecondCardFlippedBack(false);
       setFirstCardFlipped(false);
       setSecondCardFlipped(false);
-      tougleAsyncFunc = async()  => {
-        await togglePlayerTurn()
+      setToggleFlag(true);
+    } }, [firstCardFlippedBack, secondCardFlippedBack, isMatched] );
+
+    useEffect(() => {
+      if (toggleFlag) {
+        togglePlayerTurn();
+        setToggleFlag(false);
       }
-      tougleAsyncFunc()
-      
-    }
-  }, [firstCardFlippedBack, secondCardFlippedBack, isMatched]);
+    }, [toggleFlag]);
 
     
   const handleCardFlip = async(cardId) => {
     const currentUserIndex = cr.currentPlayers.findIndex((player) => player.name === userName);
     const cardIdx = getCardIndexByCardId(cardId);
 
-    console.log("IN handleCardFlip -- interactionAllowed: ", interactionAllowed)
     console.log("IN handleCardFlip -- cardIdx: ", cardIdx)
     console.log("IN handleCardFlip -- cardId: ", cardId)
     console.log("IN handleCardFlip -- firstCardId: ", firstCardId, firstCardFlipped)
