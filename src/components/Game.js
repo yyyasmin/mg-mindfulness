@@ -293,11 +293,11 @@ function Game() {
     } }, [firstCardFlippedBack, secondCardFlippedBack, isMatched] );
 
     useEffect(() => {
-      if (toggleFlag) {
+      if (toggleFlag && !isMatched) {
         togglePlayerTurn();
         setToggleFlag(false);
       }
-    }, [toggleFlag]);
+    }, [toggleFlag, isMatched]);
 
     
   const handleCardFlip = async(cardId) => {
