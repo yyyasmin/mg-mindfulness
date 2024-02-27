@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const CardContainer = styled.div`
-  width: 300px;
+  width: ${props => props.cardWidth}px;
+  height: ${props => props.cardHeight}px + 200 px;
+
   display: flex;
   flex-direction: column;
   cursor: grab;
@@ -11,7 +13,6 @@ const CardContainer = styled.div`
   margin: 10px;
   border-radius: 25px;
   border: 10px solid brown;
-  display: flex;
 `;
 
 const ContentWrapper = styled.div`
@@ -52,13 +53,11 @@ const PlayerName = styled.div`
 `;
 
 const CardText = styled.div`
-  font-size: 1em;
+  font-size: 2em;
 `;
 
 const MatchedCards = (props) => {
-  const { index, players, card } = props;
-
-  //console.log("MatchCards -- props: ", props)
+  const { index, players, cardSize, card } = props;
 
   const activePlayerIndex = players.findIndex((player) => player.isActive);
 
@@ -70,9 +69,9 @@ const MatchedCards = (props) => {
   const currentPlayer = activePlayerIndex === index ? players[activePlayerIndex] : players[secondPlayerIndex]
 
   const currentText = activePlayerIndex === index ? card.text1 : card.text2
-
+    
   return (
-    <CardContainer>
+    <CardContainer cardWidth={cardSize.card.width} cardHeight={cardSize.card.height}>
       <ContentWrapper>
         <ImageWrapper>
           <Image src={card.imageImportName} alt={card.imageImportName} />

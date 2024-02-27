@@ -8,22 +8,14 @@ import { Acquaintance_1 } from "./GameCards/Acquaintance_1.js";
 import { shuffle } from "./shuffle"; // Import all exports for images loading
 import { CHOSEN_PROXY_URL } from "./ServerRoutes.js";
 
-//const MIN_CARD_WIDTH = 150; // Adjust this value based on your design preference
 const TITLE_SIZE = "2.5rem";
-//const CARD_RATIO = 0.8; // WIDTH/HEIGHT
-//const FIXED_GAP_SIZE = 10; // height/width
 
-////console.log("init - server - CHOSEN_PROXY_URL: ", CHOSEN_PROXY_URL);
-
-// This function fetches data from a JSON file
 const fetchDataFromJSON = async (filePath) => {
   try {
     const response = await fetch(filePath);
     const data = await response.json();
-    ////console.log("INIT -- fetchDataFromJSON -- data: ", data)
     return data;
   } catch (error) {
-    ////console.error("Error fetching data from JSON file:", error);
     return null;
   }
 };
@@ -36,19 +28,19 @@ const getInitialGallerySize = () => {
 	return initialGallerySize			
 }
 
+
 export const calculateCardSize = (cardsNum) => {
   const initialSize = getInitialGallerySize();
   const containerWidth = initialSize.width;
   const containerHeight = initialSize.height;
   let cols, rows
 
-  ////console.log("IN calculateCardSize -- cardsNum: ", cardsNum)
-
   switch(cardsNum)  {
-    case 2:
-      cols = 2
-      rows = 1
-      break;
+
+  case 2:
+    cols = 2
+    rows = 1
+    break;
 
 	case 8:
       cols = 4
@@ -129,23 +121,27 @@ export const calculateCardSize = (cardsNum) => {
   let gapHeight = totalGapHeight / (rows+1)
 
   let cardWidth = ( containerWidth - (totalGapWidth+1) ) / cols
+  cardWidth = Math.min(0.4 * containerWidth, cardWidth);
+
   let cardHeight = ( containerHeight - (totalGapHeight+1) ) / rows
+  cardHeight = Math.min(containerHeight*0.6, cardHeight*0.8)
 
-    
+  console.log("IN init -- calculateCardSize -- cardsNum, cardWidth, cardHeight:  ", cardsNum, cardWidth, cardHeight)
+
+  
   //let cardWidth = CARD_RATIO * cardHeight
-
   const cardSize = {
     card: {
       width: cardWidth,
-      height: cardHeight*0.8,
+      height: cardHeight,
     },
     gap: {
       width: gapWidth,
       height: gapHeight,
     },
   };
+  console.log("IN init -- calculateCardSize -- cardsNum, cardSize:  ", cardsNum, cardSize)
 
-  ////console.log("IN calculateCardSize -- cardSize: ", cardSize);
   return cardSize;
 };
 
@@ -153,17 +149,8 @@ export const calculateCardSize = (cardsNum) => {
 // Initialize cards in rooms from a JSON file based on gameName
 const initCardsInRoomsFromJson = async (rooms) => {
   for (const room of rooms) {
-
-    ////console.log("initCardsInRoomsFromJson -- room: ", room)
-
     const jsonURL = `${CHOSEN_PROXY_URL}/database/GameCards/${room.gameName}.json`;
-
-    ////console.log("initCardsInRoomsFromJson -- jsonURL: ", jsonURL)
-
     const cardsData = await fetchDataFromJSON(jsonURL);
-
-    ////console.log("initCardsInRoomsFromJson -- cardsData: ", cardsData)
-
 
     if (cardsData) {
       let gameCards = cardsData.gameCards || [];
@@ -181,9 +168,7 @@ const initCardsInRoomsFromJson = async (rooms) => {
         const gameCards1 = gameCards.map((card, index) => ({
           ...card,
           imageImportName: importArr[room.gameName][index+1][0],
-        })); 
-        ////console.log("INIT -- initCardsInRoomsFromJson -- gameCards1: ", gameCards1)
-  
+        }));   
         const gameCards2 = gameCards.map((card, index) => ({
           ...card,
           imageImportName: importArr[room.gameName][index+1][1],
@@ -191,10 +176,9 @@ const initCardsInRoomsFromJson = async (rooms) => {
         gameCards = shuffle(gameCards1.concat(gameCards2));
         room.cardsData = gameCards; 
         room.cardSize = calculateCardSize(gameCards.length)
-		room.MatchedCardSize = calculateCardSize(2)
+		    room.MatchedCardSize = calculateCardSize(2)
+        console.log("IN initCardsInRoomsFromJson -- room.MatchedCardSize: ", room.MatchedCardSize)
         room.backgroundImage = backgroundImage;
-
-        ////console.log("INIT -- AFTER SHUFFLE -- room: ", room);
       }      
     }
   }

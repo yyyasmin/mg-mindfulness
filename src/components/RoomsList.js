@@ -92,6 +92,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
   }, []);
 
   useEffect(() => {
+    console.log("IN ROOMSLIST -- currentRoom: ", currentRoom)
     if (currentRoom && currentRoom.id >= 0) {
       navigate(`/game/${currentRoom.id}`, {
         state: { userName, currentRoom },
