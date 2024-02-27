@@ -168,16 +168,20 @@ function Game() {
 
 
   const togglePlayerTurn = () => {
-    console.log("IN togglePlayerTurn")
-    const updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
-      ...player,
-      isActive: !player.isActive,
-      flippCount: 0
-    }));
-    const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
-    console.log("IN togglePlayerTurn -- updatedRoom: ", updatedRoom)
+    if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) && cr.currentPlayers.length>1 )  {
+      console.log("IN togglePlayerTurn")
+      const updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
+        ...player,
+        isActive: !player.isActive,
+        flippCount: 0
+      }));
+      const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
+      console.log("IN togglePlayerTurn -- updatedRoom: ", updatedRoom)
+  
+      broadcastChangeCr(updatedRoom);
 
-    broadcastChangeCr(updatedRoom);
+    }
+
   };
 
 
