@@ -40,15 +40,15 @@ const CardGallery = styled.div`
   flex-wrap: wrap;
   background-color: #fad5a5;
   border-radius: 25px;
-  height: calc(100vh - 100px);
+  /*** height: calc(100vh - 100px); ***/
+  height: calc(100vh - 100px); /* Adjusted height based on screen size and title height */
+
   justify-content: space-between;
 `;
 
 function Game() {
   const location = useLocation();
   const { userName, currentRoom } = location.state
-
-  ////////console.log("IN GAME -- currentRoom: ", currentRoom)
 
   const [cr, setCr] = useState({});
 
@@ -76,20 +76,26 @@ function Game() {
     }
   }
 
-
   const broadcastChangeIsMatched = async (isMatched, last2FlippedCards) => {
-    //////console.log("IN broadcastChangeIsMatched -- last2FlippedCards: ", last2FlippedCards)
-    if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) )
-    await emitCurentIsMatched(isMatched, last2FlippedCards);
+    console.log("IN 1111 -- broadcastChangeIsMatched -- isMatched: ", isMatched)
+    if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) )  {
+      await emitCurentIsMatched(isMatched, last2FlippedCards);
+    }
   }
 
-  const broadcastChangeCardSize = async (cr) => {
+  const broadcastChangeCardSize = async (cr, isMatched) => {
+    console.log("IN 2222 -- broadcastChangeCardSize -- isMatched: ", isMatched)
+
     let updateCrWithNewCardSize
     if ( !isEmpty(cr) ) {
-      ////////console.log("IN broadcastChangeCardSize -- cr.cardsData: ", cr.cardsData)
       if ( !isEmpty(cr.cardsData) ) {
         let cardSize = calculateCardSize(cr.cardsData.length)
-        updateCrWithNewCardSize = {...cr, cardSize: cardSize}
+        let MatchedCardSize = calculateCardSize(2)
+
+        updateCrWithNewCardSize = { ...cr,
+                                    cardSize: cardSize,
+                                    MatchedCardSize: MatchedCardSize
+                                  }
       }
 		  broadcastChangeCr(updateCrWithNewCardSize)
     }
@@ -97,7 +103,6 @@ function Game() {
 
 
   const resetPlayersFlippCount = () => {
-    ////////console.log("IN resetPlayersFlippCount -- cr: ", cr)
     let updatedCurrentPlayers
     if  ( !isEmpty(cr.currentPlayers) )  {
       updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
@@ -111,7 +116,7 @@ function Game() {
 
 
   const handleResize = () => {
-		broadcastChangeCardSize(cr);
+		broadcastChangeCardSize(cr, isMatched);
   }
 
   useEffect(() => {
@@ -124,10 +129,10 @@ function Game() {
 
   useEffect(() => {
     updateCr(setCr)
-	broadcastChangeCr(currentRoom);
+	  broadcastChangeCr(currentRoom);
     updateIsMatched(setIsMatched, setLast2FlippedCards)
     if (!isEmpty(currentRoom) && !isEmpty(userName)) {
-      broadcastChangeCardSize(currentRoom);  // Update Cr is in broadcastChangeCardSize
+      broadcastChangeCardSize(currentRoom, isMatched);  // Update Cr is in broadcastChangeCardSize
     }
   }, [currentRoom]);
 
@@ -145,14 +150,12 @@ function Game() {
       }
     }
     var dialogText = 'Are you really sure you want to leave?';
-    ////////console.log("Game -- handleBeforeUnload -- dialogText: ", dialogText);
     e.returnValue = dialogText;
     return dialogText;
   };
   
    
   useEffect( () => {
-    ////console.log("CR - BEFORE -- cr:", cr)
     const asyncClear = async() =>  {
       if (clearFlippedCards) {
         await setAllFlippedCards([]);
@@ -162,14 +165,12 @@ function Game() {
       }
     }
     asyncClear()
-    ////console.log("CR - AFTER -- cr:", cr)
-
   }, [clearFlippedCards] );
 
 
   const togglePlayerTurn = () => {
-    if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) && cr.currentPlayers.length>1 )  {
-      console.log("IN togglePlayerTurn")
+    console.log("IN togglePlayerTurn")
+    if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) && cr.currentPlayers.length > 1 ) {
       const updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
         ...player,
         isActive: !player.isActive,
@@ -179,9 +180,7 @@ function Game() {
       console.log("IN togglePlayerTurn -- updatedRoom: ", updatedRoom)
   
       broadcastChangeCr(updatedRoom);
-
-    }
-
+    }   
   };
 
 
@@ -202,7 +201,6 @@ function Game() {
     setAllFlippedCards(newAllFlippedCards);
     if (newAllFlippedCards.length % 2 === 0) {
       const last2FlippedCards = newAllFlippedCards.slice(-2);
-      ////////console.log("IN checkForMatch -- last2FlippedCards: ", last2FlippedCards)
       if (last2FlippedCards[0].name === last2FlippedCards[1].name) {
         tmpIsMatched = true;
       }
@@ -223,9 +221,6 @@ function Game() {
       broadcastChangeCr(cr);
 
     }
-    ////console.log("IN END OF checkForMatch -- last2FlippedCards: ", last2FlippedCards);
-    ////console.log("IN END OF checkForMatch -- updatedLast2FlippedCards: ", updatedLast2FlippedCards);
-    ////console.log("IN END OF checkForMatch -- cr: ", cr);
   }
   
   
@@ -234,21 +229,6 @@ function Game() {
 		return {...activePlayer}
 	};  
 
-  const handleFlippCount = () =>  {
-    let activePlayer = getActivePlayer();
-    if (!isEmpty(activePlayer) && cr.currentPlayers.length > 1) {
-      const updatedPlayers = cr.currentPlayers.map((player) => {
-        if (player.name === activePlayer.name) {
-          return { ...activePlayer, flippCount: (isMatched || activePlayer.flippCount>=3) ? 0 : activePlayer.flippCount + 1 };
-        } else {
-          return { ...player };
-        }
-      });
-      const updatedRoom = { ...cr, currentPlayers: updatedPlayers };
-      ////////console.log("handleFlippCount -- FFFFFFF - currentPlayers: isMatched, updatedPlayers", isMatched, updatedPlayers)
-      broadcastChangeCr(updatedRoom);
-    }
-  };
 
   const getCardIndexByCardId = (cardId) =>  {
     return cr.cardsData.findIndex((card) => card.id === cardId);
@@ -256,10 +236,7 @@ function Game() {
 
   const updateCardSide = async (cardId, cardIdx) =>  {
       const updatedCard = { ...cr.cardsData[cardIdx] };
-      ////console.log("IN updateCardSide -- AAA -- updatedCard.faceType: ", updatedCard.faceType, updatedCard)
       await updatedCard.faceType === "back" ?  updatedCard.faceType = "front" : updatedCard.faceType = "back"
-      ////console.log("IN updateCardSide -- BBB -- updatedCard.faceType: ", updatedCard.faceType, updatedCard)
-
       const updatedRoom = { ...cr };
       updatedRoom.cardsData[cardIdx] = updatedCard;
       broadcastChangeCr(updatedRoom);
@@ -269,17 +246,6 @@ function Game() {
   const toggleCardFlip = async(cardId, cardIdx) => {
     const  updatedCard = await updateCardSide(cardId, cardIdx)
     await checkForMatch(updatedCard);
-    ////console.log("IN updateCardSide -- CCCC checkForMatch -- updatedCard.faceType: ", updatedCard.faceType, updatedCard)
-    ////console.log("IN updateCardSide -- DDDD checkForMatch -- cr: ", cr)
-
-    // await handleFlippCount();
-    // let activePlayer = getActivePlayer();
-    // if ( !isEmpty(cr) &&
-    //     !isEmpty(cr.currentPlayers) &&
-    //     cr.currentPlayers.length > 1 &&
-    //     activePlayer.flippCount >= 3 ) {
-    //   await togglePlayerTurn();
-    // }
   }
 
   const cardInLast2FlippedCards = (cardId) => {
@@ -296,31 +262,24 @@ function Game() {
       setToggleFlag(true);
     } }, [firstCardFlippedBack, secondCardFlippedBack, isMatched] );
 
+
     useEffect(() => {
       if (toggleFlag && !isMatched) {
+        console.log("IN useEffect[toggleFlag, isMatched] -- 1111 -- cr: ", cr)
         togglePlayerTurn();
+        console.log("IN useEffect[toggleFlag, isMatched] -- 2222 -- cr: ", cr)
         setToggleFlag(false);
       }
-    }, [toggleFlag, isMatched]);
+   }, [toggleFlag, isMatched]);
 
     
   const handleCardFlip = async(cardId) => {
     const currentUserIndex = cr.currentPlayers.findIndex((player) => player.name === userName);
     const cardIdx = getCardIndexByCardId(cardId);
 
-    console.log("IN handleCardFlip -- cardIdx: ", cardIdx)
-    console.log("IN handleCardFlip -- cardId: ", cardId)
-    console.log("IN handleCardFlip -- firstCardId: ", firstCardId, firstCardFlipped)
-    console.log("IN handleCardFlip -- secondCardId: ", secondCardId, secondCardFlipped)
-    console.log("IN handleCardFlip -- cardId === secondCardId: ", cardId === secondCardId, cardId, secondCardId)
-    console.log("IN handleCardFlip -- firstCardFlipped && secondCardFlipped: ", firstCardFlipped && secondCardFlipped, firstCardFlipped, secondCardFlipped)
-
-
     if ( currentUserIndex !== -1 &&
          cr.currentPlayers[currentUserIndex].isActive &&
          cr.cardsData[cardIdx].faceType !== "matched"  ) {
-
-          console.log("0000 -- cr.cardsData[cardIdx].faceType: ", cr.cardsData[cardIdx].faceType)
 
         if (!firstCardFlipped && !secondCardFlipped) {
           // Flip the first card
@@ -333,7 +292,6 @@ function Game() {
           await toggleCardFlip(cardId, cardIdx);
 
         } else if (!secondCardFlipped && cardId !== firstCardId) {
-           console.log("2222 -- !secondCardFlipped && cardId !== firstCardId")
           // Flip the second card
           await setSecondCardId(cardId);
           await setSecondCardFlipped(true);
@@ -341,19 +299,14 @@ function Game() {
 
         // FLIPP BACK IF THERE IS NO MATCH
         } else if (firstCardFlipped && secondCardFlipped) {
-           console.log("3333 -- firstCardFlipped && secondCardFlipped")
-
           // Flip back the first or second card
           if ( cardId === firstCardId && !firstCardFlippedBack ) {
             console.log("4444 -- cardId === firstCardId")
             await setFirstCardFlippedBack(true);
             // Flip back the first card
-            console.log("IN handleCardFlip -- BEFORE tougle- cr: ", cr)
             await toggleCardFlip(cardId, cardIdx);                       
-            console.log("IN handleCardFlip -- AFTER tougle- cr: ", cr)
 
           } else if (cardId === secondCardId && !secondCardFlippedBack ) {
-            console.log("5555 -- cardId === secondCardId")
             // Flip back the second card
             await setSecondCardFlippedBack(true);
             await toggleCardFlip(cardId, cardIdx);
@@ -361,10 +314,9 @@ function Game() {
         }
     }
   };
-  
 
-////////console.log("BEFORE RENDER -- isMatched: ", isMatched)
-////////console.log("BEFORE RENDER -- last2FlippedCards: ", last2FlippedCards)
+  console.log("IN GAME -- cr: ", cr)
+
 
   return (
     <GameContainer>
@@ -394,12 +346,19 @@ function Game() {
     cr.currentPlayers.length > 0 ? (
     last2FlippedCards.map((card, index) => (
 
-      <MatchedCards
-          key={index} 
-          index={index}
-          playerName={userName} 
-          players={cr.currentPlayers} 
-          card={card} />
+          <NikeCard
+          key={index}
+          playerName={userName}
+          card={card}
+          faceType={card.faceType}
+          cardSize={cr.MatchedCardSize}
+          frameColor={cr.frameColor}
+
+          toggleCardFlip={() => {
+            handleCardFlip(card.id);
+          }}
+        />
+
     ))
   )  : (
       <>
