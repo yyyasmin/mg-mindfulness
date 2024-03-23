@@ -31,7 +31,7 @@ const getRoomFromActiveRooms = (room) => {
     return activeRooms[existingRoomIndex];
   } else {
     let newRoom = createNewRoom(room, newRoomId);
-    activeRooms.push(newRoom);
+    // activeRooms.push(newRoom);   ITS IN updateActiveRoomsWithUpdatedRoom
     return newRoom;
   }
 };
