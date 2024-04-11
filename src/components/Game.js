@@ -46,71 +46,64 @@ const CardGallery = styled.div`
 
 function Game() {
   const location = useLocation();
-  const { userName, currentRoom } = location.state
+  const { userName, currentRoom } = location.state;
   const [cr, setCr] = useState({});
-
   const [isMatched, setIsMatched] = useState(false);
   const [last2FlippedCards, setLast2FlippedCards] = useState([]);
-
   const [allFlippedCards, setAllFlippedCards] = useState([]);
   const [clearFlippedCards, setClearFlippedCards] = useState(false);
   const [playerLeft, setPlayerLeft] = useState(null);
-  
-  // FORCE PAIR FLIIPPING FLOW
   const [firstCardId, setFirstCardId] = useState(0);
   const [firstCardFlipped, setFirstCardFlipped] = useState(false);
   const [firstCardFlippedBack, setFirstCardFlippedBack] = useState(false);
-
   const [secondCardId, setSecondCardId] = useState(0);
   const [secondCardFlipped, setSecondCardFlipped] = useState(false);
   const [secondCardFlippedBack, setSecondCardFlippedBack] = useState(false);
-
   const [toggleFlag, setToggleFlag] = useState(false);
 
   const broadcastChangeCr = async (updatedCr) => {
-    if ( !isEmpty(updatedCr) )  {
-        await emitCurentRoomChanged({ ...updatedCr });
-    }
-  }
-
-
-  const broadcastChangeIsMatched = async (isMatched, last2FlippedCards) => {
-    if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) )
-    await emitCurentIsMatched(isMatched, last2FlippedCards);
-  }
-
-  const broadcastChangeCardSize = async (cr) => {
-    let updateCrWithNewCardSize
-    if ( !isEmpty(cr) ) {
-      if ( !isEmpty(cr.cardsData) ) {
-        let cardSize = calculateCardSize(cr.cardsData.length)
-        let MatchedCardSize = calculateCardSize(2)
-        updateCrWithNewCardSize = {...cr, 
-                                      cardSize: cardSize,
-                                      MatchedCardSize: MatchedCardSize
-        }
-      }
-		  broadcastChangeCr(updateCrWithNewCardSize)
+    if (!isEmpty(updatedCr)) {
+      await emitCurentRoomChanged({ ...updatedCr });
     }
   };
 
+  const broadcastChangeIsMatched = async (isMatched, last2FlippedCards) => {
+    if (!isEmpty(cr) && !isEmpty(cr.currentPlayers)) {
+      await emitCurentIsMatched(isMatched, last2FlippedCards);
+    }
+  };
+
+  const broadcastChangeCardSize = async (cr) => {
+    let updateCrWithNewCardSize;
+    if (!isEmpty(cr)) {
+      if (!isEmpty(cr.cardsData)) {
+        let cardSize = calculateCardSize(cr.cardsData.length);
+        let MatchedCardSize = calculateCardSize(2);
+        updateCrWithNewCardSize = {
+          ...cr,
+          cardSize: cardSize,
+          MatchedCardSize: MatchedCardSize,
+        };
+      }
+      broadcastChangeCr(updateCrWithNewCardSize);
+    }
+  };
 
   const resetPlayersFlippCount = () => {
-    let updatedCurrentPlayers
-    if  ( !isEmpty(cr.currentPlayers) )  {
+    let updatedCurrentPlayers;
+    if (!isEmpty(cr.currentPlayers)) {
       updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
         ...player,
         flippCount: 0,
       }));
     }
-    const updatedCr = {...cr, currentPlayers: updatedCurrentPlayers}
+    const updatedCr = { ...cr, currentPlayers: updatedCurrentPlayers };
     broadcastChangeCr(updatedCr);
-  }
-
+  };
 
   const handleResize = () => {
-		broadcastChangeCardSize(cr);
-  }
+    broadcastChangeCardSize(cr);
+  };
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -119,22 +112,22 @@ function Game() {
     };
   }, []);
 
-
   useEffect(() => {
-    console.log("IN GAME -- useEffect[currentRoom] -- currentRoom: ", currentRoom)
-    updateCr(setCr)
-	broadcastChangeCr(currentRoom);
-    updateIsMatched(setIsMatched, setLast2FlippedCards)
+    updateCr(setCr);
+    broadcastChangeCr(currentRoom);
+    updateIsMatched(setIsMatched, setLast2FlippedCards);
     if (!isEmpty(currentRoom) && !isEmpty(userName)) {
-      broadcastChangeCardSize(currentRoom);  // Update Cr is in broadcastChangeCardSize
+      broadcastChangeCardSize(currentRoom);
     }
   }, [currentRoom]);
 
-
-  useEffect(() => {  // DEBUG
-    console.log("DEBUG useEffect -- isMatched, cr.MatchedCardSize: ", isMatched, cr.MatchedCardSize)
+  useEffect(() => {
+    console.log(
+      "DEBUG useEffect -- isMatched, cr.MatchedCardSize: ",
+      isMatched,
+      cr.MatchedCardSize
+    );
   }, [cr.MatchedCardSize]);
-
 
   window.onbeforeunload = async function (e) {
     await updatePlayerLeft(setPlayerLeft);
@@ -144,56 +137,59 @@ function Game() {
         playerName: userName,
         chosenRoom: cr,
       });
-      if ( !isEmpty(cr) && cr.currentPlayers==[] ) {
-        emitRemoveRoomFromActiveRooms(cr.id)
+      if (!isEmpty(cr) && cr.currentPlayers === []) {
+        emitRemoveRoomFromActiveRooms(cr.id);
       }
     }
-    var dialogText = 'Are you really sure you want to leave?';
+    var dialogText = "Are you really sure you want to leave?";
     e.returnValue = dialogText;
     return dialogText;
   };
-  
-   
-  useEffect( () => {
-    const asyncClear = async() =>  {
+
+  useEffect(() => {
+    const asyncClear = async () => {
       if (clearFlippedCards) {
         await setAllFlippedCards([]);
-        await broadcastChangeIsMatched(false, [], 0)
-        await resetPlayersFlippCount()
+        await broadcastChangeIsMatched(false, [], 0);
+        await resetPlayersFlippCount();
         await setClearFlippedCards(false);
       }
-    }
-    asyncClear()
-  }, [clearFlippedCards] );
-
+    };
+    asyncClear();
+  }, [clearFlippedCards]);
 
   const togglePlayerTurn = () => {
-    console.log("IN togglePlayerTurn")
-    if ( !isEmpty(cr) && !isEmpty(cr.currentPlayers) && cr.currentPlayers.length > 1 ) {
+    console.log("IN togglePlayerTurn");
+    if (
+      !isEmpty(cr) &&
+      !isEmpty(cr.currentPlayers) &&
+      cr.currentPlayers.length > 1
+    ) {
       const updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
         ...player,
         isActive: !player.isActive,
       }));
-      const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };  
+      const updatedRoom = { ...cr, currentPlayers: updatedCurrentPlayers };
       broadcastChangeCr(updatedRoom);
-    }   
+    }
   };
 
-
   const updateMatchingCards = (cardsData, cardsToUpdate) => {
-    return cardsData.map(card => {
-      if (cardsToUpdate.some(flipCard => flipCard.id === card.id)) {
-        return cardsToUpdate.find(updatedCard => updatedCard.id === card.id);
+    return cardsData.map((card) => {
+      if (cardsToUpdate.some((flipCard) => flipCard.id === card.id)) {
+        return cardsToUpdate.find(
+          (updatedCard) => updatedCard.id === card.id
+        );
       }
       return card;
     });
   };
-  
+
   const checkForMatch = (updatedCard) => {
     const newAllFlippedCards = [...allFlippedCards, updatedCard];
     let tmpIsMatched = false;
     let updatedLast2FlippedCards = [];
-  
+
     setAllFlippedCards(newAllFlippedCards);
     if (newAllFlippedCards.length % 2 === 0) {
       const last2FlippedCards = newAllFlippedCards.slice(-2);
@@ -201,121 +197,101 @@ function Game() {
         tmpIsMatched = true;
       }
       if (tmpIsMatched) {
-        // Set faceType to matched for both cards
-        updatedLast2FlippedCards = last2FlippedCards.map(card => ({
+        updatedLast2FlippedCards = last2FlippedCards.map((card) => ({
           ...card,
-          faceType: "matched"
+          faceType: "matched",
         }));
-        // Update the matching cards in cardsData
         broadcastChangeIsMatched(true, updatedLast2FlippedCards);
         cr.cardsData = updateMatchingCards(cr.cardsData, updatedLast2FlippedCards);
-      } else {  // NO MATCH
+      } else {
         broadcastChangeIsMatched(false, last2FlippedCards);
         cr.cardsData = updateMatchingCards(cr.cardsData, last2FlippedCards);
-        // Handle non-matching cards here...
       }
       broadcastChangeCr(cr);
-
     }
-  }
-  
-  
-	const getActivePlayer = () => {
-		const activePlayer = cr.currentPlayers.find((player) => player.isActive);
-		return {...activePlayer}
-	};  
+  };
 
+  const getActivePlayer = () => {
+    const activePlayer = cr.currentPlayers.find((player) => player.isActive);
+    return { ...activePlayer };
+  };
 
-  const getCardIndexByCardId = (cardId) =>  {
+  const getCardIndexByCardId = (cardId) => {
     return cr.cardsData.findIndex((card) => card.id === cardId);
-  }
+  };
 
-  const updateCardSide = async (cardId, cardIdx) =>  {
-      const updatedCard = { ...cr.cardsData[cardIdx] };
-      await updatedCard.faceType === "back" ?  updatedCard.faceType = "front" : updatedCard.faceType = "back"
-      const updatedRoom = { ...cr };
-      updatedRoom.cardsData[cardIdx] = updatedCard;
-      broadcastChangeCr(updatedRoom);
-      return updatedCard
-  }
+  const updateCardSide = async (cardId, cardIdx) => {
+    const updatedCard = { ...cr.cardsData[cardIdx] };
+    await updatedCard.faceType === "back"
+      ? (updatedCard.faceType = "front")
+      : (updatedCard.faceType = "back");
+    const updatedRoom = { ...cr };
+    updatedRoom.cardsData[cardIdx] = updatedCard;
+    broadcastChangeCr(updatedRoom);
+    return updatedCard;
+  };
 
-  const toggleCardFlip = async(cardId, cardIdx) => {
-    const  updatedCard = await updateCardSide(cardId, cardIdx)
+  const toggleCardFlip = async (cardId, cardIdx) => {
+    const updatedCard = await updateCardSide(cardId, cardIdx);
     await checkForMatch(updatedCard);
-  }
+  };
 
   const cardInLast2FlippedCards = (cardId) => {
-    return last2FlippedCards.some(card => card.id === cardId);
+    return last2FlippedCards.some((card) => card.id === cardId);
   };
-  
-  useEffect( () => {  // RESET FORCE FLIIPING CORRECT FLOW RESET VARS
-    if ( (firstCardFlippedBack && secondCardFlippedBack) || isMatched ) {
+
+  useEffect(() => {
+    if ((firstCardFlippedBack && secondCardFlippedBack) || isMatched) {
       console.log("6666 -- RESET VARS");
       setFirstCardFlippedBack(false);
       setSecondCardFlippedBack(false);
       setFirstCardFlipped(false);
       setSecondCardFlipped(false);
       setToggleFlag(true);
-    } }, [firstCardFlippedBack, secondCardFlippedBack, isMatched] );
+    }
+  }, [firstCardFlippedBack, secondCardFlippedBack, isMatched]);
 
-    useEffect(() => {
-      if (toggleFlag) {
-        togglePlayerTurn();
-        setToggleFlag(false);
-      }
-    }, [toggleFlag]);
+  useEffect(() => {
+    if (toggleFlag) {
+      togglePlayerTurn();
+      setToggleFlag(false);
+    }
+  }, [toggleFlag]);
 
-    
-  const handleCardFlip = async(cardId) => {
-    const currentUserIndex = cr.currentPlayers.findIndex((player) => player.name === userName);
+  const handleCardFlip = async (cardId) => {
+    const currentUserIndex = cr.currentPlayers.findIndex(
+      (player) => player.name === userName
+    );
     const cardIdx = getCardIndexByCardId(cardId);
 
-    if ( currentUserIndex !== -1 &&
-         cr.currentPlayers[currentUserIndex].isActive &&
-         cr.cardsData[cardIdx].faceType !== "matched"  ) {
-          console.log("0000 -- cr.cardsData[cardIdx].faceType: ", cr.cardsData[cardIdx].faceType)
-        
-        if (!firstCardFlipped && !secondCardFlipped) {
-          // Flip the first card
-          console.log("1111 -- !firstCardFlipped && !secondCardFlipped")
-          await setFirstCardFlippedBack(false);
-          await setSecondCardFlippedBack(false);
-
-          await setFirstCardId(cardId);
-          await setFirstCardFlipped(true);
-          await toggleCardFlip(cardId, cardIdx);
-
-        } else if (!secondCardFlipped && cardId !== firstCardId) {
-           console.log("2222 -- !secondCardFlipped && cardId !== firstCardId")
-          // Flip the second card
-          await setSecondCardId(cardId);
-          await setSecondCardFlipped(true);
-          await toggleCardFlip(cardId, cardIdx);
-
-        // FLIPP BACK IF THERE IS NO MATCH
-        } else if (firstCardFlipped && secondCardFlipped) {
-           console.log("3333 -- firstCardFlipped && secondCardFlipped")
-
-        // Flip back the first or second card
-        if ( cardId === firstCardId && !firstCardFlippedBack ) {
-          console.log("4444 -- cardId === firstCardId")
+    if (
+      currentUserIndex !== -1 &&
+      cr.currentPlayers[currentUserIndex].isActive &&
+      cr.cardsData[cardIdx].faceType !== "matched"
+    ) {
+      if (!firstCardFlipped && !secondCardFlipped) {
+        await setFirstCardFlippedBack(false);
+        await setSecondCardFlippedBack(false);
+        await setFirstCardId(cardId);
+        await setFirstCardFlipped(true);
+        await toggleCardFlip(cardId, cardIdx);
+      } else if (!secondCardFlipped && cardId !== firstCardId) {
+        await setSecondCardId(cardId);
+        await setSecondCardFlipped(true);
+        await toggleCardFlip(cardId, cardIdx);
+      } else if (firstCardFlipped && secondCardFlipped) {
+        if (cardId === firstCardId && !firstCardFlippedBack) {
           await setFirstCardFlippedBack(true);
-          // Flip back the first card
-          console.log("IN handleCardFlip -- BEFORE tougle- cr: ", cr)
-          await toggleCardFlip(cardId, cardIdx);                       
-          console.log("IN handleCardFlip -- AFTER tougle- cr: ", cr)
-
-        } else if (cardId === secondCardId && !secondCardFlippedBack ) {
-          console.log("5555 -- cardId === secondCardId")
-          // Flip back the second card
+          await toggleCardFlip(cardId, cardIdx);
+        } else if (cardId === secondCardId && !secondCardFlippedBack) {
           await setSecondCardFlippedBack(true);
           await toggleCardFlip(cardId, cardIdx);
         }
       }
     }
   };
-  
-  console.log("IN GAME - before return cr: ", cr)
+
+  console.log("IN GAME - before return cr: ", cr);
 
   return (
     <GameContainer>
@@ -337,48 +313,44 @@ function Game() {
         />
       )}
 
-<CardGallery>
-  { isMatched &&
-    last2FlippedCards &&
-    last2FlippedCards.length > 0 &&
-    !isEmpty(cr) && !isEmpty(cr.currentPlayers) && !isEmpty(cr.MatchedCardSize) && 
-    cr.currentPlayers.length > 0 ? (
-    last2FlippedCards.map((card, index) => (
+      <CardGallery>
+        {isMatched &&
+          last2FlippedCards &&
+          last2FlippedCards.length > 0 &&
+          !isEmpty(cr) && !isEmpty(cr.currentPlayers) && !isEmpty(cr.MatchedCardSize) && 
+          cr.currentPlayers.length > 0 ? (
+            last2FlippedCards.map((card, index) => (
+              <MatchedCards
+                key={index} 
+                index={index}
+                playerName={userName} 
+                players={cr.currentPlayers} 
+                cardSize={cr.MatchedCardSize} 
+                card={card} />
+            ))
+          ) : (
+            <>
+              {  
+                cr.cardsData &&
+                !isEmpty(cr.cardSize) &&
+                cr.cardsData.map((card, index) => (
+                  <NikeCard
+                    key={index}
+                    playerName={userName}
+                    card={card}
+                    faceType={card.faceType}
+                    cardSize={cr.cardSize}
+                    frameColor={cr.frameColor}
 
-      <MatchedCards
-          key={index} 
-          index={index}
-          playerName={userName} 
-          players={cr.currentPlayers} 
-          cardSize={cr.MatchedCardSize} 
-          card={card} />
-
-    ))
-  )  : (
-      <>
-       {  
-        cr.cardsData &&
-        !isEmpty(cr.cardSize) &&
-        cr.cardsData.map((card, index) => (
-          <NikeCard
-            key={index}
-            playerName={userName}
-            card={card}
-            faceType={card.faceType}
-            cardSize={cr.cardSize}
-            frameColor={cr.frameColor}
-
-            toggleCardFlip={() => {
-              handleCardFlip(card.id);
-            }}
-          />
-        ))
-       }
-    </>
-  )}
-</CardGallery>
-
-
+                    toggleCardFlip={() => {
+                      handleCardFlip(card.id);
+                    }}
+                  />
+                ))
+              }
+            </>
+          )}
+      </CardGallery>
     </GameContainer>
   );
 }

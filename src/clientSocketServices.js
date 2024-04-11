@@ -32,6 +32,10 @@ export const emitCurentCardSize = (cr, cardSize) => {
   socket.emit("CARD_SIZE_CHANGED", cr, cardSize );
 };
 
+export const emitHeartbeat = (playerName) => {
+  socket.emit("heartbeat", playerName);
+};
+
 export const updateCr = (setCr) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
     //console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom.currentPlayers)           
@@ -75,7 +79,6 @@ export const removeUpdatedRoomDataListener = () => {
 export const removeUpdatedMatchedCards = () => {
   socket.off("UPDATED_MATCHED_CARDS");
 };
-
 
 export const removeUpdatedIsMatched = () => {
   socket.off("UPDATED_IS_MATCHED");
