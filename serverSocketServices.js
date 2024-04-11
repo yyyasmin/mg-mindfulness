@@ -130,7 +130,7 @@ function checkInactivePlayers(io) {
 
 // Start a timer to check for inactive players periodically
 setInterval(() => {
-  checkInactivePlayers(io);
+  checkInactivePlayers();
 }, HEARTBEAT_INTERVAL);
 
 // Socket.io event handling
