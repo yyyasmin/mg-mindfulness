@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom";
 
 const NameFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 2rem;
+  font-size: 2vw;
   font-weight: 700;
-
 `;
 
 const NameInput = styled.input`
-  font-size: 2rem;
+  font-size: 2vw;
   font-weight: 600;
 `;
 
@@ -20,14 +19,13 @@ const SubmitButton = styled.button`
   background-color: #fbbe01;
   color: #000;
   text-transform: uppercase;
-  font-size:  2rem;
+  font-size: 2vw;
   font-weight: 600;
   border: 3px solid transparent;
   outline: none;
   cursor: pointer;
   transition: all 290ms ease-in-out;
   border-radius: 8px;
-  
 
   &:hover {
     background-color: transparent;
@@ -38,12 +36,12 @@ const SubmitButton = styled.button`
 
 function NameForm({ setUserName }) {
   const [name, setName] = useState("");
-  const navigate = useNavigate(); // Get the navigate function from react-router-dom
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setUserName(name); // Set the user name
-    navigate("/rooms"); // Redirect to the rooms page
+    setUserName(name);
+    navigate("/rooms");
   };
 
   return (

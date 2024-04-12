@@ -7,7 +7,6 @@ import {
   removeUpdatedRoomDataListener,
   emitAddMemberToRoom,
   emitCurentRoomChanged,
-
 } from "../clientSocketServices";
 
 const GameContainer = styled.div`
@@ -15,9 +14,10 @@ const GameContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100%;
   font-family: Lobster, Georgia, serif;
   color: #545454;
+  padding: 2vw;
 `;
 
 const GameHeading = styled.h1`
@@ -40,18 +40,18 @@ const RoomItem = styled.li`
   background-size: cover;
   background-position: center;
   margin: 10px;
-  width: 180px;
-  height: 180px;
+  width: 15vw;
+  height: 15vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   text-align: center;
-  border: 8px solid ${(props) => props.frameColor};
+  border: 6px solid ${(props) => props.frameColor};
   border-radius: 5px;
-  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
   position: relative;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
   &:hover {
     transform: scale(1.05);
@@ -65,6 +65,7 @@ const RoomInfoLink = styled.a`
   padding: 5px 10px;
   border-radius: 5px;
   margin: 5px 0;
+  font-size: 1.5vw;
 `;
 
 const JoinButton = styled.button`
@@ -75,7 +76,7 @@ const JoinButton = styled.button`
   border-radius: 5px;
   cursor: pointer;
   margin-bottom: 10px;
-
+  font-size: 1.5vw;
 `;
 
 const RoomsList = ({ userName, roomsInitialData }) => {
@@ -92,7 +93,6 @@ const RoomsList = ({ userName, roomsInitialData }) => {
   }, []);
 
   useEffect(() => {
-    console.log("IN ROOMSLIST -- currentRoom: ", currentRoom)
     if (currentRoom && currentRoom.id >= 0) {
       navigate(`/game/${currentRoom.id}`, {
         state: { userName, currentRoom },
@@ -100,13 +100,11 @@ const RoomsList = ({ userName, roomsInitialData }) => {
     }
   }, [currentRoom, navigate, userName]);
 
-  
   const broadcastChangeCr = async (updatedCr) => {
-    //console.log("IN RoomsList -- broadcastChangeCr -- updatedCr: ", updatedCr)
-    if ( !isEmpty(updatedCr) )  {
-        await emitCurentRoomChanged({ ...updatedCr });
+    if (!isEmpty(updatedCr)) {
+      await emitCurentRoomChanged({ ...updatedCr });
     }
-  }
+  };
 
   const handleJoinRoom = async (room) => {
     if (!isEmpty(userName)) {
@@ -114,9 +112,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
         playerName: userName,
         chosenRoom: room,
       });
-      // Potentially set current room here if immediate feedback is needed
       broadcastChangeCr(room);
-      //console.log("IN handleJoinRoom -- after broadcastChangeCr -- currentRoom-currentPlayers: ", currentRoom.currentPlayers)
     }
   };
 

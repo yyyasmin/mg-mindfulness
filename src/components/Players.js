@@ -1,69 +1,57 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 const PlayersContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
   justify-content: center;
-  margin-bottom: 5px;
+  gap: 1vw;
+  margin-top: 1vw;
 `;
 
 const Player = styled.div`
-  margin-bottom: 10px;
-  font-size: ${(props) => (props.isPlayersTurn ? "2.3rem" : "2.3rem")};
-  font-weight: ${(props) => (props.isPlayersTurn ? "650" : "500")};
+  margin-bottom: 0.5vw;
+  font-size: calc(0.8rem + 0.5vw);
   color: ${(props) => (props.isPlayersTurn ? "brown" : "lightbrown")};
 `;
-const PlayerName = styled.div`
-  margin-bottom: 10px;
-  font-size: 2.3rem;
-  font-weight: 500;
-  color: #C4B454;
-`;
-const Turn = styled.div`
-  margin-bottom: 10px;
-  font-size: 2.3rem;
-  font-weight: 650;
+
+const PlayerName = styled.span`
+  font-size: calc(0.8rem + 0.5vw);
   color: #808000;
 `;
 
-const Players = (props) => {
-  const { players, playerName } = props
+const BoldPlayerName = styled(PlayerName)`
+  font-weight: bold;
+`;
 
-  const activePlayerIndex = players.findIndex((player) => player.isActive);
-  const activePlayer = players[activePlayerIndex]
+const Turn = styled.div`
+  margin-left: 0.5vw;
+  font-size: calc(0.8rem + 0.5vw);
+  color: #808000;
+`;
+
+const Players = ({ players = [], playerName }) => {
+  const currentPlayerIndex = players.findIndex((player) => player.name === playerName);
+  const activePlayer = players.find((player) => player.isActive);
 
   return (
-    <Container>
-
-      <PlayersContainer>
-        <PlayerName> 
-          You are: {playerName}
-        </PlayerName>
-
-        <Turn> 
-            It's {activePlayer ? activePlayer.name + "'s" : ""} turn
-        </Turn>
-      </PlayersContainer>
-
-      <PlayersContainer>
+    <PlayersContainer>
+      <Player>
+        PLAYERS:{" "}
         {players.map((player, index) => (
-          <Player
-              key={index}
-              isPlayersTurn={player.isActive}>
-            Player: {player.name}
-          </Player>
+          <PlayerName key={index}>
+            {player.name === playerName ? `${player.name}(you)` : player.name}{" "}
+          </PlayerName>
         ))}
-      </PlayersContainer>
-
-    </Container>
+        {activePlayer && (
+          <Turn>
+            ITS{" "}
+            <BoldPlayerName>{activePlayer.name}</BoldPlayerName>'S TURN
+          </Turn>
+        )}
+      </Player>
+    </PlayersContainer>
   );
 };
 

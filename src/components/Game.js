@@ -3,17 +3,14 @@ import styled from "styled-components";
 import NikeCard from "./NikeCard";
 import Players from "./Players";
 import isEmpty from "../helpers/isEmpty";
-
 import MatchedCards from "./MatchedCards";
 import TougleMatchedCardButton from "./TougleMatchedCardButton";
 import { useLocation } from "react-router-dom";
 import { calculateCardSize } from "../helpers/init";
-
 import {
   updateCr,
   updateIsMatched,
   updatePlayerLeft,
-
   emitRemoveMemberFromRoom,
   emitRemoveRoomFromActiveRooms,
   emitCurentRoomChanged,
@@ -24,6 +21,7 @@ const GameContainer = styled.div`
   background-color: #fdf2e9;
   color: brown;
   border-radius: 25px;
+  padding: 20px;
 `;
 
 const Wellcome = styled.h1`
@@ -40,8 +38,8 @@ const CardGallery = styled.div`
   flex-wrap: wrap;
   background-color: #fad5a5;
   border-radius: 25px;
-  height: calc(100vh - 100px);
-  justify-content: space-between;
+  min-height: 80vh; /* Changed height to min-height */
+  padding: 20px;
 `;
 
 function Game() {

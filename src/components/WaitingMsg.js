@@ -5,27 +5,27 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2vw; /* Used vw for padding to make it responsive */
 `;
 
 const MsgContainer = styled.div`
   display: flex;
-  flex-wrap: wrap; /* Allow Msg to wrap to the next row if needed */
-  gap: 40px;
+  flex-wrap: wrap;
+  gap: 2vw; /* Used vw for gap to make it responsive */
   justify-content: center;
-  margin-bottom: 5px; /* Adjust the bottom margin */
+  margin-bottom: 1vw; /* Used vw for margin to make it responsive */
 `;
 
 const MsgSection = styled.div`
-  margin-bottom: 10px; /* Adjust the vertical spacing between Msg */
-  font-size: 2.3rem;
+  font-size: 2vw; /* Used vw for font-size to make it responsive */
+  text-align: center;
 `;
 
 const WaitingMsg = () => {
-
   return (
     <Container>
       <MsgContainer>
-          <MsgSection>Waiting for another player to join the room...</MsgSection>
+        <MsgSection>Waiting for another player to join the room...</MsgSection>
       </MsgContainer>
     </Container>
   );

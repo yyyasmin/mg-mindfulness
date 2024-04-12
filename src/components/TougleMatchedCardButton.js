@@ -1,89 +1,57 @@
 import React from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 
-const PlayersContainer = styled.div`
+const ReturnButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: #fdf2e9;
   color: #fad5a5;
-  margin-bottom: 50px;
-  padding: 0;
+  padding: 1vw; /* Used vw for padding to make it responsive */
+  /* background-color: green; */
+
 `;
 
 const MsgAndButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const MsgContainer = styled.div`
-  background-color: #fdf2e9;
-  color: #fad5a5;
-  margin-bottom: 10px;
-  padding: 10px;
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  border-radius: 25px;
-
-  background-color: #808000;
-  color: #fad5a5;
-
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.5);
-  transition: transform 0.2s;
-  font-size: 2.3rem;
-  font-weight: bold;
-  display: flex;
-  flex-direction: row-reverse;
-  &:active {
-    transform: translateY(5px);
-    box-shadow: none;
-  }
+  margin-bottom: 0.5vw; /* Reduce the vertical gap */
 `;
 
 const ReturnButton = styled.button`
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  border-radius: 25px;
-  
   background-color: #fad5a5;
   color: #808000;
-
   border: none;
-  border-radius: 10px;
+  border-radius: 1vw; /* Used vw for border-radius to make it responsive */
   cursor: pointer;
-  box-shadow: 0px 5px 0px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0.5vw 0.5vw 0 0 rgba(0, 0, 0, 0.5); /* Used vw for box-shadow to make it responsive */
   transition: transform 0.2s;
-  font-size: 2.3rem;
+  font-size: 2vw; /* Used vw for font-size to make it responsive */
   font-weight: bold;
-  display: flex;
-  flex-direction: row-reverse;
-  &:active {
-    transform: translateY(5px);
-    box-shadow: none;
-  }
+  padding: 1.5vw 3vw; /* Used vw for padding to make it responsive */
+  margin-bottom: 0; /* Remove margin-bottom */
 `;
-
 
 const TougleMatchedCardButton = (props) => {
   let { isMatched, setIsMatched, setClearFlippedCards } = props;
 
   return (
-    <Container>
-      <PlayersContainer>
+      <ReturnButtonContainer>
+        {!isMatched && (
+          <MsgAndButtonContainer>
+            <ReturnButton
+              onClick={() => {
+                setIsMatched(!isMatched);
+                setClearFlippedCards(true);
+              }}
+            >
+              Keep going!
+            </ReturnButton>
+          </MsgAndButtonContainer>
+        )}
         {isMatched && (
           <MsgAndButtonContainer>
-            <MsgContainer>"You've got a match!"</MsgContainer>
             <ReturnButton
               onClick={() => {
                 setClearFlippedCards(true);
@@ -93,18 +61,7 @@ const TougleMatchedCardButton = (props) => {
             </ReturnButton>
           </MsgAndButtonContainer>
         )}
-        {!isMatched && (
-          <ReturnButton
-            onClick={() => {
-              setIsMatched(!isMatched);
-              setClearFlippedCards(true);
-            }}
-          >
-            Keep going!
-          </ReturnButton>
-        )}
-      </PlayersContainer>
-    </Container>
+      </ReturnButtonContainer>
   );
 };
 
