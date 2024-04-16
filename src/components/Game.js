@@ -60,6 +60,7 @@ function Game() {
   const [toggleFlag, setToggleFlag] = useState(false);
 
   const broadcastChangeCr = async (updatedCr) => {
+    console.log("ÏN broadcastChangeCr -- updatedCr:", updatedCr)
     if (!isEmpty(updatedCr)) {
       await emitCurentRoomChanged({ ...updatedCr });
     }
@@ -135,9 +136,9 @@ function Game() {
         playerName: userName,
         chosenRoom: cr,
       });
-      if (!isEmpty(cr) && cr.currentPlayers === []) {
-        emitRemoveRoomFromActiveRooms(cr.id);
-      }
+      // if (!isEmpty(cr) && isEmpty(cr.currentPlayers) ) {
+      //   emitRemoveRoomFromActiveRooms(cr.id);
+      // }
     }
     var dialogText = "Are you really sure you want to leave?";
     e.returnValue = dialogText;
@@ -219,17 +220,23 @@ function Game() {
   };
 
   const updateCardSide = async (cardId, cardIdx) => {
+    console.log("IN updateCardSide cardId:", cardId,  " cardIdx:", cardIdx)
+
     const updatedCard = { ...cr.cardsData[cardIdx] };
     await updatedCard.faceType === "back"
       ? (updatedCard.faceType = "front")
       : (updatedCard.faceType = "back");
     const updatedRoom = { ...cr };
     updatedRoom.cardsData[cardIdx] = updatedCard;
+    console.log("IN updateCardSide AFTER FLIPING CARD -- CARD IN IDX:", cardIdx, "IS:", updatedCard)
+    console.log("IN updateCardSide EMITING ROOM:", updatedRoom)
+
     broadcastChangeCr(updatedRoom);
     return updatedCard;
   };
 
   const toggleCardFlip = async (cardId, cardIdx) => {
+    console.log("IN toggleCardFlip cardId:", cardId,  " cardIdx:", cardIdx)
     const updatedCard = await updateCardSide(cardId, cardIdx);
     await checkForMatch(updatedCard);
   };
@@ -257,6 +264,7 @@ function Game() {
   }, [toggleFlag]);
 
   const handleCardFlip = async (cardId) => {
+    console.log("IN GAME -- handleCardFlip -- cr.currentPlayers: ", cr.currentPlayers)
     const currentUserIndex = cr.currentPlayers.findIndex(
       (player) => player.name === userName
     );

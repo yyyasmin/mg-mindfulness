@@ -4,6 +4,7 @@ import { CHOSEN_PROXY_URL } from "./helpers/ServerRoutes.js";
 export const socket = io(CHOSEN_PROXY_URL);
 
 export const emitAddMemberToRoom = ({ playerName, chosenRoom }) => {
+  console.log("IN emitAddMemberToRoom -- EMITTING -- emmiting CREATE_ROOM_AND_ADD_PLAYER -- ", playerName, chosenRoom)
   socket.emit('CREATE_ROOM_AND_ADD_PLAYER', { playerName, chosenRoom });
 };
 
@@ -38,7 +39,7 @@ export const emitHeartbeat = (playerName) => {
 
 export const updateCr = (setCr) => {
   socket.on("UPDATED_CURRENT_ROOM", (serverUpdatedCurentRoom) => {
-    //console.log("clientSocketServices -- updateCr -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom.currentPlayers)           
+    console.log("clientSocketServices -- updateCr -- ON UPDATED_CURRENT_ROOM -- serverUpdatedCurentRoom: ", serverUpdatedCurentRoom.id, serverUpdatedCurentRoom.currentPlayers)           
     setCr(serverUpdatedCurentRoom);
   });
 };

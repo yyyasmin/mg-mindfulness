@@ -43,6 +43,8 @@ const CardImage = styled.img`
 const NikeCard = (props) => {
   let { playerName, card, cardSize, faceType, frameColor, toggleCardFlip } = props;
 
+  console.log("IN NikeCard -- handleCardClick -- toggleCardFlip: ", toggleCardFlip)
+
   const handleCardClick = () => {
     if (toggleCardFlip != null) {
       toggleCardFlip(card.id);
