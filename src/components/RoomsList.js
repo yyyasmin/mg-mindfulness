@@ -107,12 +107,14 @@ const RoomsList = ({ userName, roomsInitialData }) => {
   };
 
   const handleJoinRoom = async (room) => {
-    if (!isEmpty(userName)) {
-      console.log("IN handleJoinRoom -- room: ", handleJoinRoom)
-      await emitAddMemberToRoom({
-        playerName: userName,
+    console.log("IN handleJoinRoom -- room: ", room)
+    console.log("IN handleJoinRoom -- userName: ", userName)
+
+    if ( !isEmpty(room) && !isEmpty(userName) ) {
+      await emitAddMemberToRoom( {
         chosenRoom: room,
-      });
+        playerName: userName
+      } );
       broadcastChangeCr(room);
     }
   };

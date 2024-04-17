@@ -60,7 +60,7 @@ function Game() {
   const [toggleFlag, setToggleFlag] = useState(false);
 
   const broadcastChangeCr = async (updatedCr) => {
-    console.log("ÏN broadcastChangeCr -- updatedCr:", updatedCr)
+    //console.log("ÏN broadcastChangeCr -- updatedCr:", updatedCr)
     if (!isEmpty(updatedCr)) {
       await emitCurentRoomChanged({ ...updatedCr });
     }
@@ -68,7 +68,7 @@ function Game() {
 
   const broadcastChangeIsMatched = async (isMatched, last2FlippedCards) => {
     if (!isEmpty(cr) && !isEmpty(cr.currentPlayers)) {
-      await emitCurentIsMatched(isMatched, last2FlippedCards);
+      await emitCurentIsMatched(cr, isMatched, last2FlippedCards);
     }
   };
 
@@ -133,12 +133,9 @@ function Game() {
     await updateCr(setCr);
     if (!isEmpty(userName) && !isEmpty(cr)) {
       await emitRemoveMemberFromRoom({
-        playerName: userName,
         chosenRoom: cr,
+        playerName: userName,
       });
-      // if (!isEmpty(cr) && isEmpty(cr.currentPlayers) ) {
-      //   emitRemoveRoomFromActiveRooms(cr.id);
-      // }
     }
     var dialogText = "Are you really sure you want to leave?";
     e.returnValue = dialogText;
@@ -158,12 +155,17 @@ function Game() {
   }, [clearFlippedCards]);
 
   const togglePlayerTurn = () => {
-    console.log("IN togglePlayerTurn");
+    console.log("33333333333333333333333333333")
+    console.log("cr.currentPlayers.length > 1", cr.currentPlayers.length > 1, cr.currentPlayers.length)
+
+    //console.log("IN togglePlayerTurn");
     if (
       !isEmpty(cr) &&
       !isEmpty(cr.currentPlayers) &&
       cr.currentPlayers.length > 1
     ) {
+      console.log("444444444444444444444444444444")
+
       const updatedCurrentPlayers = cr.currentPlayers.map((player) => ({
         ...player,
         isActive: !player.isActive,
@@ -220,7 +222,7 @@ function Game() {
   };
 
   const updateCardSide = async (cardId, cardIdx) => {
-    console.log("IN updateCardSide cardId:", cardId,  " cardIdx:", cardIdx)
+    //console.log("IN updateCardSide cardId:", cardId,  " cardIdx:", cardIdx)
 
     const updatedCard = { ...cr.cardsData[cardIdx] };
     await updatedCard.faceType === "back"
@@ -228,15 +230,15 @@ function Game() {
       : (updatedCard.faceType = "back");
     const updatedRoom = { ...cr };
     updatedRoom.cardsData[cardIdx] = updatedCard;
-    console.log("IN updateCardSide AFTER FLIPING CARD -- CARD IN IDX:", cardIdx, "IS:", updatedCard)
-    console.log("IN updateCardSide EMITING ROOM:", updatedRoom)
+    //console.log("IN updateCardSide AFTER FLIPING CARD -- CARD IN IDX:", cardIdx, "IS:", updatedCard)
+    //console.log("IN updateCardSide EMITING ROOM:", updatedRoom)
 
     broadcastChangeCr(updatedRoom);
     return updatedCard;
   };
 
   const toggleCardFlip = async (cardId, cardIdx) => {
-    console.log("IN toggleCardFlip cardId:", cardId,  " cardIdx:", cardIdx)
+    //console.log("IN toggleCardFlip cardId:", cardId,  " cardIdx:", cardIdx)
     const updatedCard = await updateCardSide(cardId, cardIdx);
     await checkForMatch(updatedCard);
   };
@@ -246,8 +248,12 @@ function Game() {
   };
 
   useEffect(() => {
+    console.log("66666666666666666666666666666", cr.currentPlayers)
+    console.log("IN useEffect[firstCardFlippedBack, secondCardFlippedBack, isMatched]:", firstCardFlippedBack, secondCardFlippedBack)
+    console.log("isMatched:", isMatched)
+
     if ((firstCardFlippedBack && secondCardFlippedBack) || isMatched) {
-      console.log("6666 -- RESET VARS");
+      console.log("777777777777777777777777", cr.currentPlayers)
       setFirstCardFlippedBack(false);
       setSecondCardFlippedBack(false);
       setFirstCardFlipped(false);
@@ -257,24 +263,38 @@ function Game() {
   }, [firstCardFlippedBack, secondCardFlippedBack, isMatched]);
 
   useEffect(() => {
+    console.group("555555555555555555555555")
+
+    console.group("IN useEffect[toggleFlag] -- toggleFlag: ", toggleFlag)
+    console.group("IN useEffect[toggleFlag] -- cr=P: ", cr.currentPlayers)
+
     if (toggleFlag) {
       togglePlayerTurn();
       setToggleFlag(false);
     }
   }, [toggleFlag]);
 
+
   const handleCardFlip = async (cardId) => {
+
     console.log("IN GAME -- handleCardFlip -- cr.currentPlayers: ", cr.currentPlayers)
+
     const currentUserIndex = cr.currentPlayers.findIndex(
       (player) => player.name === userName
     );
     const cardIdx = getCardIndexByCardId(cardId);
+    console.log("11111111111111111111")
+    console.log("currentUserIndex !== -1", currentUserIndex !== -1, currentUserIndex)
+    console.log("cr.currentPlayers[currentUserIndex].isActive ", cr.currentPlayers[currentUserIndex].isActive , cr.currentPlayers[currentUserIndex])
+    console.log("cr.cardsData[cardIdx].faceType !== matched", cr.cardsData[cardIdx].faceType)
 
     if (
       currentUserIndex !== -1 &&
       cr.currentPlayers[currentUserIndex].isActive &&
       cr.cardsData[cardIdx].faceType !== "matched"
     ) {
+      console.log("22222222222222222222222")
+
       if (!firstCardFlipped && !secondCardFlipped) {
         await setFirstCardFlippedBack(false);
         await setSecondCardFlippedBack(false);
@@ -297,7 +317,9 @@ function Game() {
     }
   };
 
+
   console.log("IN GAME - before return cr: ", cr);
+  console.log("IN GAME - before return CONDITION--!isEmpty(cr.cardSize): ", !isEmpty(cr.cardSize), cr.cardSize);
 
   return (
     <GameContainer>

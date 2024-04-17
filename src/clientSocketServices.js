@@ -1,15 +1,25 @@
 import io from "socket.io-client";
 import { CHOSEN_PROXY_URL } from "./helpers/ServerRoutes.js";
+import isEmpty from "./helpers/isEmpty.js";
 
 export const socket = io(CHOSEN_PROXY_URL);
 
-export const emitAddMemberToRoom = ({ playerName, chosenRoom }) => {
-  console.log("IN emitAddMemberToRoom -- EMITTING -- emmiting CREATE_ROOM_AND_ADD_PLAYER -- ", playerName, chosenRoom)
-  socket.emit('CREATE_ROOM_AND_ADD_PLAYER', { playerName, chosenRoom });
+export const emitAddMemberToRoom = ( {chosenRoom, playerName} ) => {
+  console.log("IN emitAddMemberToRoom -- input OBJ --chosenRoom: ", chosenRoom)
+  console.log("IN emitAddMemberToRoom -- input OBJ --playerName: ", playerName)
+
+  if ( !isEmpty(chosenRoom) && !isEmpty(playerName) ) {
+    console.log("IN emitAddMemberToRoom -- EMITTING -- emmiting CREATE_ROOM_AND_ADD_PLAYER -- ", chosenRoom, playerName)
+    socket.emit( 'CREATE_ROOM_AND_ADD_PLAYER', { chosenRoom, playerName } );
+  }
+  else {
+    console.log("tyryig to emit EMPTY OBJ-- chosenRoom:", chosenRoom, " PLAYER:", playerName) 
+  }
 };
 
-export const emitRemoveMemberFromRoom = ({ playerName, chosenRoom }) => {
-  socket.emit('REMOVE_PLAYER_FROM_ROOM', { playerName, chosenRoom });
+export const emitRemoveMemberFromRoom = ({ chosenRoom, playerName }) => {
+  console.log("IN emitRemoveMemberFromRoom -- chosenRoom:", chosenRoom)
+  socket.emit('REMOVE_PLAYER_FROM_ROOM', { chosenRoom, playerName });
 };
 
 export const emitRemoveRoomFromActiveRooms = (roomId) => {
@@ -20,21 +30,24 @@ export const emitCurentRoomChanged = (curentRoom) => {
   socket.emit("CURENT_ROOM_CHANGED", curentRoom);
 };
 
-export const emitCurentMatchedCards = (cr, matchedCards) => {
-  socket.emit("MATCHED_CARDS_CHANGED", cr, matchedCards);
+// export const emitCurentMatchedCards = (cr, matchedCards) => {
+//   socket.emit("MATCHED_CARDS_CHANGED", cr, matchedCards);
+// };
+
+export const emitCurentIsMatched = (cr, isMatched, last2FlippedCards, have_has_word_idx) => {
+  console.log("IN emitCurentIsMatched -- cr:", cr)
+  console.log("IN emitCurentIsMatched -- last2FlippedCards:", last2FlippedCards)
+  console.log("IN emitCurentIsMatched -- isMatched:", isMatched)
+
+  socket.emit("IS_MATCHED_CHANGED", cr, isMatched, last2FlippedCards, have_has_word_idx );
 };
 
-export const emitCurentIsMatched = (isMatched, last2FlippedCards, have_has_word_idx) => {
-  ////console.log("IN emitCurentIsMatched -- have_has_word_idx: ", have_has_word_idx)
-  socket.emit("IS_MATCHED_CHANGED", isMatched, last2FlippedCards, have_has_word_idx );
-};
+// export const emitCurentCardSize = (cr, cardSize) => {
+//   socket.emit("CARD_SIZE_CHANGED", cr, cardSize );
+// };
 
-export const emitCurentCardSize = (cr, cardSize) => {
-  socket.emit("CARD_SIZE_CHANGED", cr, cardSize );
-};
-
-export const emitHeartbeat = (playerName) => {
-  socket.emit("heartbeat", playerName);
+export const emitHeartBeat = (playerName) => {
+  socket.emit("HEART_BEAT", playerName);
 };
 
 export const updateCr = (setCr) => {
@@ -46,7 +59,7 @@ export const updateCr = (setCr) => {
 
 export const updatePlayerLeft = (setPlayerLeft) => {
   socket.on("PLAYER_LEFT_ROOM", (playerName) => {
-    ////console.log("clientSocketServices -- updatePlayerLeft -- ON-PLAYER_LEFT_ROOM -- playerName: ", playerName)
+    console.log("clientSocketServices -- updatePlayerLeft -- ON-PLAYER_LEFT_ROOM -- playerName: ", playerName)
     setPlayerLeft(playerName);
   });
 };
@@ -58,8 +71,13 @@ export const updateMatchedCards = (setMatchedCards) => {
 };
 
 export const updateIsMatched = (setIsMatched, setLast2FlippedCards) => {
+   
+    console.log("IN updateIsMatched -- ON-UPDATED_IS_MATCHED -- setIsMatched: ", setIsMatched)
+    console.log("")
+
   socket.on("UPDATED_IS_MATCHED", (isMatched, last2FlippedCards, have_has_word_idx) => {
-    ////console.log("IN updateIsMatched -- ON-UPDATED_IS_MATCHED -- last2FlippedCards: ", last2FlippedCards)
+    console.log("IN updateIsMatched -- ON-UPDATED_IS_MATCHED -- isMatched: ", isMatched)
+
     setIsMatched(isMatched);
     setLast2FlippedCards(last2FlippedCards);
   });
