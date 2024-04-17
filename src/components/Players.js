@@ -46,7 +46,7 @@ const Players = ({ maxMembers=2, players=[], playerName }) => {
         ))}
         {players.length < maxMembers && (
           <PlayerName>
-            (Waiting for another player to join the game...)
+            Waiting for another player to join the game...
           </PlayerName>
         )}
         {activePlayer && (
