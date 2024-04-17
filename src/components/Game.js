@@ -243,10 +243,7 @@ function Game() {
     await checkForMatch(updatedCard);
   };
 
-  const cardInLast2FlippedCards = (cardId) => {
-    return last2FlippedCards.some((card) => card.id === cardId);
-  };
-
+  
   useEffect(() => {
     console.log("66666666666666666666666666666", cr.currentPlayers)
     console.log("IN useEffect[firstCardFlippedBack, secondCardFlippedBack, isMatched]:", firstCardFlippedBack, secondCardFlippedBack)
@@ -330,7 +327,7 @@ function Game() {
       </Wellcome>
 
       {cr && parseInt(cr.id) >= 0 && cr.currentPlayers && cr.currentPlayers.length > 0 && (
-        <Players players={cr.currentPlayers} playerName={userName} />
+        <Players maxMembers={cr.maxMembers} players={cr.currentPlayers} playerName={userName} />
       )}
 
       {cr && parseInt(cr.id) >= 0 && (

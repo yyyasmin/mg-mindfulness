@@ -31,7 +31,7 @@ const Turn = styled.div`
   color: #808000;
 `;
 
-const Players = ({ players = [], playerName }) => {
+const Players = ({ maxMembers=2, players=[], playerName }) => {
   const currentPlayerIndex = players.findIndex((player) => player.name === playerName);
   const activePlayer = players.find((player) => player.isActive);
 
@@ -44,6 +44,11 @@ const Players = ({ players = [], playerName }) => {
             {player.name === playerName ? `${player.name}(you)` : player.name}{" "}
           </PlayerName>
         ))}
+        {players.length < maxMembers && (
+          <PlayerName>
+            (Waiting for another player to join the game...)
+          </PlayerName>
+        )}
         {activePlayer && (
           <Turn>
             ITS{" "}
