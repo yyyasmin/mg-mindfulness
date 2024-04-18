@@ -1,7 +1,7 @@
 export const PROXY_URL = "http://localhost:5000";
 //export const RENDER_PROXY_URL = "https://share-and-listen-production.up.railway.app";  // main DEPLOY
 //export const RENDER_PROXY_URL = "https://share-and-listen-production-d3bb.up.railway.app";  // players_timeout_2 DEPLOY
-export const RENDER_PROXY_URL = "https://mg-acquaintance-production.up.railway.app";  // mg-acquaintance-1 DEPLOY
+export const RENDER_PROXY_URL = "https://mg-mindfulness-production.up.railway.app";  // mg-mindfulness-1 DEPLOY
 
-//export const CHOSEN_PROXY_URL = RENDER_PROXY_URL;
-export const CHOSEN_PROXY_URL = PROXY_URL;
+export const CHOSEN_PROXY_URL = RENDER_PROXY_URL;
+//export const CHOSEN_PROXY_URL = PROXY_URL;

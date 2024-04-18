@@ -1,15 +1,15 @@
 [
   {
-    "id": "1",
-    "name": "GET TO KNOW EACH OTHER",
-	  "linkTilte": "WATCH GET TO KNOW EACH OTHER EXAMPLE",
-    "gameName": "Acquaintance_1",
+    "id": "3",
+    "name": "RELAX WITH MINDFULLNESS",
+    "linkTilte": "WATCH RELAX WITH MINDFULLNESS EXAMPLE",
+    "gameName": "Calm_1",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
     "startGame": false,
     "endGame": false,
-    "info": "https://www.youtube.com/watch?v=3LAvEzScXs4",
-    "frameColor": "#BA68C8"
+    "info": "https://www.youtube.com/shorts/pvJtxQWPcgA",
+    "frameColor": "#34976c"
   }
 ]
