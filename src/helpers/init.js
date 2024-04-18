@@ -199,6 +199,7 @@ const initRoomsFromJson = async () => {
 export const initRoomsFunc = async () => {
   ////console.log("11-11-11-11");
   let rooms = await initRoomsFromJson();
+  console.log("IN init -- rooms: ", rooms)
   rooms = await initCardsInRoomsFromJson(rooms); // Make sure to await this function
   return rooms;
 };

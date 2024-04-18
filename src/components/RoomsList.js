@@ -127,7 +127,7 @@ const RoomsList = ({ userName, roomsInitialData }) => {
         {roomsInitialData.map((room) => (
           <RoomItem key={room.id} frameColor={room.frameColor} backgroundImage={room.backgroundImage}>
             <RoomInfoLink href={room.info} target="_blank" rel="noopener noreferrer">
-              {room.name}
+              {room.linkTilte}
             </RoomInfoLink>
             <JoinButton btnColor={room.frameColor} onClick={() => handleJoinRoom(room)}>Join</JoinButton>
           </RoomItem>
