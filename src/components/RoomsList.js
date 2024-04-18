@@ -119,9 +119,10 @@ const RoomsList = ({ userName, roomsInitialData }) => {
     }
   };
 
+  console.log("In ROOM-LIST -- roomsInitialData: ", roomsInitialData)
   return (
     <GameContainer>
-      <GameHeading>Available Rooms:</GameHeading>
+      <GameHeading>Share And Listen Room:</GameHeading>
       <RoomList>
         {roomsInitialData.map((room) => (
           <RoomItem key={room.id} frameColor={room.frameColor} backgroundImage={room.backgroundImage}>

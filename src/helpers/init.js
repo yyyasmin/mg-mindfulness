@@ -1,9 +1,5 @@
 
 import { Intimacy_1 } from "./GameCards/Intimacy_1.js";
-import { Calm_1 } from "./GameCards/Calm_1.js";
-import { Acquaintance_1 } from "./GameCards/Acquaintance_1.js";
-
-
 
 import { shuffle } from "./shuffle"; // Import all exports for images loading
 import { CHOSEN_PROXY_URL } from "./ServerRoutes.js";
@@ -155,9 +151,7 @@ const initCardsInRoomsFromJson = async (rooms) => {
     if (cardsData) {
       let gameCards = cardsData.gameCards || [];
       const importArr = {
-        Acquaintance_1: Acquaintance_1,
-        Intimacy_1: Intimacy_1,
-        Calm_1: Calm_1
+        Intimacy_1: Intimacy_1
         // Add more gameName mappings as needed
       };
 

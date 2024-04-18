@@ -1,38 +1,15 @@
 [
-  {
-    "id": "1",
-    "name": "GET TO KNOW EACH OTHER ID:1",
-    "gameName": "Acquaintance_1",
-    "difficulty": 2,
-    "maxMembers": 2,
-    "currentPlayers": [],
-    "startGame": false,
-    "endGame": false,
-    "info": "https://youtu.be/7wUCyjiyXdg?t=3",
-    "frameColor": "#BA68C8"
-  },
+
   {
     "id": "2",
-    "name": "SHARE AND LISTEN ID:2",
+    "name": "WATCH SHARE AND LISTEN EXAMPLE",
     "gameName": "Intimacy_1",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
     "startGame": false,
     "endGame": false,
-    "info": "https://www.youtube.com/shorts/pvJtxQWPcgA",
+    "info": "https://www.youtube.com/watch?v=3_dAkDsBQyk&t=3s",
     "frameColor": "#8BC34A"
-  },
-  {
-    "id": "3",
-    "name": "RELAX WITH MINDFULLNESS ID:3",
-    "gameName": "Calm_1",
-    "difficulty": 2,
-    "maxMembers": 2,
-    "currentPlayers": [],
-    "startGame": false,
-    "endGame": false,
-    "info": "https://www.youtube.com/shorts/pvJtxQWPcgA",
-    "frameColor": "#34976c"
   }
 ]

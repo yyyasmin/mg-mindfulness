@@ -1,6 +1,6 @@
 
 // Import all the required images for Intimacy-1
-export const roomSelectionBackgroundImage = require("../../assets/textures/acquaintance_1/roomSelectionBackgroundImage.png");
+export const roomSelectionBackgroundImage = require("../../assets/textures/intimacy_1/roomSelectionBackgroundImage.png");
 
 export const inti1_1 = require("../../assets/textures/intimacy_1/png1/inti1.png");
 export const inti1_2 = require("../../assets/textures/intimacy_1/png2/inti1.png");
