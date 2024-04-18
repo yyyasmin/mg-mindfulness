@@ -1,16 +1,15 @@
 [
-
   {
-    "id": "2",
-    "name": "SHARE AND LISTEN",
-    "linkTilte": "WATCH SHARE AND LISTEN EXAMPLE",
-    "gameName": "Intimacy_1",
+    "id": "1",
+    "name": "GET TO KNOW EACH OTHER",
+	  "linkTilte": "WATCH GET TO KNOW EACH OTHER EXAMPLE",
+    "gameName": "Acquaintance_1",
     "difficulty": 2,
     "maxMembers": 2,
     "currentPlayers": [],
     "startGame": false,
     "endGame": false,
-    "info": "https://www.youtube.com/watch?v=3_dAkDsBQyk&t=3s",
-    "frameColor": "#8BC34A"
+    "info": "https://www.youtube.com/watch?v=3LAvEzScXs4",
+    "frameColor": "#BA68C8"
   }
 ]

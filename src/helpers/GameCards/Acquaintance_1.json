@@ -1,0 +1,90 @@
+{
+    "gameName": "Acquaintance_1",
+    "id": 1,
+    "gameCards": [
+        {
+            "id": "31",
+            "name": "p1",
+            "fileFolder": "../../assets/textures/puaintance_1/png",
+            "fileFullPath": "../../assets/textures/puaintance_1/png/p1.png",
+            "fileNameWithSufix": "p1.png",
+            "background": "blue",
+            "text1": "ספר על תחום בחייך שבו יש לך מטרה חשובה ",
+            "text2": "נסה להגדיר עם חברך למשחק מטרה ישימה לשבוע הקרוב",
+            "text3": "Tell us about an area of ​​your life where you have an important goal",
+            "text4": "Try to set an actionable goal for the coming week with your game partner",
+            "faceType": "back"
+            
+        },
+        {
+            "id": "32",
+            "name": "p2",
+            "fileFolder": "../../assets/textures/puaintance_1/png",
+            "fileFullPath": "../../assets/textures/puaintance_1/png/p2.png",
+            "fileNameWithSufix": "p2.png",
+            "background": "blue",
+            "text1": "ספר על טקס מסורתי או אחר שמדבר אליך",
+            "text2": "תאר איך אתה מדמיין את הטקס הזה שחברך הזכיר",
+            "text3": "Tell about a traditional or other ritual that speaks to you",
+            "text4": "Describe how you imagine this ritual your friend mentioned",
+            "faceType": "back"
+            
+        },
+        {
+            "id": "33",
+            "name": "p3",
+            "fileFolder": "../../assets/textures/puaintance_1/png",
+            "fileFullPath": "../../assets/textures/puaintance_1/png/p3.png",
+            "fileNameWithSufix": "p3.png",
+            "background": "blue",
+            "text1": "ספר על השג קטן שאתה גאה בו ועל הדרך שעשית כדי להגיע אליו",
+            "text2": "איזה תכונת אופי לדעתך נדרשת בשביל להשיג את מה שחברך סיפר",
+            "text3": "Tell about a small achievement you are proud of and the path you took to reach it",
+            "text4": "What character trait do you think is required to achieve what your friend said",
+            "faceType": "back"
+            
+        },
+        {
+            "id": "34",
+            "name": "p4",
+            "fileFolder": "../../assets/textures/puaintance_1/png",
+            "fileFullPath": "../../assets/textures/puaintance_1/png/p4.png",
+            "fileNameWithSufix": "p4.png",
+            "background": "blue",
+            "text1": "ספר על טעות חשובה שעשית ומה למדת ממנה ",
+            "text2": "למה לדעתך הטעות שחברך סיפר עליה חשובה",
+            "text3": "Tell about an important mistake you made and what you learned from it",
+            "text4": "Why do you think the mistake your friend told you about is important",
+            "faceType": "back"
+            
+        },
+        {
+            "id": "35",
+            "name": "p5",
+            "fileFolder": "../../assets/textures/puaintance_1/png",
+            "fileFullPath": "../../assets/textures/puaintance_1/png/p5.png",
+            "fileNameWithSufix": "p5.png",
+            "background": "blue",
+            "text1": "ספר על חוויה נעימה שעולה בדעתך עכשיו",
+            "text2": "אם הייתי חווה את החוויה שיברך למשחק סיפר - מה היית מרגיש? ",
+            "text3": "Tell about a pleasant experience that comes to your mind right now",
+            "text4": "If I had had the experience that blessed the game narrated - how would you feel?",
+            "faceType": "back"
+            
+        },
+        {
+            "id": "36",
+            "name": "p6",
+            "fileFolder": "../../assets/textures/puaintance_1/png",
+            "fileFullPath": "../../assets/textures/puaintance_1/png/p6.png",
+            "fileNameWithSufix": "p6.png",
+            "background": "blue",
+            "text1": "דבר על מה שבא לך במשך 30 שניות ",
+            "text2": "סכם בקצרה את מה שאמר חברך למשחק",
+            "text3": "Talk about whatever you want for 30 seconds",
+            "text4": "Briefly summarize what your playmate said",
+            "faceType": "back"
+            
+        }
+    ]
+}
