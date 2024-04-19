@@ -31,7 +31,7 @@ const Turn = styled.div`
   color: #808000;
 `;
 
-const Players = ({ maxMembers=2, players=[], playerName }) => {
+const Players = ({ maxMembers = 2, players = [], playerName }) => {
   const currentPlayerIndex = players.findIndex((player) => player.name === playerName);
   const activePlayer = players.find((player) => player.isActive);
 
@@ -41,7 +41,7 @@ const Players = ({ maxMembers=2, players=[], playerName }) => {
         PLAYERS:{" "}
         {players.map((player, index) => (
           <PlayerName key={index}>
-            {player.name === playerName ? `${player.name}(you)` : player.name}{" "}
+            {index === currentPlayerIndex ? `${player.name} (you)` : player.name}{" "}
           </PlayerName>
         ))}
         {players.length < maxMembers && (
@@ -51,8 +51,10 @@ const Players = ({ maxMembers=2, players=[], playerName }) => {
         )}
         {activePlayer && (
           <Turn>
-            ITS{" "}
-            <BoldPlayerName>{activePlayer.name}</BoldPlayerName>'S TURN
+            IT'S{" "}
+            <BoldPlayerName>
+              {activePlayer.name === playerName ? `${activePlayer.name} (your)` : activePlayer.name}
+            </BoldPlayerName>'S TURN
           </Turn>
         )}
       </Player>
