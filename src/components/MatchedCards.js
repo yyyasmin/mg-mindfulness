@@ -52,11 +52,11 @@ const CardText = styled.div`
   font-size: 2vw;
 `;
 
-const MatchedCards = (props) => {
-  const { cardWidth, cardHeight, card, players, index } = props;
+const MatchedCards = ({ cardWidth, cardHeight, card, players, index }) => {
   const currentPlayer = players.find((player) => player.isActive);
   const opponentPlayer = players.find((player) => !player.isActive);
 
+  const playerName = index === 0 ? currentPlayer.name : opponentPlayer.name;
   const currentText = index === 0 ? card.text1 : card.text2;
 
   return (
@@ -66,7 +66,7 @@ const MatchedCards = (props) => {
           <Image src={card.imageImportName} alt={card.imageImportName} />
         </ImageWrapper>
         <TextContainer>
-          <PlayerName>{currentPlayer.name}</PlayerName>
+          <PlayerName>{playerName}</PlayerName>
           <CardText>{currentText}</CardText>
         </TextContainer>
       </CardFrame>
